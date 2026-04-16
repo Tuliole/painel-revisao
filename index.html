@@ -1075,25 +1075,19 @@ function updateHistChassis(){
 // ══════════════════════════════════════════
 // SAVE / EDIT / DEL
 // ══════════════════════════════════════════
-function saveFrota(){
-  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
-  if(!o.cliente||!o.chassi||!o.modelo){alert('Preencha cliente, chassi e modelo.');return;}
-  if(ei.frota>=0)db.frotas[ei.frota]=o;else db.frotas.push(o);
-  closeM('frota');rAll();
-}
 function editFrota(i){
   ei.frota=i;const f=db.frotas[i];
   document.getElementById('mf-t').textContent='Editar Equipamento';
   sv('mf-frota',f.frota);sv('mf-cli',f.cliente);sv('mf-ch',f.chassi);sv('mf-mod',f.modelo);sv('mf-tipo',f.tipo||'Trator');
   document.getElementById('modal-frota').classList.add('open');
 }
-function delFrota(i){if(confirm('Remover equipamento?')){db.frotas.splice(i,1);rAll();}}
+function delFrota(i){if(confirm('Remover equipamento?')){db.frotas.splice(i,1);rAll();saveLocal(true);}}
 
 function saveHist(){
   const o={id:ei.hist>=0?db.hist[ei.hist].id:uid(),chassi:gv('mh-ch'),rev:gv('mh-rev'),hor:gv('mh-hor'),os:gv('mh-os'),data:gv('mh-data')};
   if(!o.chassi||!o.rev){alert('Preencha chassi e revisão.');return;}
   if(ei.hist>=0)db.hist[ei.hist]=o;else db.hist.push(o);
-  closeM('hist');rAll();
+  closeM('hist');rAll();saveLocal(true);
 }
 function editHist(i){
   ei.hist=i;const h=db.hist[i];
@@ -1108,7 +1102,7 @@ function editHist(i){
   sv('mh-rev',h.rev);sv('mh-hor',h.hor);sv('mh-os',h.os);sv('mh-data',h.data);
   document.getElementById('modal-hist').classList.add('open');
 }
-function delHist(i){if(confirm('Remover?')){db.hist.splice(i,1);rAll();}}
+function delHist(i){if(confirm('Remover?')){db.hist.splice(i,1);rAll();saveLocal(true);}}
 
 function savePlano(){
   const nome=gv('mp-nome'),mod=gv('mp-mod'),tipo=gv('mp-tipo'),revs=gv('mp-revs').split(',').map(r=>r.trim()).filter(Boolean);
@@ -1116,17 +1110,174 @@ function savePlano(){
   const mao={},anal={};
   revs.forEach(r=>{mao[r]=0;anal[r]=0;});
   db.planos.push({id:uid(),nome,modelo:mod,tipo,revs,items:[],mao,anal,desl:350,chassis:[]});
-  closeM('plano');rAll();
+  closeM('plano');rAll();saveLocal(true);
 }
-function delPlano(i){if(confirm('Remover plano?')){db.planos.splice(i,1);rAll();}}
+function delPlano(i){if(confirm('Remover plano?')){db.planos.splice(i,1);rAll();saveLocal(true);}}
+
+function saveFrota(){
+  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
+  if(!o.cliente||!o.chassi||!o.modelo){alert('Preencha cliente, chassi e modelo.');return;}
+  if(ei.frota>=0)db.frotas[ei.frota]=o;else db.frotas.push(o);
+  closeM('frota');rAll();saveLocal(true);
+}
 
 // close on bg click
 document.querySelectorAll('.overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 
 // ══════════════════════════════════════════
-// INIT
+// PERSISTÊNCIA — localStorage + JSON export/import
 // ══════════════════════════════════════════
-seed();rAll();
+const LS_KEY = 'tracbel_revisoes_v1';
+
+function saveLocal(silent){
+  try{
+    localStorage.setItem(LS_KEY, JSON.stringify({db, _saved: new Date().toISOString()}));
+    const el=document.getElementById('save-status');
+    if(el){
+      const ts=new Date().toLocaleString('pt-BR');
+      el.textContent=`✅ Salvo em ${ts}`;
+      el.style.color='var(--green)';
+    }
+    updateSaveInfo();
+    if(!silent) showToast('💾 Dados salvos!');
+  }catch(e){
+    const el=document.getElementById('save-status');
+    if(el){el.textContent='❌ Erro ao salvar: '+e.message;el.style.color='var(--red)';}
+  }
+}
+
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw){
+      const el=document.getElementById('save-status');
+      if(el){el.textContent='⚠️ Nenhum dado salvo encontrado.';el.style.color='var(--yellow)';}
+      return false;
+    }
+    const parsed=JSON.parse(raw);
+    if(parsed.db){
+      db.frotas=parsed.db.frotas||[];
+      db.hist=parsed.db.hist||[];
+      db.planos=parsed.db.planos||[];
+      rAll();
+      const el=document.getElementById('save-status');
+      if(el){
+        const ts=parsed._saved?new Date(parsed._saved).toLocaleString('pt-BR'):'desconhecido';
+        el.textContent=`✅ Dados restaurados (salvo em ${ts})`;
+        el.style.color='var(--green)';
+      }
+      showToast('✅ Dados restaurados do navegador!');
+      return true;
+    }
+  }catch(e){
+    const el=document.getElementById('save-status');
+    if(el){el.textContent='❌ Erro ao restaurar: '+e.message;el.style.color='var(--red)';}
+  }
+  return false;
+}
+
+function updateSaveInfo(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw) return;
+    const parsed=JSON.parse(raw);
+    const ts=parsed._saved?new Date(parsed._saved).toLocaleString('pt-BR'):'—';
+    const el=document.getElementById('save-status');
+    if(el && !el.textContent){
+      el.textContent=`Último save: ${ts}`;
+      el.style.color='var(--muted)';
+    }
+  }catch(e){}
+}
+
+function exportData(){
+  const data={db, _version:'1.0', _exported:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const ts=new Date().toISOString().slice(0,10);
+  a.href=url;a.download=`tracbel_revisoes_${ts}.json`;
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+  showToast('⬇️ Backup exportado!');
+}
+
+function importData(input){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const parsed=JSON.parse(e.target.result);
+      if(!parsed.db||!Array.isArray(parsed.db.frotas)){
+        const el=document.getElementById('import-status');
+        if(el){el.textContent='❌ Arquivo inválido — estrutura não reconhecida.';el.style.color='var(--red)';}
+        return;
+      }
+      if(!confirm(`Importar dados?\n\nIsso irá substituir:\n• ${parsed.db.frotas.length} equipamentos\n• ${parsed.db.hist.length} registros de histórico\n• ${parsed.db.planos.length} planos de manutenção\n\nEsta ação não pode ser desfeita.`)) return;
+      db.frotas=parsed.db.frotas||[];
+      db.hist=parsed.db.hist||[];
+      db.planos=parsed.db.planos||[];
+      saveLocal(true);
+      rAll();
+      const el=document.getElementById('import-status');
+      if(el){
+        const ts=parsed._exported?new Date(parsed._exported).toLocaleString('pt-BR'):'desconhecido';
+        el.textContent=`✅ Importado! ${db.frotas.length} equip., ${db.hist.length} histórico, ${db.planos.length} planos. (backup de ${ts})`;
+        el.style.color='var(--green)';
+      }
+      showToast('✅ Dados importados com sucesso!');
+    }catch(err){
+      const el=document.getElementById('import-status');
+      if(el){el.textContent='❌ Erro ao ler arquivo: '+err.message;el.style.color='var(--red)';}
+    }
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
+// Toast notification
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:opacity .3s;pointer-events:none';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._to);t._to=setTimeout(()=>{t.style.opacity='0';},2500);
+}
+
+// Modal dados: show last save time on open
+const _origOpenM=openM;
+window.openM=function(t){
+  _origOpenM(t);
+  if(t==='dados'){
+    updateSaveInfo();
+    const raw=localStorage.getItem(LS_KEY);
+    const el=document.getElementById('save-status');
+    if(el&&raw){
+      try{
+        const p=JSON.parse(raw);
+        const ts=p._saved?new Date(p._saved).toLocaleString('pt-BR'):'—';
+        el.textContent=`Último save automático: ${ts}`;
+        el.style.color='var(--muted)';
+      }catch(e){}
+    } else if(el){
+      el.textContent='Nenhum dado salvo no navegador ainda.';
+      el.style.color='var(--muted)';
+    }
+  }
+};
+
+// ══════════════════════════════════════════
+// INIT — carrega dados salvos ou usa seed
+// ══════════════════════════════════════════
+(function init(){
+  const hasLocal = loadLocal();
+  if(!hasLocal){
+    // primeiro acesso: carrega dados iniciais e salva
+    seed();
+    saveLocal(true);
+  }
+  rAll();
+})();
 </script>
 </body>
 </html>
