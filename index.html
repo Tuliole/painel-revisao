@@ -5,74 +5,52 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Gestão de Revisões — Tracbel Agro</title>
 <style>
-:root{
-  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2230;--bg4:#21262d;
-  --green:#2ea043;--green-b:#238636;--green-d:#1a6330;--green-g:rgba(46,160,67,.15);
-  --border:#30363d;--border2:#21262d;
-  --text:#e6edf3;--muted:#7d8590;--muted2:#484f58;
-  --blue:#58a6ff;--blue-g:rgba(88,166,255,.12);
-  --yellow:#d29922;--yellow-g:rgba(210,153,34,.12);
-  --red:#f85149;--red-g:rgba(248,81,73,.12);
-  --r:8px;--rs:5px;--sh:0 0 0 1px var(--border);
-}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2230;--bg4:#21262d;--green:#2ea043;--green-b:#238636;--green-d:#1a6330;--green-g:rgba(46,160,67,.15);--border:#30363d;--border2:#21262d;--text:#e6edf3;--muted:#7d8590;--muted2:#484f58;--blue:#58a6ff;--blue-g:rgba(88,166,255,.12);--yellow:#d29922;--yellow-g:rgba(210,153,34,.12);--red:#f85149;--red-g:rgba(248,81,73,.12);--r:8px;--rs:5px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-
-/* LAYOUT */
 .layout{display:flex;min-height:100vh}
 .sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh}
 .logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
-.logo-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--green);text-transform:uppercase}
-.logo-name{font-size:15px;font-weight:700;color:var(--text);margin-top:3px;letter-spacing:-.3px}
-.logo-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.logo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;box-shadow:0 0 8px var(--green)}
+.logo-ey{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+.logo-nm{font-size:15px;font-weight:700;color:var(--text);margin-top:3px}
+.logo-sb{font-size:11px;color:var(--muted);margin-top:1px}
+.ldot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;box-shadow:0 0 8px var(--green)}
 nav{padding:10px 8px;flex:1;overflow-y:auto}
-.nav-section{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--muted2);text-transform:uppercase;padding:10px 8px 4px}
+.nav-sec{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--muted2);text-transform:uppercase;padding:10px 8px 4px}
 .nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--rs);cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:1px;border:1px solid transparent}
 .nav-item:hover{background:var(--bg3);color:var(--text)}
 .nav-item.active{background:var(--green-g);color:var(--green);border-color:rgba(46,160,67,.25)}
 .nav-item svg{width:15px;height:15px;flex-shrink:0}
 .nc{margin-left:auto;background:var(--bg4);border:1px solid var(--border);border-radius:999px;font-size:10px;padding:1px 7px;color:var(--muted);min-width:20px;text-align:center}
 .nav-item.active .nc{background:var(--green-d);border-color:var(--green);color:var(--green)}
-.sidebar-foot{padding:12px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted2)}
-
-/* MAIN */
+.sfoot{padding:12px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted2)}
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.topbar-title{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
-.topbar-title span{color:var(--muted);font-weight:400}
-.search-wrap{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:5px 11px;width:220px;transition:border-color .15s}
-.search-wrap:focus-within{border-color:var(--green)}
-.search-wrap input{border:none;background:transparent;font-size:13px;color:var(--text);outline:none;width:100%}
-.search-wrap input::placeholder{color:var(--muted2)}
+.topbar-title{font-size:14px;font-weight:600;color:var(--text)}
+.swrap{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:5px 11px;width:220px;transition:border-color .15s}
+.swrap:focus-within{border-color:var(--green)}
+.swrap input{border:none;background:transparent;font-size:13px;color:var(--text);outline:none;width:100%}
+.swrap input::placeholder{color:var(--muted2)}
 .content{flex:1;padding:22px 24px;overflow-y:auto}
 .section{display:none}.section.active{display:block}
-
-/* PAGE HEADER */
-.page-hd{margin-bottom:20px}
 .page-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.4px}
-.page-sub{font-size:13px;color:var(--muted);margin-top:3px}
-
-/* STAT CARDS */
+.page-sub{font-size:13px;color:var(--muted);margin-top:3px;margin-bottom:18px}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;transition:border-color .15s}
-.stat:hover{border-color:var(--muted2)}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
 .stat.ac{border-left:2px solid var(--green)}
 .stat .lbl{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .stat .val{font-size:24px;font-weight:700;color:var(--text);line-height:1}
 .stat .s{font-size:11px;color:var(--muted2);margin-top:4px}
-
 /* CLIENT GROUPS */
-.client-group{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
-.client-group-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
-.client-group-hd:hover{background:var(--bg4)}
-.client-name{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
-.client-badge{font-size:10px;font-weight:600;background:var(--green-g);color:var(--green);border:1px solid rgba(46,160,67,.3);border-radius:999px;padding:2px 8px}
-.chevron{transition:transform .2s;color:var(--muted)}
-.client-group.collapsed .chevron{transform:rotate(-90deg)}
-.client-group.collapsed .cg-body{display:none}
-
+.cg{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.cg-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+.cg-hd:hover{background:var(--bg4)}
+.cg-name{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+.cg-badge{font-size:10px;font-weight:600;background:var(--green-g);color:var(--green);border:1px solid rgba(46,160,67,.3);border-radius:999px;padding:2px 8px}
+.chev{transition:transform .2s;color:var(--muted)}
+.cg.collapsed .chev{transform:rotate(-90deg)}
+.cg.collapsed .cg-body{display:none}
 /* TABLE */
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
@@ -82,40 +60,31 @@ tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.02)}
 .acts{display:flex;gap:5px;opacity:0;transition:opacity .15s}
 tr:hover .acts{opacity:1}
-
 /* BADGES */
-.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;gap:4px}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
 .bg{background:var(--green-g);color:var(--green);border:1px solid rgba(46,160,67,.25)}
 .bb{background:var(--blue-g);color:var(--blue);border:1px solid rgba(88,166,255,.2)}
 .by{background:var(--yellow-g);color:var(--yellow);border:1px solid rgba(210,153,34,.2)}
 .bk{background:var(--bg4);color:var(--muted);border:1px solid var(--border)}
-.br{background:var(--red-g);color:var(--red);border:1px solid rgba(248,81,73,.2)}
 .mono{font-family:'Courier New',monospace;font-size:11px;color:var(--muted)}
-
-/* TAGS */
 .tag-list{display:flex;flex-wrap:wrap;gap:4px}
 .tag{display:inline-flex;align-items:center;padding:2px 8px;background:var(--bg4);color:var(--muted);border:1px solid var(--border);border-radius:999px;font-size:11px;font-weight:500}
-
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-size:13px;font-weight:500;border-radius:var(--rs);cursor:pointer;transition:all .15s;border:1px solid transparent;font-family:inherit;white-space:nowrap}
-.btn-p{background:var(--green-b);color:#fff;border-color:var(--green-b)}.btn-p:hover{background:var(--green);border-color:var(--green)}
+.btn-p{background:var(--green-b);color:#fff;border-color:var(--green-b)}.btn-p:hover{background:var(--green)}
 .btn-g{background:var(--bg3);color:var(--text);border-color:var(--border)}.btn-g:hover{background:var(--bg4);border-color:var(--muted2)}
 .btn-d{background:transparent;color:var(--red);border-color:var(--border)}.btn-d:hover{background:var(--red-g);border-color:var(--red)}
 .btn-b{background:var(--blue-g);color:var(--blue);border-color:rgba(88,166,255,.3)}.btn-b:hover{background:rgba(88,166,255,.2)}
 .btn-sm{padding:3px 9px;font-size:12px}
 .fil{padding:5px 10px;font-size:12px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg3);color:var(--text);outline:none;cursor:pointer}
 .fil:focus{border-color:var(--green)}
-
 /* PANEL */
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
-.panel-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);flex-wrap:wrap;gap:8px}
-.panel-hd h2{font-size:13px;font-weight:600;color:var(--text)}
-.panel-hd .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
+.phd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);flex-wrap:wrap;gap:8px}
+.phd h2{font-size:13px;font-weight:600;color:var(--text)}
 /* EMPTY */
 .emp{text-align:center;padding:32px;color:var(--muted);font-size:13px}
 .emp .ico{font-size:24px;opacity:.3;margin-bottom:8px}
-
 /* MODALS */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .overlay.open{display:flex}
@@ -134,124 +103,119 @@ tr:hover .acts{opacity:1}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green)}
 .field select option{background:var(--bg3)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.fcheck{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;background:var(--bg3)}
-.fcheck input{width:15px;height:15px;accent-color:var(--green);cursor:pointer}
-.fcheck label{font-size:13px;color:var(--text);cursor:pointer;margin:0;text-transform:none;letter-spacing:0;font-weight:400}
 .hint{font-size:11px;color:var(--muted2);margin-top:4px}
-
 /* PLAN EDITOR */
-.plan-editor{overflow-x:auto;max-height:calc(100vh - 280px)}
+.plan-editor{overflow-x:auto;flex:1;min-height:0}
 .plan-table{border-collapse:collapse;font-size:12px;min-width:100%}
 .plan-table thead th{position:sticky;top:0;z-index:2}
-.plan-table th{background:var(--bg4);border:1px solid var(--border);padding:7px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:center}
-.plan-table th.item-col{text-align:left;min-width:200px;max-width:200px}
-.plan-table th.code-col{min-width:80px;max-width:80px}
-.plan-table th.qty-col{min-width:50px;max-width:50px}
-.plan-table td{border:1px solid var(--border2);padding:5px 7px;vertical-align:middle}
-.plan-table td.item-cell{background:var(--bg3);min-width:200px;max-width:200px}
-.plan-table td.code-cell{background:var(--bg3);text-align:center;min-width:80px;max-width:80px}
-.plan-table td.qty-cell{background:var(--bg3);text-align:center;min-width:50px;max-width:50px}
-.plan-table td.rev-cell{text-align:center;cursor:pointer;background:var(--bg4);transition:background .1s;min-width:52px}
-.plan-table td.rev-cell:hover{background:var(--green-d)}
-.plan-table td.rev-cell.marked{background:var(--green-g)}
-.plan-table .x-mark{color:var(--green);font-weight:700;font-size:13px;pointer-events:none}
-.plan-table input[type=text]{background:transparent;border:none;color:var(--text);font-size:12px;width:100%;outline:none;padding:0;font-family:inherit;overflow:hidden;text-overflow:ellipsis}
-.plan-table input[type=text]:focus{background:var(--bg);padding:1px 4px;border-radius:3px}
-.add-item-row td{background:var(--bg4)}
-
+.plan-table th{background:var(--bg4);border:1px solid var(--border);padding:6px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:center}
+.plan-table th.ic{text-align:left;min-width:190px;max-width:190px}
+.plan-table th.cc{min-width:80px;max-width:80px}
+.plan-table th.qc{min-width:48px;max-width:48px}
+.plan-table td{border:1px solid var(--border2);padding:5px 6px;vertical-align:middle}
+.plan-table td.ic{background:var(--bg3);min-width:190px;max-width:190px}
+.plan-table td.cc{background:var(--bg3);text-align:center;min-width:80px;max-width:80px}
+.plan-table td.qc{background:var(--bg3);text-align:center;min-width:48px;max-width:48px}
+.plan-table td.rc{text-align:center;cursor:pointer;background:var(--bg4);transition:background .1s;min-width:50px}
+.plan-table td.rc:hover{background:rgba(46,160,67,.25)}
+.plan-table td.rc.marked{background:var(--green-g)}
+.plan-table .xm{color:var(--green);font-weight:700;font-size:13px;pointer-events:none}
+.plan-table input[type=text]{background:transparent;border:none;color:var(--text);font-size:12px;width:100%;outline:none;padding:0;font-family:inherit}
+.plan-table input[type=text]:focus{background:rgba(255,255,255,.05);padding:1px 4px;border-radius:3px}
 /* CHASSIS PICKER */
-.chassis-picker{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--bg3)}
-.chassis-picker-search{display:flex;align-items:center;gap:7px;padding:7px 10px;border-bottom:1px solid var(--border);background:var(--bg4)}
-.chassis-picker-search input{border:none;background:transparent;font-size:12px;color:var(--text);outline:none;width:100%}
-.chassis-picker-body{max-height:200px;overflow-y:auto}
-.chassis-picker-item{display:flex;align-items:center;gap:10px;padding:7px 12px;cursor:pointer;border-bottom:1px solid var(--border2);transition:background .1s}
-.chassis-picker-item:last-child{border-bottom:none}
-.chassis-picker-item:hover{background:var(--bg4)}
-.chassis-picker-item.selected{background:var(--green-g)}
-.chassis-picker-item input{accent-color:var(--green);cursor:pointer;flex-shrink:0;width:14px;height:14px}
-.chassis-picker-item .pi-main{flex:1;min-width:0}
-.chassis-picker-item .pi-chassi{font-size:12px;font-family:'Courier New',monospace;color:var(--text);font-weight:600}
-.chassis-picker-item .pi-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.chassis-picker-item .pi-frota{background:var(--bg4);border:1px solid var(--border);border-radius:4px;font-size:10px;padding:1px 6px;color:var(--muted);flex-shrink:0}
-.chassis-sel-count{font-size:11px;color:var(--muted);padding:6px 12px;border-top:1px solid var(--border);background:var(--bg4);display:flex;align-items:center;justify-content:space-between}
-.chassis-sel-count button{font-size:11px;color:var(--green);background:none;border:none;cursor:pointer;padding:0}
-.chassis-sel-count button:hover{text-decoration:underline}
-
-/* EMAIL PAGE */
-.email-builder{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-.email-form{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px}
-.email-form h3{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text)}
-.email-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:sticky;top:72px}
-.email-preview h3{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text);display:flex;align-items:center;justify-content:space-between}
-.email-output{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:14px;font-size:12px;color:var(--text);white-space:pre-wrap;font-family:'Courier New',monospace;min-height:200px;line-height:1.65;max-height:calc(100vh - 200px);overflow-y:auto}
-
-/* FILTER BAR */
-.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.filter-bar input{padding:5px 10px;font-size:12px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg3);color:var(--text);outline:none;width:180px}
-.filter-bar input:focus{border-color:var(--green)}
-
+.cpick{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--bg3)}
+.cpick-search{display:flex;align-items:center;gap:7px;padding:7px 10px;border-bottom:1px solid var(--border);background:var(--bg4)}
+.cpick-search input{border:none;background:transparent;font-size:12px;color:var(--text);outline:none;width:100%}
+.cpick-body{max-height:180px;overflow-y:auto}
+.cpick-item{display:flex;align-items:center;gap:10px;padding:7px 12px;cursor:pointer;border-bottom:1px solid var(--border2);transition:background .1s}
+.cpick-item:last-child{border-bottom:none}
+.cpick-item:hover{background:var(--bg4)}
+.cpick-item.sel{background:var(--green-g)}
+.cpick-item input{accent-color:var(--green);cursor:pointer;flex-shrink:0;width:14px;height:14px}
+.cpick-item .pim{flex:1;min-width:0}
+.cpick-item .pic{font-size:12px;font-family:'Courier New',monospace;color:var(--text);font-weight:600}
+.cpick-item .pis{font-size:11px;color:var(--muted);margin-top:1px}
+.cpick-item .pif{background:var(--bg4);border:1px solid var(--border);border-radius:4px;font-size:10px;padding:1px 6px;color:var(--muted);flex-shrink:0}
+.cpick-foot{font-size:11px;color:var(--muted);padding:6px 12px;border-top:1px solid var(--border);background:var(--bg4);display:flex;align-items:center;justify-content:space-between}
+.cpick-foot button{font-size:11px;color:var(--green);background:none;border:none;cursor:pointer;padding:0}
 /* PLAN LIST */
 .plan-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px}
-.plan-card-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
-.plan-card-hd .left{display:flex;align-items:center;gap:10px}
+.plan-card-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.plan-card-hd .left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .plan-card-hd h3{font-size:13px;font-weight:600;color:var(--text)}
-.plan-chassis-list{padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border)}
-
-/* COPY BTN */
-.copy-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:12px;padding:4px 10px;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;gap:5px}
-.copy-btn:hover{border-color:var(--green);color:var(--green)}
-
+/* EMAIL */
+.email-builder{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.eform{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.eform h3{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text)}
+.eprev{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:sticky;top:72px}
+.eprev h3{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text);display:flex;align-items:center;justify-content:space-between}
+.eout{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:14px;font-size:12px;color:var(--text);white-space:pre-wrap;font-family:'Courier New',monospace;min-height:200px;line-height:1.65;max-height:calc(100vh - 200px);overflow-y:auto}
+.cpybtn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:12px;padding:4px 10px;border-radius:var(--rs);cursor:pointer}
+.cpybtn:hover{border-color:var(--green);color:var(--green)}
+/* FILTER BAR */
+.fbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.fbar input{padding:5px 10px;font-size:12px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg3);color:var(--text);outline:none;width:180px}
+.fbar input:focus{border-color:var(--green)}
 /* NOTICE */
 .notice{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--rs);font-size:12px;border:1px solid;margin-bottom:14px}
 .notice-info{background:var(--blue-g);color:var(--blue);border-color:rgba(88,166,255,.2)}
-.notice-warn{background:var(--yellow-g);color:var(--yellow);border-color:rgba(210,153,34,.2)}
-
-/* CH cell */
 .ch-cell{display:flex;flex-direction:column;gap:1px}
 .ch-cell .cm{font-size:11px;color:var(--muted2)}
+/* LOADING SCREEN */
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px}
+#loading .spin{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading p{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
-<div class="layout">
+
+<!-- LOADING SCREEN -->
+<div id="loading">
+  <div class="spin"></div>
+  <p id="loading-msg">Conectando ao Firebase...</p>
+</div>
+
+<div class="layout" id="app" style="display:none">
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">
-    <div class="logo-eyebrow"><span class="logo-dot"></span>John Deere</div>
-    <div class="logo-name">Gestão de Revisões</div>
-    <div class="logo-sub">Tracbel Agro · Catanduva</div>
+    <div class="logo-ey"><span class="ldot"></span>John Deere</div>
+    <div class="logo-nm">Gestão de Revisões</div>
+    <div class="logo-sb">Tracbel Agro · Catanduva</div>
   </div>
   <nav>
-    <div class="nav-section">Cadastros</div>
-    <div class="nav-item active" onclick="go('frotas')">
+    <div class="nav-sec">Cadastros</div>
+    <div class="nav-item active" id="nav-frotas" onclick="go('frotas')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
       Base de Frotas <span class="nc" id="nc-frotas">0</span>
     </div>
-    <div class="nav-item" onclick="go('historico')">
+    <div class="nav-item" id="nav-historico" onclick="go('historico')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       Histórico <span class="nc" id="nc-hist">0</span>
     </div>
-    <div class="nav-section">Técnico</div>
-    <div class="nav-item" onclick="go('plano')">
+    <div class="nav-sec">Técnico</div>
+    <div class="nav-item" id="nav-plano" onclick="go('plano')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7"/></svg>
       Planos de Manutenção <span class="nc" id="nc-plano">0</span>
     </div>
-    <div class="nav-section">Operação</div>
-    <div class="nav-item" onclick="go('email')">
+    <div class="nav-sec">Operação</div>
+    <div class="nav-item" id="nav-email" onclick="go('email')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       Gerar Orçamento
     </div>
-    <div class="nav-section">Sistema</div>
-    <div class="nav-item" onclick="openM('dados')">
+    <div class="nav-sec">Sistema</div>
+    <div class="nav-item" onclick="go('dados')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-      Salvar / Exportar
+      Firebase / Backup
     </div>
   </nav>
-  <div class="sidebar-foot" style="display:flex;flex-direction:column;gap:6px">
-    <div style="display:flex;align-items:center;gap:6px">
-      <span id="fb-sidebar-dot" style="width:7px;height:7px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .3s"></span>
-      <span style="font-size:10px;color:var(--muted2)">Firebase</span>
+  <div class="sfoot">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+      <span id="fb-dot" style="width:7px;height:7px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .4s"></span>
+      <span id="fb-lbl" style="font-size:10px;color:var(--muted2)">Firebase</span>
     </div>
-    <span style="font-size:10px;color:var(--muted2)">v3.0 · Tracbel Agro</span>
+    <span style="font-size:10px;color:var(--muted2)">v3.1 · Tracbel Agro</span>
   </div>
 </div>
 
@@ -259,77 +223,66 @@ tr:hover .acts{opacity:1}
 <div class="main">
   <div class="topbar">
     <div class="topbar-title" id="tt">Base de Frotas</div>
-    <div class="search-wrap">
+    <div class="swrap">
       <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" id="gsearch" placeholder="Buscar..." oninput="srch(this.value)">
     </div>
   </div>
   <div class="content">
 
-    <!-- ── FROTAS ── -->
+    <!-- FROTAS -->
     <div class="section active" id="sec-frotas">
-      <div class="page-hd">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between">
-          <div><div class="page-title">Base de Frotas</div><div class="page-sub">Equipamentos organizados por cliente</div></div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <select class="fil" id="fil-tipo-f" onchange="rFrotas()"><option value="">Todos os tipos</option><option>Trator</option><option>Colhedora</option><option>Pulverizador</option></select>
-            <button class="btn btn-p" onclick="openM('frota')">+ Adicionar</button>
-          </div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div><div class="page-title">Base de Frotas</div><div class="page-sub" style="margin-bottom:0">Equipamentos organizados por cliente</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select class="fil" id="fil-tipo-f" onchange="rFrotas()"><option value="">Todos os tipos</option><option>Trator</option><option>Colhedora</option><option>Pulverizador</option></select>
+          <button class="btn btn-p" onclick="openM('frota')">+ Adicionar</button>
         </div>
       </div>
       <div class="stats-row" id="stats-frotas"></div>
       <div id="frotas-groups"></div>
     </div>
 
-    <!-- ── HISTORICO ── -->
+    <!-- HISTORICO -->
     <div class="section" id="sec-historico">
-      <div class="page-hd">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between">
-          <div><div class="page-title">Histórico de Revisões</div><div class="page-sub">Registro de manutenções realizadas</div></div>
-          <button class="btn btn-p" onclick="openM('hist')">+ Registrar revisão</button>
-        </div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div><div class="page-title">Histórico de Revisões</div><div class="page-sub" style="margin-bottom:0">Manutenções realizadas por equipamento</div></div>
+        <button class="btn btn-p" onclick="openM('hist')">+ Registrar revisão</button>
       </div>
-      <div class="filter-bar">
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--muted)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
+      <div class="fbar">
         <input type="text" id="hist-search" placeholder="Buscar cliente ou chassi..." oninput="rHist()">
         <select class="fil" id="fil-cli-h" onchange="rHist()"><option value="">Todos os clientes</option></select>
       </div>
       <div id="hist-groups"></div>
     </div>
 
-    <!-- ── PLANOS ── -->
+    <!-- PLANOS -->
     <div class="section" id="sec-plano">
-      <div class="page-hd">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between">
-          <div><div class="page-title">Planos de Manutenção</div><div class="page-sub">Planos padrão e personalizados por cliente</div></div>
-          <button class="btn btn-p" onclick="openM('plano')">+ Novo plano</button>
-        </div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div><div class="page-title">Planos de Manutenção</div><div class="page-sub" style="margin-bottom:0">Planos padrão e personalizados por cliente</div></div>
+        <button class="btn btn-p" onclick="openM('plano')">+ Novo plano</button>
       </div>
       <div id="plano-list"></div>
     </div>
 
-    <!-- ── EMAIL ── -->
+    <!-- EMAIL -->
     <div class="section" id="sec-email">
-      <div class="page-hd">
-        <div class="page-title">Gerar Orçamento</div>
-        <div class="page-sub">Selecione os equipamentos e a revisão para gerar o texto do email</div>
-      </div>
+      <div class="page-title" style="margin-bottom:4px">Gerar Orçamento</div>
+      <div class="page-sub">Selecione equipamentos e revisão para gerar o texto do email</div>
       <div class="email-builder">
         <div>
-          <div class="email-form">
+          <div class="eform">
             <h3>1. Cliente e equipamentos</h3>
             <div class="field"><label>Cliente</label>
               <select id="em-cli" onchange="updateEmailChassis()"><option value="">Selecione...</option></select>
             </div>
             <div class="field"><label>Chassis — selecione um ou mais</label>
-              <div class="chassis-picker" id="em-chassis-picker">
-                <div class="chassis-picker-body" style="min-height:60px">
-                  <div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div>
-                </div>
+              <div class="cpick" id="em-cpick">
+                <div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>
               </div>
             </div>
           </div>
-          <div class="email-form">
+          <div class="eform">
             <h3>2. Revisão</h3>
             <div class="field"><label>Plano de manutenção</label>
               <select id="em-plano" onchange="updateEmailRevs()"><option value="">Selecione...</option></select>
@@ -337,22 +290,63 @@ tr:hover .acts{opacity:1}
             <div class="field"><label>Revisão (horímetro)</label>
               <select id="em-rev" onchange="buildEmail()"><option value="">Selecione...</option></select>
             </div>
-            <div class="field"><label>Observações adicionais (opcional)</label>
+            <div class="field"><label>Observações (opcional)</label>
               <textarea id="em-obs" rows="2" placeholder="Ex: Máquina com defeito no..." oninput="buildEmail()" style="resize:vertical"></textarea>
             </div>
-            <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:4px" onclick="buildEmail()">⚡ Gerar email</button>
+            <button class="btn btn-p" style="width:100%;justify-content:center" onclick="buildEmail()">⚡ Gerar email</button>
           </div>
         </div>
-        <div class="email-preview">
-          <h3>Email gerado <button class="copy-btn" onclick="copyEmail()">📋 Copiar</button></h3>
-          <div class="email-output" id="em-output">Preencha os campos ao lado para gerar o email.</div>
+        <div class="eprev">
+          <h3>Email gerado <button class="cpybtn" onclick="copyEmail()">📋 Copiar</button></h3>
+          <div class="eout" id="em-output">Preencha os campos ao lado para gerar o email.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DADOS / FIREBASE -->
+    <div class="section" id="sec-dados">
+      <div class="page-title" style="margin-bottom:4px">Firebase / Backup</div>
+      <div class="page-sub">Sincronização e cópias de segurança</div>
+      <div style="max-width:500px">
+        <div class="panel" style="margin-bottom:16px">
+          <div class="phd"><h2>Status da conexão</h2></div>
+          <div style="padding:16px;display:flex;align-items:center;gap:12px">
+            <span id="fb-dot2" style="width:10px;height:10px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .4s"></span>
+            <span id="fb-status" style="font-size:13px;color:var(--muted)">Verificando...</span>
+          </div>
+        </div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="phd"><h2>Sincronização manual</h2></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-p" style="justify-content:center" onclick="fbSaveAll()">☁️ Salvar tudo no Firebase agora</button>
+            <button class="btn btn-g" style="justify-content:center" onclick="fbLoadAll()">🔄 Recarregar do Firebase</button>
+            <div id="save-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="phd"><h2>Backup local (.json)</h2></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:12px;color:var(--muted2)">Baixa um arquivo com todos os dados como cópia de segurança extra.</p>
+            <button class="btn btn-b" style="justify-content:center" onclick="exportData()">⬇️ Baixar backup .json</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="phd"><h2>Restaurar de backup</h2></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:12px;color:var(--muted2)">Importa um .json e envia para o Firebase. <strong style="color:var(--yellow)">Substitui dados atuais.</strong></p>
+            <label style="cursor:pointer">
+              <div class="btn btn-g" style="justify-content:center;width:100%">⬆️ Selecionar arquivo .json</div>
+              <input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(this)">
+            </label>
+            <div id="import-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 </div>
-</div>
+</div><!-- /layout -->
 
 <!-- MODAL FROTA -->
 <div class="overlay" id="modal-frota">
@@ -377,7 +371,7 @@ tr:hover .acts{opacity:1}
     <div class="mhd"><h3 id="mh-t">Registrar Revisão</h3><button class="mcl" onclick="closeM('hist')">×</button></div>
     <div class="mbody">
       <div class="field"><label>Cliente</label>
-        <select id="mh-cli" onchange="updateHistChassis()"><option value="">Selecione o cliente...</option></select>
+        <select id="mh-cli" onchange="updateHistChassis()"><option value="">Selecione...</option></select>
       </div>
       <div class="field"><label>Chassi</label>
         <select id="mh-ch" disabled><option value="">Selecione o cliente primeiro</option></select>
@@ -404,9 +398,9 @@ tr:hover .acts{opacity:1}
         <div class="field"><label>Nome do plano</label><input id="mp-nome" placeholder="Ex: CH570 Padrão Colombo"></div>
         <div class="field"><label>Modelo base</label><input id="mp-mod" placeholder="Ex: CH570"></div>
       </div>
-      <div class="field"><label>Tipo de equipamento</label><select id="mp-tipo"><option>Colhedora</option><option>Trator</option><option>Pulverizador</option></select></div>
-      <div class="field"><label>Horímetros / intervalos (separados por vírgula)</label><input id="mp-revs" placeholder="Ex: 100h, 250h, 500h, 750h, 1000h"><div class="hint">Esses serão as colunas do plano. Você poderá adicionar itens depois.</div></div>
-      <div class="notice notice-info">ℹ️ Após criar, você poderá editar os itens do plano e atribuir chassis.</div>
+      <div class="field"><label>Tipo</label><select id="mp-tipo"><option>Colhedora</option><option>Trator</option><option>Pulverizador</option></select></div>
+      <div class="field"><label>Horímetros (separados por vírgula)</label><input id="mp-revs" placeholder="Ex: 100h, 250h, 500h, 1000h"><div class="hint">Serão as colunas. Adicione itens depois no editor.</div></div>
+      <div class="notice notice-info">ℹ️ Após criar, clique em "Editar plano" para adicionar itens e atribuir chassis.</div>
     </div>
     <div class="mftr"><button class="btn btn-g" onclick="closeM('plano')">Cancelar</button><button class="btn btn-p" onclick="savePlano()">Criar plano</button></div>
   </div>
@@ -423,19 +417,19 @@ tr:hover .acts{opacity:1}
       </div>
     </div>
     <div class="mbody">
-      <div class="plan-editor" id="plan-editor-wrap" style="flex:1;min-height:0;overflow:auto"></div>
+      <div class="plan-editor" id="plan-editor-wrap"></div>
       <div style="flex-shrink:0;border-top:1px solid var(--border);background:var(--bg3);padding:12px 16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
           <label style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Chassis que seguem este plano</label>
           <span id="editor-ch-count" style="font-size:11px;color:var(--muted)">0 selecionados</span>
         </div>
-        <div class="chassis-picker">
-          <div class="chassis-picker-search">
+        <div class="cpick">
+          <div class="cpick-search">
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
             <input type="text" id="editor-ch-search" placeholder="Filtrar por chassi ou cliente..." oninput="filterEditorChassis(this.value)">
           </div>
-          <div class="chassis-picker-body" id="editor-chassis-list"></div>
-          <div class="chassis-sel-count">
+          <div class="cpick-body" id="editor-chassis-list"></div>
+          <div class="cpick-foot">
             <span id="editor-ch-label">Nenhum selecionado</span>
             <button onclick="toggleAllEditorChassis(false)">Desmarcar todos</button>
           </div>
@@ -446,404 +440,287 @@ tr:hover .acts{opacity:1}
   </div>
 </div>
 
-<!-- MODAL DADOS -->
-<div class="overlay" id="modal-dados">
-  <div class="modal" style="width:500px">
-    <div class="mhd"><h3>☁️ Firebase — Dados &amp; Backup</h3><button class="mcl" onclick="closeM('dados')">×</button></div>
-    <div class="mbody">
-      <!-- status conexão -->
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);margin-bottom:18px">
-        <span id="fb-dot" style="width:9px;height:9px;border-radius:50%;background:var(--muted2);flex-shrink:0"></span>
-        <span id="fb-status" style="font-size:12px;color:var(--muted)">Verificando conexão...</span>
-      </div>
-      <!-- sync manual -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Sincronização</div>
-        <div style="display:flex;gap:8px">
-          <button class="btn btn-p" style="flex:1;justify-content:center" onclick="fbSaveAll()">☁️ Salvar no Firebase</button>
-          <button class="btn btn-g" style="flex:1;justify-content:center" onclick="fbLoadAll()">🔄 Recarregar do Firebase</button>
-        </div>
-        <div id="save-status" style="font-size:12px;color:var(--muted);min-height:18px;margin-top:8px"></div>
-      </div>
-      <div style="height:1px;background:var(--border);margin-bottom:18px"></div>
-      <!-- export -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Backup local (segurança extra)</div>
-        <p style="font-size:12px;color:var(--muted2);margin-bottom:8px">Baixa um .json com todos os dados como cópia de segurança.</p>
-        <button class="btn btn-b" style="width:100%;justify-content:center" onclick="exportData()">⬇️ Baixar backup .json</button>
-      </div>
-      <div style="height:1px;background:var(--border);margin-bottom:18px"></div>
-      <!-- import -->
-      <div>
-        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Restaurar de backup</div>
-        <p style="font-size:12px;color:var(--muted2);margin-bottom:8px">Importa um .json e envia tudo para o Firebase. <strong style="color:var(--yellow)">Substitui dados atuais.</strong></p>
-        <label style="display:block;cursor:pointer">
-          <div class="btn btn-g" style="width:100%;justify-content:center">⬆️ Selecionar arquivo .json</div>
-          <input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(this)">
-        </label>
-        <div id="import-status" style="font-size:12px;color:var(--muted);min-height:18px;margin-top:8px"></div>
-      </div>
-    </div>
-    <div class="mftr"><button class="btn btn-g" onclick="closeM('dados')">Fechar</button></div>
-  </div>
-</div>
-
+<!-- ── FIREBASE MODULE (isolado — só inicializa o SDK) ── -->
 <script type="module">
-// ══════════════════════════════════════════
-// FIREBASE — SDK imports
-// ══════════════════════════════════════════
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",
-  authDomain: "painel-revisao.firebaseapp.com",
-  projectId: "painel-revisao",
-  storageBucket: "painel-revisao.firebasestorage.app",
-  messagingSenderId: "822130385965",
-  appId: "1:822130385965:web:ef5b725647bedc3b3a84a4"
+const _app = initializeApp({
+  apiKey:"AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",
+  authDomain:"painel-revisao.firebaseapp.com",
+  projectId:"painel-revisao",
+  storageBucket:"painel-revisao.firebasestorage.app",
+  messagingSenderId:"822130385965",
+  appId:"1:822130385965:web:ef5b725647bedc3b3a84a4"
+});
+const _fs = getFirestore(_app);
+const COL = "dados";
+
+// Expõe funções no window para o script normal usar
+window._fbRead = async function(docId){
+  const snap = await getDoc(doc(_fs, COL, docId));
+  return snap.exists() ? (snap.data().lista || []) : [];
+};
+window._fbWrite = async function(docId, lista){
+  await setDoc(doc(_fs, COL, docId), { lista, _ts: new Date().toISOString() });
 };
 
-const _app = initializeApp(firebaseConfig);
-const _db  = getFirestore(_app);
+// Sinaliza que o Firebase está pronto
+window._fbReady = true;
+document.dispatchEvent(new Event('fbReady'));
+</script>
 
-// Firestore helpers — tudo em 3 documentos na coleção "dados"
-const COL = "dados";
-const DOCS = { frotas:"frotas", hist:"historico", planos:"planos" };
+<!-- ── APP PRINCIPAL (script normal — acessa window global normalmente) ── -->
+<script>
+'use strict';
+// ── STATE ──
+let db = { frotas:[], hist:[], planos:[] };
+let ei = { frota:-1, hist:-1 };
+let sq = '';
+let editorPlanIdx = -1;
+let editorData = null;
 
-async function fbRead(docId){
+// ── UTILS ──
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2);
+const brl = v => parseFloat(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const gv  = id => document.getElementById(id).value.trim();
+const sv  = (id,v) => { document.getElementById(id).value = v||''; };
+const gMod  = ch => (db.frotas.find(f=>f.chassi===ch)||{modelo:'—'}).modelo;
+const gCli  = ch => (db.frotas.find(f=>f.chassi===ch)||{cliente:'—'}).cliente;
+const gFrot = ch => (db.frotas.find(f=>f.chassi===ch)||{frota:''}).frota;
+const tbadge = t => { const m={Trator:'bg',Colhedora:'bb',Pulverizador:'by'}; return `<span class="badge ${m[t]||'bk'}">${t||'Outro'}</span>`; };
+const empRow = (cols,ico,txt) => `<tr><td colspan="${cols}"><div class="emp"><div class="ico">${ico}</div><p>${txt}</p></div></td></tr>`;
+
+function toast(msg){
+  let t = document.getElementById('_toast');
+  if(!t){ t=document.createElement('div'); t.id='_toast'; t.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:none'; document.body.appendChild(t); }
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(t._t); t._t=setTimeout(()=>{ t.style.opacity='0'; },2600);
+}
+
+function setFb(state, msg){
+  const cols = {ok:'var(--green)',loading:'var(--yellow)',error:'var(--red)'};
+  const c = cols[state]||'var(--muted2)';
+  ['fb-dot','fb-dot2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.background=c; });
+  const lbl=document.getElementById('fb-lbl'); if(lbl) lbl.textContent='Firebase '+(state==='ok'?'✓':state==='loading'?'…':'✗');
+  const st=document.getElementById('fb-status'); if(st){ st.textContent=msg; st.style.color=c; }
+}
+
+function setSaveStatus(msg, ok){
+  const el=document.getElementById('save-status');
+  if(el){ el.textContent=msg; el.style.color=ok?'var(--green)':'var(--red)'; }
+}
+
+// ── FIREBASE OPERATIONS ──
+async function fbSaveAll(){
   try{
-    const snap = await getDoc(doc(_db, COL, docId));
-    return snap.exists() ? (snap.data().lista || []) : [];
-  }catch(e){ console.error("fbRead",docId,e); return []; }
+    setFb('loading','Salvando...');
+    await Promise.all([
+      window._fbWrite('frotas',  db.frotas),
+      window._fbWrite('historico', db.hist),
+      window._fbWrite('planos',  db.planos),
+    ]);
+    const ts = new Date().toLocaleString('pt-BR');
+    setFb('ok',`Sincronizado · ${ts}`);
+    setSaveStatus(`✅ Salvo no Firebase às ${ts}`, true);
+    toast('☁️ Salvo no Firebase!');
+  }catch(e){
+    setFb('error','Erro: '+e.message);
+    setSaveStatus('❌ '+e.message, false);
+    toast('❌ Falha ao salvar!');
+  }
 }
 
-async function fbWrite(docId, lista){
-  await setDoc(doc(_db, COL, docId), { lista, _updated: new Date().toISOString() });
+async function fbLoadAll(){
+  try{
+    setFb('loading','Carregando...');
+    const [f,h,p] = await Promise.all([
+      window._fbRead('frotas'),
+      window._fbRead('historico'),
+      window._fbRead('planos'),
+    ]);
+    db.frotas=f; db.hist=h; db.planos=p;
+    rAll();
+    const ts = new Date().toLocaleString('pt-BR');
+    setFb('ok',`Carregado · ${ts}`);
+    setSaveStatus(`✅ Dados recarregados às ${ts}`, true);
+    toast('✅ Dados sincronizados!');
+    return true;
+  }catch(e){
+    setFb('error','Erro: '+e.message);
+    return false;
+  }
 }
 
-// ══════════════════════════════════════════
-// DATA
-// ══════════════════════════════════════════
-let db={frotas:[],hist:[],planos:[]};
-let ei={frota:-1,hist:-1};
-let sq='';
-let editingPlan=null;
-
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function brl(v){return parseFloat(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}
-function gv(id){return document.getElementById(id).value.trim();}
-function sv(id,v){document.getElementById(id).value=v||'';}
-function gMod(ch){return(db.frotas.find(f=>f.chassi===ch)||{modelo:'—'}).modelo;}
-function gCli(ch){return(db.frotas.find(f=>f.chassi===ch)||{cliente:'—'}).cliente;}
-function gFrota(ch){return(db.frotas.find(f=>f.chassi===ch)||{frota:''}).frota;}
-function tbadge(t){const m={Trator:'bg',Colhedora:'bb',Pulverizador:'by'};return`<span class="badge ${m[t]||'bk'}">${t||'Outro'}</span>`;}
-function emp(cols,ico,txt){return`<tr><td colspan="${cols}"><div class="emp"><div class="ico">${ico}</div><p>${txt}</p></div></td></tr>`;}
-
-// ══════════════════════════════════════════
-// SEED
-// ══════════════════════════════════════════
-function seed(){
-  const f=(frota,cliente,chassi,modelo,tipo)=>({id:uid(),frota,cliente,chassi,modelo,tipo});
-  db.frotas=[
-    f('100','Santa Sofia','1BM5080ECS6203394','5080E','Trator'),
-    f('101','Santa Sofia','1BM5080ELS6205299','5080E','Trator'),
-    f('102','Santa Sofia','1BM5080ELS6204878','5080E','Trator'),
-    f('103','Santa Sofia','1BM5080ECS6203418','5080E','Trator'),
-    f('2003','Nardini','1NWC570HJTT260216','CH570','Colhedora'),
-    f('2004','Nardini','1NWC570HCTT260217','CH570','Colhedora'),
-    f('2005','Nardini','1NWC570HVTT260218','CH570','Colhedora'),
-    f('2006','Nardini','1NWC570HATT260219','CH570','Colhedora'),
-    f('2007','Nardini','1NWC570HLTT260223','CH570','Colhedora'),
-    f('2008','Nardini','1NWC570HHTT260224','CH570','Colhedora'),
-    f('2009','Nardini','1NWC570HLTT260237','CH570','Colhedora'),
-    f('2010','Nardini','1NWC570HETT260239','CH570','Colhedora'),
-    f('704151','Colombo','1NWC570HCST260113','CH570','Colhedora'),
-    f('704152','Colombo','1NWC570HPST260115','CH570','Colhedora'),
-    f('704153','Colombo','1NWC570HKST260116','CH570','Colhedora'),
-    f('704154','Colombo','1NWC570HJST260103','CH570','Colhedora'),
-    f('704155','Colombo','1NWC570HKST260102','CH570','Colhedora'),
-    f('704156','Colombo','1NWC570HHST260111','CH570','Colhedora'),
-    f('704157','Colombo','1NWC570HJST260117','CH570','Colhedora'),
-    f('704165','Colombo','1NWC570HKTT260196','CH570','Colhedora'),
-    f('704166','Colombo','1NWC570HPTT260195','CH570','Colhedora'),
-    f('704167','Colombo','1NWC570HHTT260207','CH570','Colhedora'),
-    f('704168','Colombo','1NWC570HJTT260202','CH570','Colhedora'),
-    f('704169','Colombo','1NWC570HATT260205','CH570','Colhedora'),
-    f('704170','Colombo','1NWC570HTTT260292','CH570','Colhedora'),
-    f('','Santa Isabel','1PY3036ELSH017739','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036ECSH017784','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036EASH017786','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036EESH017789','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036ETSH017777','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036ECSH017793','3036EN','Trator'),
-    f('','Santa Isabel','1PY3036EHSH017791','3036EN','Trator'),
-    f('','Santa Isabel','1NWC570HAST260008','CH570','Colhedora'),
-    f('','Santa Isabel','1NWC570HVST260007','CH570','Colhedora'),
-    f('','Santa Isabel','1NWC950HETT260024','CH950','Colhedora'),
-    f('','Santa Isabel','1BM5090EVS6200848','5090E','Trator'),
-    f('','Santa Isabel','1BM5090ECS6201318','5090E','Trator'),
-    f('','Santa Isabel','1BM5090ECS6201022','5090E','Trator'),
-    f('','Santa Isabel','1BM5090ECS6201358','5090E','Trator'),
-    f('','Santa Isabel','1BM5090EAS6201337','5090E','Trator'),
-    f('','Santa Isabel','1BM5090ECS6201330','5090E','Trator'),
-  ];
-
-  // Helper to make plan item: item, cod, qtd, marks = array of rev indices (0-based)
-  const pi=(item,cod,qtd,marks)=>({id:uid(),item,cod,qtd:String(qtd),marks});
-
-  // CH570 Nardini plan
-  const revsCH570N=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h','3250h','3500h'];
-  const nardiniItems=[
-    pi('SUBSTITUIR FILTRO DE ÓLEO DE MOTOR','DZ118283',1,[2,4,6,8,10,12,14]),
-    pi('TROCAR ÓLEO DE MOTOR','15W40',33.3,[2,4,6,8,10,12,14]),
-    pi('SUBSTITUIR FILTRO DE COMBUSTÍVEL PRIMÁRIO','RE525523',1,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]),
-    pi('SUBSTITUIR FILTRO SEPARADOR DE ÁGUA','AT365869',1,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]),
-    pi('SUBSTITUIR FILTRO DE ÓLEO HIDRÁULICO','CB01505351',3,[6,12]),
-    pi('TROCAR ÓLEO DAS REDUÇÕES FINAIS','85W140',3,[0,1,2,3,4,5,6,7,8,9,11,12,13,14]),
-    pi('TROCAR ÓLEO CX ACIONAMENTO DA BOMBA','85W140',7.1,[0,4,8,12]),
-    pi('TROCAR ÓLEO CX ENGRENAGENS CORTADOR DE BASE','85W140',7,[0,4,8,10,12]),
-    pi('TROCAR ÓLEO CX ENGRENAGEM DO PICADOR','85W140',13,[0,4,8,10,12]),
-    pi('TROCAR FILTROS RECIRCULAÇÃO AR CABINE','TA32591',1,[2,4,6,8,10,12,14]),
-    pi('TROCAR FILTROS DE AR CONDICIONADO','L214634',1,[2,4,6,8,12,14]),
-    pi('TROCAR FILTRO DE AR EXTERNO','HXE11090',1,[2,4,6,8,12,14]),
-    pi('TROCAR FILTRO DE AR INTERNO','HXE11091',1,[6,12]),
-    pi('TROCAR VÁLVULAS DO TERMOSTATO','DZ120918',2,[4,8,12]),
-    pi('REALIZAR AJUSTE DAS VÁLVULAS DO MOTOR','DZ128866',1,[2,4,6,8,10,12,14]),
-  ];
-  const maoNardini={'100h':1408.4,'250h':1263.2,'500h':1553.6,'750h':1263.2,'1000h':1844,'1250h':1263.2,'1500h':1553.6,'1750h':1263.2,'2000h':2715.2,'2250h':1263.2,'2500h':1553.6,'2750h':1263.2,'3000h':2715.2,'3250h':1263.2,'3500h':1553.6};
-  const analNardini={'100h':2,'250h':2,'500h':2,'750h':2,'1000h':2,'1250h':2,'1500h':2,'1750h':2,'2000h':2,'2250h':2,'2500h':2,'2750h':2,'3000h':2,'3250h':2,'3500h':2};
-
-  // CH570 Colombo plan
-  const revsCH570C=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h'];
-  const colomboItems=[
-    pi('SUBSTITUIR FILTRO DE ÓLEO DE MOTOR','DZ118283',1,[2,4,6,8,10,12]),
-    pi('TROCAR ÓLEO DE MOTOR','15W40',33.3,[2,4,6,8,10,12]),
-    pi('SUBSTITUIR FILTRO DE COMBUSTÍVEL PRIMÁRIO','RE525523',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('SUBSTITUIR FILTRO SEPARADOR DE ÁGUA','AT365869',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('SUBSTITUIR FILTRO DE ÓLEO HIDRÁULICO','CB01505351',3,[6,12]),
-    pi('TROCAR ÓLEO DAS REDUÇÕES FINAIS','85W140',3,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('TROCAR ÓLEO CX ACIONAMENTO DA BOMBA','85W140',7.1,[0,4,8,12]),
-    pi('TROCAR ÓLEO CX ENGRENAGENS CORTADOR DE BASE','85W140',7,[0,4,8,12]),
-    pi('TROCAR ÓLEO CX ENGRENAGEM DO PICADOR','85W140',13,[0,4,8,12]),
-    pi('TROCAR FILTROS RECIRCULAÇÃO AR CABINE','TA32591',1,[2,4,6,8,10,12]),
-    pi('TROCAR FILTROS DE AR CONDICIONADO','L214634',1,[2,4,6,8,10,12]),
-    pi('TROCAR FILTRO DE AR EXTERNO','HXE11090',1,[2,4,6,8,10,12]),
-    pi('TROCAR FILTRO DE AR INTERNO','HXE11091',1,[4,12]),
-    pi('TROCAR VÁLVULAS DO TERMOSTATO','DZ120918',2,[12]),
-    pi('REALIZAR AJUSTE DAS VÁLVULAS DO MOTOR','DZ128866',1,[8]),
-    pi('SUBSTITUIR ÓLEO DO SISTEMA HIDRÁULICO','—',350,[12]),
-    pi('ANÁLISE PERFIL DE CARGA DE OPERAÇÃO','—',1,[1,5,7,9,11]),
-    pi('TESTE DE COMPRESSÃO DO MOTOR','—',1,[1,5,7,9,11]),
-  ];
-  const maoColombo={'100h':2630,'250h':2507,'500h':2507,'750h':2507,'1000h':3305,'1250h':2507,'1500h':2507,'1750h':2507,'2000h':4151,'2250h':2507,'2500h':2507,'2750h':2507,'3000h':4574};
-  const analColombo={'100h':9,'250h':4,'500h':4,'750h':4,'1000h':9,'1250h':4,'1500h':4,'1750h':4,'2000h':9,'2250h':4,'2500h':4,'2750h':4,'3000h':9};
-
-  // 5080E Santa Sofia plan
-  const revsSF=['100h','500h','750h','1000h','1500h','1750h','2000h'];
-  const sfItems=[
-    pi('KIT ANÁLISE FLUIDO MOTOR','AFPM',1,[0,1,2,3,4,5,6]),
-    pi('KIT ANÁLISE FLUIDO SISTEMA HIDÁULICO','AFPM',1,[1,2,3,4,5,6]),
-    pi('KIT ANÁLISE FLUIDO CUBO LD','AFPM',1,[2,3,4,6]),
-    pi('KIT ANÁLISE FLUIDO CUBO LE','AFPM',1,[2,3,4,6]),
-    pi('KIT ANÁLISE FLUIDO EIXO DIANTEIRO','AFPM',1,[2,3,4,6]),
-    pi('KIT ANÁLISE FLUIDO LIQ. ARREFECIMENTO','AFPM',1,[3,6]),
-    pi('ÓLEO EIXO E CUBO','CQM20191',10,[0,2]),
-    pi('ÓLEO MOTOR 11L PLUS 50II','CQM20203',11,[1,3,4,6]),
-    pi('GRAXA POLYUREA SD','CQM20246',1,[0,1,2,3,4,5,6]),
-    pi('JUNTA TAMPA DE VALVULA','DZ107458',1,[1,6]),
-    pi('FILTRO LUBRIFICANTE ÓLEO MOTOR','DZ114256',1,[1,3,4,6]),
-    pi('FILTRO DE COMBUSTIVEL','DZ114677',1,[1,2,3,4,5,6]),
-    pi('FILTRO DE RECIRCULAÇÃO DE AR','RE195491',2,[2,4]),
-    pi('FILTRO AR FRESCO','RE198488',2,[2,4]),
-    pi('FILTRO HIDRAULICO','RE45864',1,[0,2,4]),
-    pi('FILTRO SEPARADOR DE ÁGUA','SJ26261',1,[6]),
-    pi('FILTRO TRANSMISSÃO','SJ28834',1,[0,2,4]),
-    pi('FILTRO DE AR MOTOR SECUNDARIO','SU29301',1,[2,4]),
-    pi('FILTRO DE AR MOTOR PRIMARIO','SU55720',1,[2,4]),
-    pi('FILTRO DA LINHA DE COMBUSTIVEL','T257865',1,[1,2,3,4,5,6]),
-    pi('ÓLEO TRANSMISSÃO 40L+EIXO E CUBO','TY25274',3,[4]),
-  ];
-  const maoSF={'100h':651,'500h':745.5,'750h':840,'1000h':745.5,'1500h':1123.5,'1750h':745.5,'2000h':840};
-  const analSF={'100h':1,'500h':2,'750h':5,'1000h':6,'1500h':5,'1750h':2,'2000h':6};
-
-  // 3036EN Santa Isabel
-  const revsSI=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h'];
-  const siItems=[
-    pi('SUBSTITUIR FILTRO DE ÓLEO DE MOTOR','M806419',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('TROCAR ÓLEO DE MOTOR','CQM20203',5,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('SUBSTITUIR FILTRO COMBUSTÍVEL PRIMÁRIO','MIU801267',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),
-    pi('SUBSTITUIR FILTRO ÓLEO HIDRÁULICO','SJ28834',1,[0,2,4,5,7,9,10,12]),
-    pi('TROCAR ÓLEO DIFERENCIAL DIANTEIRO','CQM20191',5,[0,2,4,6,8,10,12]),
-    pi('TROCAR FILTRO DE AR EXTERNO','SJ16911',1,[2,4,8,12]),
-    pi('TROCAR FILTRO DE AR INTERNO','SJ16914',1,[4,8,12]),
-    pi('REALIZAR AJUSTE VÁLVULAS DO MOTOR','M811429',1,[4,8,12]),
-    pi('SUBSTITUIR LÍQUIDO DE ARREFECIMENTO','CQM25552',7,[8]),
-    pi('INSPEÇÃO/LIMPEZA/TESTE INJETORES','—',1,[4,8,12]),
-  ];
-  const maoSI={'100h':1160,'250h':1235,'500h':1460,'750h':1235,'1000h':3485,'1250h':1625,'1500h':1460,'1750h':1235,'2000h':3485,'2250h':1235,'2500h':1850,'2750h':1235,'3000h':3485};
-  const analSI={'100h':0,'250h':1,'500h':4,'750h':1,'1000h':5,'1250h':1,'1500h':4,'1750h':1,'2000h':5,'2250h':1,'2500h':4,'2750h':1,'3000h':5};
-
-  const ch570nChassis=db.frotas.filter(f=>f.cliente==='Nardini').map(f=>f.chassi);
-  const ch570cChassis=db.frotas.filter(f=>f.cliente==='Colombo').map(f=>f.chassi);
-  const sfChassis=db.frotas.filter(f=>f.cliente==='Santa Sofia').map(f=>f.chassi);
-  const si3036Chassis=db.frotas.filter(f=>f.cliente==='Santa Isabel'&&f.modelo==='3036EN').map(f=>f.chassi);
-
-  db.planos=[
-    {id:uid(),nome:'CH570 — Nardini',modelo:'CH570',tipo:'Colhedora',revs:revsCH570N,items:nardiniItems,mao:maoNardini,anal:analNardini,desl:350,chassis:ch570nChassis},
-    {id:uid(),nome:'CH570 — Colombo',modelo:'CH570',tipo:'Colhedora',revs:revsCH570C,items:colomboItems,mao:maoColombo,anal:analColombo,desl:350,chassis:ch570cChassis},
-    {id:uid(),nome:'5080E — Santa Sofia',modelo:'5080E',tipo:'Trator',revs:revsSF,items:sfItems,mao:maoSF,anal:analSF,desl:350,chassis:sfChassis},
-    {id:uid(),nome:'3036EN — Santa Isabel',modelo:'3036EN',tipo:'Trator',revs:revsSI,items:siItems,mao:maoSI,anal:analSI,desl:350,chassis:si3036Chassis},
-  ];
+// Autosave: chamado após cada mutação
+async function autosave(){
+  try{
+    await Promise.all([
+      window._fbWrite('frotas',  db.frotas),
+      window._fbWrite('historico', db.hist),
+      window._fbWrite('planos',  db.planos),
+    ]);
+    setFb('ok','Sincronizado · '+new Date().toLocaleString('pt-BR'));
+  }catch(e){ setFb('error','Erro autosave: '+e.message); }
 }
 
-// ══════════════════════════════════════════
-// NAV
-// ══════════════════════════════════════════
-const titles={frotas:'Base de Frotas',historico:'Histórico',plano:'Planos de Manutenção',email:'Gerar Orçamento'};
+// Export / import
+function exportData(){
+  const blob = new Blob([JSON.stringify({db,_v:'1.0',_ts:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=`tracbel_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  toast('⬇️ Backup exportado!');
+}
+
+function importData(input){
+  const file=input.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload = async e => {
+    try{
+      const p=JSON.parse(e.target.result);
+      if(!p.db||!Array.isArray(p.db.frotas)){ document.getElementById('import-status').textContent='❌ Arquivo inválido.'; return; }
+      if(!confirm(`Importar?\n• ${p.db.frotas.length} equip.\n• ${p.db.hist.length} históricos\n• ${p.db.planos.length} planos\n\nSubstitui dados atuais.`)) return;
+      db.frotas=p.db.frotas||[]; db.hist=p.db.hist||[]; db.planos=p.db.planos||[];
+      await autosave(); rAll();
+      const ts=p._ts?new Date(p._ts).toLocaleString('pt-BR'):'—';
+      const el=document.getElementById('import-status');
+      if(el){ el.textContent=`✅ Importado! (backup de ${ts})`; el.style.color='var(--green)'; }
+      toast('✅ Importado com sucesso!');
+    }catch(err){ const el=document.getElementById('import-status'); if(el){ el.textContent='❌ '+err.message; el.style.color='var(--red)'; } }
+  };
+  r.readAsText(file); input.value='';
+}
+
+// ── NAV ──
+const TITLES={frotas:'Base de Frotas',historico:'Histórico de Revisões',plano:'Planos de Manutenção',email:'Gerar Orçamento',dados:'Firebase / Backup'};
+const NAV_IDS=['frotas','historico','plano','email'];
+
 function go(s){
   document.querySelectorAll('.section').forEach(e=>e.classList.remove('active'));
   document.getElementById('sec-'+s).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach((e,i)=>{
-    e.classList.toggle('active',['frotas','historico','plano','email'][i]===s);
-  });
-  document.getElementById('tt').textContent=titles[s]||s;
+  NAV_IDS.forEach(id=>{ const el=document.getElementById('nav-'+id); if(el) el.classList.toggle('active',id===s); });
+  document.getElementById('tt').textContent = TITLES[s]||s;
   document.getElementById('gsearch').value=''; sq='';
-  if(s==='email')initEmail();
+  if(s==='email') initEmail();
   rAll();
 }
-function srch(q){sq=q.toLowerCase();rAll();}
-function rAll(){rFrotas();rHist();rPlanos();upCounts();upFils();}
+
+function srch(q){ sq=q.toLowerCase(); rAll(); }
+
+function rAll(){ rFrotas(); rHist(); rPlanos(); upCounts(); upFils(); }
+
 function upCounts(){
-  document.getElementById('nc-frotas').textContent=db.frotas.length;
-  document.getElementById('nc-hist').textContent=db.hist.length;
-  document.getElementById('nc-plano').textContent=db.planos.length;
-}
-function upFils(){
-  const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
-  ['fil-cli-h'].forEach(id=>{const el=document.getElementById(id);if(!el)return;const v=el.value;el.innerHTML='<option value="">Todos os clientes</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');el.value=v;});
+  document.getElementById('nc-frotas').textContent = db.frotas.length;
+  document.getElementById('nc-hist').textContent   = db.hist.length;
+  document.getElementById('nc-plano').textContent  = db.planos.length;
 }
 
-// ══════════════════════════════════════════
-// FROTAS
-// ══════════════════════════════════════════
+function upFils(){
+  const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
+  const fc=document.getElementById('fil-cli-h'); if(!fc) return;
+  const cv=fc.value;
+  fc.innerHTML='<option value="">Todos os clientes</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
+  fc.value=cv;
+}
+
+// ── FROTAS ──
 function rFrotas(){
   const ft=document.getElementById('fil-tipo-f').value;
   let list=db.frotas.filter(f=>{
-    if(ft&&f.tipo!==ft)return false;
-    if(sq&&!(f.cliente+f.chassi+f.modelo+f.frota).toLowerCase().includes(sq))return false;
+    if(ft&&f.tipo!==ft) return false;
+    if(sq&&!(f.cliente+f.chassi+f.modelo+f.frota).toLowerCase().includes(sq)) return false;
     return true;
   });
   const clis=[...new Set(db.frotas.map(f=>f.cliente))];
   const mods=[...new Set(db.frotas.map(f=>f.modelo))];
   document.getElementById('stats-frotas').innerHTML=`
-    <div class="stat ac"><div class="lbl">Equipamentos</div><div class="val">${db.frotas.length}</div><div class="s">total cadastrado</div></div>
+    <div class="stat ac"><div class="lbl">Equipamentos</div><div class="val">${db.frotas.length}</div><div class="s">total</div></div>
     <div class="stat"><div class="lbl">Clientes</div><div class="val">${clis.length}</div><div class="s">${clis.join(' · ')}</div></div>
     <div class="stat"><div class="lbl">Modelos</div><div class="val">${mods.length}</div><div class="s">tipos distintos</div></div>
     <div class="stat"><div class="lbl">Colhedoras</div><div class="val">${db.frotas.filter(f=>f.tipo==='Colhedora').length}</div><div class="s">${db.frotas.filter(f=>f.tipo==='Trator').length} tratores</div></div>
   `;
   const byClient={};
-  list.forEach(f=>{(byClient[f.cliente]=byClient[f.cliente]||[]).push(f);});
+  list.forEach(f=>{ (byClient[f.cliente]=byClient[f.cliente]||[]).push(f); });
   const wrap=document.getElementById('frotas-groups');
-  if(!list.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">🚜</div><p>Nenhum equipamento encontrado.</p></div></div>`;return;}
+  if(!list.length){ wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">🚜</div><p>Nenhum equipamento encontrado.</p></div></div>`; return; }
   wrap.innerHTML=Object.entries(byClient).map(([cli,equips])=>`
-    <div class="client-group">
-      <div class="client-group-hd" onclick="this.parentElement.classList.toggle('collapsed')">
-        <div class="client-name">${cli}<span class="client-badge">${equips.length} equip.</span></div>
-        <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    <div class="cg">
+      <div class="cg-hd" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="cg-name">${cli}<span class="cg-badge">${equips.length} equip.</span></div>
+        <svg class="chev" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </div>
       <div class="cg-body">
         <div class="tw"><table><thead><tr><th>Frota</th><th>Chassi</th><th>Modelo</th><th>Tipo</th><th></th></tr></thead>
-        <tbody>${equips.map(f=>{const i=db.frotas.indexOf(f);return`<tr>
+        <tbody>${equips.map(f=>{ const i=db.frotas.indexOf(f); return`<tr>
           <td><strong>${f.frota||'—'}</strong></td>
           <td class="mono">${f.chassi}</td>
           <td><strong>${f.modelo}</strong></td>
           <td>${tbadge(f.tipo)}</td>
           <td><div class="acts"><button class="btn btn-g btn-sm" onclick="editFrota(${i})">Editar</button><button class="btn btn-d btn-sm" onclick="delFrota(${i})">Remover</button></div></td>
-        </tr>`;}).join('')}</tbody></table></div>
+        </tr>`; }).join('')}</tbody></table></div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ══════════════════════════════════════════
-// HISTORICO
-// ══════════════════════════════════════════
+// ── HISTORICO ──
 function rHist(){
-  const hs=document.getElementById('hist-search').value.toLowerCase();
+  const hs=(document.getElementById('hist-search')||{}).value?.toLowerCase()||'';
   const fc=document.getElementById('fil-cli-h').value;
   let list=db.hist.filter(h=>{
-    if(fc&&gCli(h.chassi)!==fc)return false;
-    if(hs&&!(h.chassi+gCli(h.chassi)+h.rev+h.os).toLowerCase().includes(hs))return false;
-    if(sq&&!(h.chassi+gCli(h.chassi)+h.rev).toLowerCase().includes(sq))return false;
+    if(fc&&gCli(h.chassi)!==fc) return false;
+    if(hs&&!(h.chassi+gCli(h.chassi)+h.rev+(h.os||'')).toLowerCase().includes(hs)) return false;
+    if(sq&&!(h.chassi+gCli(h.chassi)+h.rev).toLowerCase().includes(sq)) return false;
     return true;
   });
   const byClient={};
-  list.forEach(h=>{const cli=gCli(h.chassi);(byClient[cli]=byClient[cli]||[]).push(h);});
+  list.forEach(h=>{ const c=gCli(h.chassi); (byClient[c]=byClient[c]||[]).push(h); });
   const wrap=document.getElementById('hist-groups');
-  if(!list.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📋</div><p>Nenhum histórico encontrado.</p></div></div>`;return;}
+  if(!list.length){ wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📋</div><p>Nenhum histórico encontrado.</p></div></div>`; return; }
   wrap.innerHTML=Object.entries(byClient).map(([cli,items])=>`
-    <div class="client-group">
-      <div class="client-group-hd" onclick="this.parentElement.classList.toggle('collapsed')">
-        <div class="client-name">${cli}<span class="client-badge">${items.length} registros</span></div>
-        <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    <div class="cg">
+      <div class="cg-hd" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="cg-name">${cli}<span class="cg-badge">${items.length} registros</span></div>
+        <svg class="chev" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </div>
       <div class="cg-body">
         <div class="tw"><table><thead><tr><th>Chassi / Modelo</th><th>Frota</th><th>Revisão</th><th>Horímetro</th><th>OS</th><th>Data</th><th></th></tr></thead>
-        <tbody>${items.map(h=>{const i=db.hist.indexOf(h);const df=h.data?new Date(h.data+'T12:00:00').toLocaleDateString('pt-BR'):'—';return`<tr>
+        <tbody>${items.map(h=>{ const i=db.hist.indexOf(h); const df=h.data?new Date(h.data+'T12:00:00').toLocaleDateString('pt-BR'):'—'; return`<tr>
           <td><div class="ch-cell"><span class="mono">${h.chassi}</span><span class="cm">${gMod(h.chassi)}</span></div></td>
-          <td>${gFrota(h.chassi)||'—'}</td>
+          <td>${gFrot(h.chassi)||'—'}</td>
           <td><span class="badge bg">${h.rev}</span></td>
           <td>${h.hor||'—'} h</td>
           <td>${h.os||'—'}</td>
           <td>${df}</td>
           <td><div class="acts"><button class="btn btn-g btn-sm" onclick="editHist(${i})">Editar</button><button class="btn btn-d btn-sm" onclick="delHist(${i})">Remover</button></div></td>
-        </tr>`;}).join('')}</tbody></table></div>
+        </tr>`; }).join('')}</tbody></table></div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ══════════════════════════════════════════
-// PLANOS
-// ══════════════════════════════════════════
+// ── PLANOS ──
 function rPlanos(){
   const wrap=document.getElementById('plano-list');
-  if(!db.planos.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📊</div><p>Nenhum plano cadastrado.</p></div></div>`;return;}
+  if(!db.planos.length){ wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📊</div><p>Nenhum plano cadastrado.</p></div></div>`; return; }
   wrap.innerHTML=db.planos.map((p,i)=>`
     <div class="plan-card">
       <div class="plan-card-hd">
-        <div class="left">
-          <h3>${p.nome}</h3>
-          ${tbadge(p.tipo)}
-          <span class="badge bk">${p.modelo}</span>
-          <span class="badge bk">${p.revs.length} intervalos</span>
-          <span class="badge bk">${p.items.length} itens</span>
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-b btn-sm" onclick="openEditor(${i})">✏️ Editar plano</button>
-          <button class="btn btn-d btn-sm" onclick="delPlano(${i})">Remover</button>
-        </div>
+        <div class="left"><h3>${p.nome}</h3>${tbadge(p.tipo)}<span class="badge bk">${p.modelo}</span><span class="badge bk">${p.revs.length} intervalos</span><span class="badge bk">${p.items.length} itens</span></div>
+        <div style="display:flex;gap:6px"><button class="btn btn-b btn-sm" onclick="openEditor(${i})">✏️ Editar plano</button><button class="btn btn-d btn-sm" onclick="delPlano(${i})">Remover</button></div>
       </div>
-      <div class="plan-chassis-list">
-        <span style="font-size:11px;color:var(--muted);margin-right:4px;align-self:center">Chassis:</span>
-        ${p.chassis.length?p.chassis.map(ch=>`<span class="tag">${ch}</span>`).join(''):`<span style="font-size:12px;color:var(--muted2)">Nenhum chassis atribuído</span>`}
+      <div style="padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border)">
+        <span style="font-size:11px;color:var(--muted);align-self:center">Chassis:</span>
+        ${p.chassis.length?p.chassis.map(ch=>`<span class="tag">${ch}</span>`).join(''):`<span style="font-size:12px;color:var(--muted2)">Nenhum atribuído</span>`}
       </div>
-      <div style="padding:10px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <span style="font-size:11px;color:var(--muted)">Mão de obra por revisão:</span>
-        ${p.revs.slice(0,6).map(r=>`<span class="tag">${r}: ${brl(p.mao[r]||0)}</span>`).join('')}
-        ${p.revs.length>6?`<span style="font-size:11px;color:var(--muted2)">+${p.revs.length-6} mais</span>`:''}
+      <div style="padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+        <span style="font-size:11px;color:var(--muted)">M.O.:</span>
+        ${p.revs.slice(0,5).map(r=>`<span class="tag">${r}: ${brl(p.mao[r]||0)}</span>`).join('')}
+        ${p.revs.length>5?`<span style="font-size:11px;color:var(--muted2)">+${p.revs.length-5} mais</span>`:''}
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ══════════════════════════════════════════
-// PLAN EDITOR
-// ══════════════════════════════════════════
-let editorPlanIdx=-1;
-let editorData=null;
-
+// ── PLAN EDITOR ──
 function openEditor(i){
   editorPlanIdx=i;
   editorData=JSON.parse(JSON.stringify(db.planos[i]));
@@ -858,37 +735,33 @@ function renderEditorChassis(filter){
   const filtered=db.frotas.filter(f=>!filter||(f.chassi+f.cliente+f.modelo).toLowerCase().includes(filter.toLowerCase()));
   cl.innerHTML=filtered.map(f=>{
     const sel=editorData.chassis.includes(f.chassi);
-    return`<div class="chassis-picker-item${sel?' selected':''}" onclick="toggleEditorChassi('${f.chassi}','${f.id}')">
+    return`<div class="cpick-item${sel?' sel':''}" onclick="toggleEditorChassi('${f.chassi}','${f.id}')">
       <input type="checkbox" id="ech-${f.id}" ${sel?'checked':''} onclick="event.stopPropagation();toggleEditorChassi('${f.chassi}','${f.id}')">
-      <div class="pi-main">
-        <div class="pi-chassi">${f.chassi}</div>
-        <div class="pi-sub">${f.modelo} · ${f.cliente}</div>
-      </div>
-      ${f.frota?`<span class="pi-frota">Frota ${f.frota}</span>`:''}
+      <div class="pim"><div class="pic">${f.chassi}</div><div class="pis">${f.modelo} · ${f.cliente}</div></div>
+      ${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}
     </div>`;
   }).join('');
-  updateEditorChCount();
+  upEditorChCount();
 }
 
 function toggleEditorChassi(chassi,fid){
   const idx=editorData.chassis.indexOf(chassi);
-  if(idx>=0)editorData.chassis.splice(idx,1); else editorData.chassis.push(chassi);
-  const el=document.getElementById('ech-'+fid);
-  if(el)el.checked=editorData.chassis.includes(chassi);
-  // update row style
-  const row=el?.closest('.chassis-picker-item');
-  if(row)row.classList.toggle('selected',editorData.chassis.includes(chassi));
-  updateEditorChCount();
+  if(idx>=0) editorData.chassis.splice(idx,1); else editorData.chassis.push(chassi);
+  const cb=document.getElementById('ech-'+fid);
+  const row=cb?.closest('.cpick-item');
+  if(cb) cb.checked=editorData.chassis.includes(chassi);
+  if(row) row.classList.toggle('sel',editorData.chassis.includes(chassi));
+  upEditorChCount();
 }
 
-function filterEditorChassis(v){renderEditorChassis(v);}
+function filterEditorChassis(v){ renderEditorChassis(v); }
 
 function toggleAllEditorChassis(sel){
   editorData.chassis=sel?db.frotas.map(f=>f.chassi):[];
   renderEditorChassis(document.getElementById('editor-ch-search').value);
 }
 
-function updateEditorChCount(){
+function upEditorChCount(){
   const n=editorData.chassis.length;
   document.getElementById('editor-ch-count').textContent=`${n} selecionado${n!==1?'s':''}`;
   document.getElementById('editor-ch-label').textContent=n?`${n} chassi selecionado${n!==1?'s':''}`:'Nenhum selecionado';
@@ -896,138 +769,116 @@ function updateEditorChCount(){
 
 function renderEditor(){
   const p=editorData;
-  const revHeaders=p.revs.map((r,ri)=>`<th style="min-width:52px"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px">${r}<input type="number" value="${p.mao[r]||''}" style="width:60px;font-size:9px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px 3px;color:var(--muted);text-align:center;margin-top:2px" placeholder="M.O." onchange="editorMao(${ri},this.value)" title="Mão de obra ${r}"></div></th>`).join('');
-  const rows=p.items.map((item,ii)=>`
-    <tr>
-      <td class="item-cell"><input type="text" value="${item.item.replace(/"/g,'&quot;')}" onchange="editorItem(${ii},'item',this.value)" title="${item.item}"></td>
-      <td class="code-cell"><input type="text" value="${item.cod}" onchange="editorItem(${ii},'cod',this.value)"></td>
-      <td class="qty-cell"><input type="text" value="${item.qtd}" onchange="editorItem(${ii},'qtd',this.value)"></td>
-      ${p.revs.map((r,ri)=>`<td class="rev-cell${item.marks.includes(ri)?' marked':''}" onclick="toggleMark(${ii},${ri})" title="${r}">${item.marks.includes(ri)?'<span class="x-mark">X</span>':''}</td>`).join('')}
-      <td style="background:var(--bg3);white-space:nowrap"><button class="btn btn-d btn-sm" onclick="removeItemRow(${ii})">✕</button></td>
-    </tr>
-  `).join('');
+  const rh=p.revs.map((r,ri)=>`<th style="min-width:50px"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px">${r}<input type="number" value="${p.mao[r]||''}" style="width:56px;font-size:9px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px;color:var(--muted);text-align:center;margin-top:2px" placeholder="M.O." onchange="editorMao(${ri},this.value)"></div></th>`).join('');
+  const rows=p.items.map((item,ii)=>`<tr>
+    <td class="ic"><input type="text" value="${item.item.replace(/"/g,'&quot;')}" onchange="editorItem(${ii},'item',this.value)" title="${item.item}"></td>
+    <td class="cc"><input type="text" value="${item.cod}" onchange="editorItem(${ii},'cod',this.value)"></td>
+    <td class="qc"><input type="text" value="${item.qtd}" onchange="editorItem(${ii},'qtd',this.value)"></td>
+    ${p.revs.map((r,ri)=>`<td class="rc${item.marks.includes(ri)?' marked':''}" onclick="toggleMark(${ii},${ri})" title="${r}">${item.marks.includes(ri)?'<span class="xm">X</span>':''}</td>`).join('')}
+    <td style="background:var(--bg3);white-space:nowrap"><button class="btn btn-d btn-sm" onclick="removeItemRow(${ii})">✕</button></td>
+  </tr>`).join('');
   document.getElementById('plan-editor-wrap').innerHTML=`
-    <table class="plan-table" style="width:100%">
-      <thead><tr>
-        <th class="item-col">Item / Descrição</th>
-        <th class="code-col">Código</th>
-        <th class="qty-col">Qtd</th>
-        ${revHeaders}
-        <th style="width:40px"></th>
-      </tr></thead>
+    <table class="plan-table">
+      <thead><tr><th class="ic">Item</th><th class="cc">Código</th><th class="qc">Qtd</th>${rh}<th style="width:40px"></th></tr></thead>
       <tbody>${rows}</tbody>
-    </table>
-  `;
+    </table>`;
 }
 
 function toggleMark(ii,ri){
   const item=editorData.items[ii];
   const idx=item.marks.indexOf(ri);
-  if(idx>=0)item.marks.splice(idx,1); else item.marks.push(ri);
-  // just update this cell without full re-render
+  if(idx>=0) item.marks.splice(idx,1); else item.marks.push(ri);
   const rows=document.getElementById('plan-editor-wrap').querySelectorAll('tbody tr');
-  const cells=rows[ii]?.querySelectorAll('td.rev-cell');
+  const cells=rows[ii]?.querySelectorAll('td.rc');
   if(cells&&cells[ri]){
-    const marked=item.marks.includes(ri);
-    cells[ri].classList.toggle('marked',marked);
-    cells[ri].innerHTML=marked?'<span class="x-mark">X</span>':'';
+    const m=item.marks.includes(ri);
+    cells[ri].classList.toggle('marked',m);
+    cells[ri].innerHTML=m?'<span class="xm">X</span>':'';
   }
 }
-function editorItem(ii,field,val){editorData.items[ii][field]=val;}
-function editorMao(ri,val){editorData.mao[editorData.revs[ri]]=parseFloat(val)||0;}
-function addItemRow(){
-  editorData.items.push({id:uid(),item:'Novo item',cod:'',qtd:'1',marks:[]});
-  renderEditor();
-}
-function removeItemRow(ii){editorData.items.splice(ii,1);renderEditor();}
+
+function editorItem(ii,f,v){ editorData.items[ii][f]=v; }
+function editorMao(ri,v){ editorData.mao[editorData.revs[ri]]=parseFloat(v)||0; }
+function addItemRow(){ editorData.items.push({id:uid(),item:'Novo item',cod:'',qtd:'1',marks:[]}); renderEditor(); }
+function removeItemRow(ii){ editorData.items.splice(ii,1); renderEditor(); }
+
 function savePlanEditor(){
   db.planos[editorPlanIdx]=editorData;
-  closeM('editor');rAll();saveLocal(true);
+  closeM('editor'); rAll(); autosave();
+  toast('✅ Plano salvo!');
 }
 
-// ══════════════════════════════════════════
-// EMAIL BUILDER
-// ══════════════════════════════════════════
+// ── EMAIL ──
 function initEmail(){
   const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
-  const emCli=document.getElementById('em-cli');
-  emCli.innerHTML='<option value="">Selecione...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
-  const emPlan=document.getElementById('em-plano');
-  emPlan.innerHTML='<option value="">Selecione...</option>'+db.planos.map((p,i)=>`<option value="${i}">${p.nome}</option>`).join('');
+  const ec=document.getElementById('em-cli');
+  ec.innerHTML='<option value="">Selecione...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
+  const ep=document.getElementById('em-plano');
+  ep.innerHTML='<option value="">Selecione...</option>'+db.planos.map((p,i)=>`<option value="${i}">${p.nome}</option>`).join('');
   document.getElementById('em-rev').innerHTML='<option value="">Selecione...</option>';
-  document.getElementById('em-chassis-picker').innerHTML='<div class="chassis-picker-body" style="min-height:60px"><div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>';
+  document.getElementById('em-cpick').innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>';
   document.getElementById('em-output').textContent='Preencha os campos ao lado para gerar o email.';
 }
 
 function updateEmailChassis(){
   const cli=document.getElementById('em-cli').value;
-  const picker=document.getElementById('em-chassis-picker');
-  if(!cli){picker.innerHTML='<div class="chassis-picker-body" style="min-height:60px"><div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>';return;}
+  const picker=document.getElementById('em-cpick');
+  if(!cli){ picker.innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>'; return; }
   const frotas=db.frotas.filter(f=>f.cliente===cli);
-  if(!frotas.length){picker.innerHTML='<div class="chassis-picker-body"><div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Nenhum equipamento para este cliente</div></div>';return;}
+  if(!frotas.length){ picker.innerHTML='<div class="cpick-body"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Nenhum equipamento</div></div>'; return; }
   picker.innerHTML=`
-    <div class="chassis-picker-search">
+    <div class="cpick-search">
       <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" placeholder="Filtrar chassis..." oninput="filterEmailChassis(this.value)">
+      <input type="text" placeholder="Filtrar chassis..." oninput="filterEmailChassis(this.value,'${cli}')">
     </div>
-    <div class="chassis-picker-body" id="em-chassis-body">
-      ${frotas.map(f=>`
-        <div class="chassis-picker-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')">
-          <input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')">
-          <div class="pi-main">
-            <div class="pi-chassi">${f.chassi}</div>
-            <div class="pi-sub">${f.modelo}</div>
-          </div>
-          ${f.frota?`<span class="pi-frota">Frota ${f.frota}</span>`:''}
-        </div>
-      `).join('')}
+    <div class="cpick-body" id="em-cpick-body">
+      ${frotas.map(f=>`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')">
+        <input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')">
+        <div class="pim"><div class="pic">${f.chassi}</div><div class="pis">${f.modelo}</div></div>
+        ${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}
+      </div>`).join('')}
     </div>
-    <div class="chassis-sel-count">
+    <div class="cpick-foot">
       <span id="em-ch-count">Nenhum selecionado</span>
       <button onclick="selectAllEmailChassis(true)">Selecionar todos</button>
-    </div>
-  `;
+    </div>`;
 }
 
 function toggleEmailChassi(fid){
   const cb=document.getElementById('emch-'+fid);
   const row=document.getElementById('emrow-'+fid);
-  if(cb){cb.checked=!cb.checked;row.classList.toggle('selected',cb.checked);}
-  const n=document.querySelectorAll('#em-chassis-body input:checked').length;
+  if(cb){ cb.checked=!cb.checked; row.classList.toggle('sel',cb.checked); }
+  const n=document.querySelectorAll('#em-cpick-body input:checked').length;
   const cnt=document.getElementById('em-ch-count');
-  if(cnt)cnt.textContent=n?`${n} selecionado${n!==1?'s':''}`:'Nenhum selecionado';
+  if(cnt) cnt.textContent=n?`${n} selecionado${n!==1?'s':''}`:'Nenhum selecionado';
   buildEmail();
 }
 
 function selectAllEmailChassis(sel){
-  document.querySelectorAll('#em-chassis-body input[type=checkbox]').forEach(cb=>{
-    cb.checked=sel;
-    cb.closest('.chassis-picker-item').classList.toggle('selected',sel);
+  document.querySelectorAll('#em-cpick-body .cpick-item').forEach(row=>{
+    const cb=row.querySelector('input');
+    if(cb){ cb.checked=sel; row.classList.toggle('sel',sel); }
   });
-  const n=document.querySelectorAll('#em-chassis-body input:checked').length;
+  const n=document.querySelectorAll('#em-cpick-body input:checked').length;
   const cnt=document.getElementById('em-ch-count');
-  if(cnt)cnt.textContent=n?`${n} selecionado${n!==1?'s':''}`:'Nenhum selecionado';
+  if(cnt) cnt.textContent=n?`${n} selecionado${n!==1?'s':''}`:'Nenhum selecionado';
   buildEmail();
 }
 
-function filterEmailChassis(q){
-  const cli=document.getElementById('em-cli').value;
-  const body=document.getElementById('em-chassis-body');
-  if(!body)return;
-  const frotas=db.frotas.filter(f=>f.cliente===cli&&(!q||(f.chassi+f.modelo+f.frota).toLowerCase().includes(q.toLowerCase())));
-  body.querySelectorAll('.chassis-picker-item').forEach(row=>{
-    const fid=row.id.replace('emrow-','');
-    const f=db.frotas.find(x=>x.id===fid);
-    row.style.display=(f&&frotas.includes(f))?'':'none';
+function filterEmailChassis(q,cli){
+  const body=document.getElementById('em-cpick-body'); if(!body) return;
+  const frotas=db.frotas.filter(f=>f.cliente===cli);
+  body.querySelectorAll('.cpick-item').forEach((row,idx)=>{
+    const f=frotas[idx];
+    row.style.display=(!q||!f||(f.chassi+f.modelo+f.frota).toLowerCase().includes(q.toLowerCase()))?'':'none';
   });
 }
 
 function updateEmailRevs(){
   const pi=parseInt(document.getElementById('em-plano').value);
   const rs=document.getElementById('em-rev');
-  if(isNaN(pi)||pi<0||pi>=db.planos.length){rs.innerHTML='<option value="">Selecione...</option>';return;}
-  const p=db.planos[pi];
-  rs.innerHTML='<option value="">Selecione...</option>'+p.revs.map(r=>`<option value="${r}">${r}</option>`).join('');
+  if(isNaN(pi)||pi<0||pi>=db.planos.length){ rs.innerHTML='<option value="">Selecione...</option>'; return; }
+  rs.innerHTML='<option value="">Selecione...</option>'+db.planos[pi].revs.map(r=>`<option value="${r}">${r}</option>`).join('');
   buildEmail();
 }
 
@@ -1038,106 +889,103 @@ function buildEmail(){
   const obs=document.getElementById('em-obs').value.trim();
   const out=document.getElementById('em-output');
   const selCh=db.frotas.filter(f=>document.getElementById('emch-'+f.id)?.checked);
-  if(!cli||isNaN(pi)||!rev||!selCh.length){out.textContent='Preencha todos os campos e selecione ao menos um chassi.';return;}
+  if(!cli||isNaN(pi)||!rev||!selCh.length){ out.textContent='Preencha todos os campos e selecione ao menos um chassi.'; return; }
+  if(pi>=db.planos.length){ out.textContent='Plano não encontrado.'; return; }
   const p=db.planos[pi];
   const ri=p.revs.indexOf(rev);
-  if(ri<0){out.textContent='Revisão não encontrada no plano.';return;}
+  if(ri<0){ out.textContent='Revisão não encontrada no plano.'; return; }
   const activeItems=p.items.filter(it=>it.marks.includes(ri));
   const maoVal=p.mao[rev]||0;
   const analVal=p.anal?.[rev]||0;
   const desl=p.desl||350;
   const fmt=v=>parseFloat(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2});
-
   let L=[];
-  // 1. Saudação
   L.push('Boa tarde!');
   L.push('');
-  // 2. Solicitação
   L.push(`Favor montar orçamento de revisão ${rev}.`);
   L.push('');
-  // 3. Cliente / frotas / chassi
   L.push(`${cli}`);
   L.push('');
   L.push('FROTA    MODELO    CHASSI');
   L.push('-'.repeat(50));
   selCh.forEach(f=>L.push(`${(f.frota||'—').padEnd(8)} ${f.modelo.padEnd(9)} ${f.chassi}`));
   L.push('');
-  // 4. M.O.
-  if(analVal>0)L.push(`${analVal} análise${analVal>1?'s':''} de fluído`);
+  if(analVal>0) L.push(`${analVal} análise${analVal>1?'s':''} de fluído`);
   L.push(`M.O. ${fmt(maoVal)} + ${fmt(desl)} desloc.`);
   L.push('');
-  // 5. Itens
-  L.push('─────────────────────────────────────');
+  L.push('─'.repeat(40));
   L.push('Itens da revisão:');
   L.push('');
   if(activeItems.length){
     L.push(`${'ITEM'.padEnd(46)} ${'CÓDIGO'.padEnd(13)} QTD`);
     L.push('-'.repeat(68));
-    activeItems.forEach(it=>{
-      const nm=it.item.length>44?it.item.slice(0,43)+'…':it.item;
-      L.push(`${nm.padEnd(46)} ${(it.cod||'—').padEnd(13)} ${it.qtd}`);
-    });
-  } else {
-    L.push('(Nenhum item previsto para esta revisão)');
-  }
-  if(obs){L.push('');L.push('─────────────────────────────────────');L.push('Observações:');L.push(obs);}
+    activeItems.forEach(it=>{ const nm=it.item.length>44?it.item.slice(0,43)+'…':it.item; L.push(`${nm.padEnd(46)} ${(it.cod||'—').padEnd(13)} ${it.qtd}`); });
+  } else { L.push('(Nenhum item previsto para esta revisão)'); }
+  if(obs){ L.push(''); L.push('─'.repeat(40)); L.push('Observações:'); L.push(obs); }
   out.textContent=L.join('\n');
 }
 
 function copyEmail(){
   const txt=document.getElementById('em-output').textContent;
-  navigator.clipboard.writeText(txt).then(()=>{
-    const btn=document.querySelector('.copy-btn');
-    btn.textContent='✅ Copiado!';setTimeout(()=>{btn.innerHTML='📋 Copiar';},1800);
-  });
+  navigator.clipboard.writeText(txt).then(()=>{ const b=document.querySelector('.cpybtn'); if(b){ b.textContent='✅ Copiado!'; setTimeout(()=>b.textContent='📋 Copiar',1800); } });
 }
 
-// ══════════════════════════════════════════
-// MODALS
-// ══════════════════════════════════════════
+// ── MODALS ──
 function openM(t){
-  if(t==='frota'){ei.frota=-1;document.getElementById('mf-t').textContent='Adicionar Equipamento';['mf-frota','mf-cli','mf-ch','mf-mod'].forEach(id=>sv(id,''));sv('mf-tipo','Trator');}
+  if(t==='frota'){
+    ei.frota=-1; document.getElementById('mf-t').textContent='Adicionar Equipamento';
+    ['mf-frota','mf-cli','mf-ch','mf-mod'].forEach(id=>sv(id,'')); sv('mf-tipo','Trator');
+  }
   if(t==='hist'){
-    ei.hist=-1;document.getElementById('mh-t').textContent='Registrar Revisão';
+    ei.hist=-1; document.getElementById('mh-t').textContent='Registrar Revisão';
     const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
     const s=document.getElementById('mh-cli');
-    s.innerHTML='<option value="">Selecione o cliente...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
-    const cs=document.getElementById('mh-ch');cs.innerHTML='<option value="">Selecione o cliente primeiro</option>';cs.disabled=true;
+    s.innerHTML='<option value="">Selecione...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
+    const cs=document.getElementById('mh-ch'); cs.innerHTML='<option value="">Selecione o cliente primeiro</option>'; cs.disabled=true;
     ['mh-rev','mh-hor','mh-os','mh-data'].forEach(id=>sv(id,''));
   }
-  if(t==='plano'){sv('mp-nome','');sv('mp-mod','');sv('mp-revs','');sv('mp-tipo','Colhedora');}
-  document.getElementById('modal-'+t).classList.add('open');
+  if(t==='plano'){ sv('mp-nome',''); sv('mp-mod',''); sv('mp-revs',''); sv('mp-tipo','Colhedora'); }
+  const el=document.getElementById('modal-'+t);
+  if(el) el.classList.add('open');
 }
-function closeM(t){document.getElementById('modal-'+t).classList.remove('open');}
+
+function closeM(t){
+  const el=document.getElementById('modal-'+t);
+  if(el) el.classList.remove('open');
+}
 
 function updateHistChassis(){
   const cli=gv('mh-cli');
   const cs=document.getElementById('mh-ch');
-  if(!cli){cs.innerHTML='<option value="">Selecione o cliente primeiro</option>';cs.disabled=true;return;}
+  if(!cli){ cs.innerHTML='<option value="">Selecione o cliente primeiro</option>'; cs.disabled=true; return; }
   const frotas=db.frotas.filter(f=>f.cliente===cli);
-  cs.innerHTML=frotas.map(f=>`<option value="${f.chassi}">${f.chassi} — ${f.modelo} (Frota: ${f.frota||'—'})</option>`).join('');
+  cs.innerHTML=frotas.map(f=>`<option value="${f.chassi}">${f.chassi} — ${f.modelo}${f.frota?' (Frota '+f.frota+')':''}</option>`).join('');
   cs.disabled=false;
 }
 
-// ══════════════════════════════════════════
-// SAVE / EDIT / DEL
-// ══════════════════════════════════════════
+// ── CRUD ──
+function saveFrota(){
+  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
+  if(!o.cliente||!o.chassi||!o.modelo){ alert('Preencha cliente, chassi e modelo.'); return; }
+  if(ei.frota>=0) db.frotas[ei.frota]=o; else db.frotas.push(o);
+  closeM('frota'); rAll(); autosave(); toast('✅ Equipamento salvo!');
+}
 function editFrota(i){
-  ei.frota=i;const f=db.frotas[i];
+  ei.frota=i; const f=db.frotas[i];
   document.getElementById('mf-t').textContent='Editar Equipamento';
-  sv('mf-frota',f.frota);sv('mf-cli',f.cliente);sv('mf-ch',f.chassi);sv('mf-mod',f.modelo);sv('mf-tipo',f.tipo||'Trator');
+  sv('mf-frota',f.frota); sv('mf-cli',f.cliente); sv('mf-ch',f.chassi); sv('mf-mod',f.modelo); sv('mf-tipo',f.tipo||'Trator');
   document.getElementById('modal-frota').classList.add('open');
 }
-function delFrota(i){if(confirm('Remover equipamento?')){db.frotas.splice(i,1);rAll();saveLocal(true);}}
+function delFrota(i){ if(confirm('Remover equipamento?')){ db.frotas.splice(i,1); rAll(); autosave(); toast('Removido.'); } }
 
 function saveHist(){
   const o={id:ei.hist>=0?db.hist[ei.hist].id:uid(),chassi:gv('mh-ch'),rev:gv('mh-rev'),hor:gv('mh-hor'),os:gv('mh-os'),data:gv('mh-data')};
-  if(!o.chassi||!o.rev){alert('Preencha chassi e revisão.');return;}
-  if(ei.hist>=0)db.hist[ei.hist]=o;else db.hist.push(o);
-  closeM('hist');rAll();saveLocal(true);
+  if(!o.chassi||!o.rev){ alert('Preencha chassi e revisão.'); return; }
+  if(ei.hist>=0) db.hist[ei.hist]=o; else db.hist.push(o);
+  closeM('hist'); rAll(); autosave(); toast('✅ Revisão registrada!');
 }
 function editHist(i){
-  ei.hist=i;const h=db.hist[i];
+  ei.hist=i; const h=db.hist[i];
   document.getElementById('mh-t').textContent='Editar Revisão';
   const cli=gCli(h.chassi);
   const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
@@ -1145,203 +993,137 @@ function editHist(i){
   ms.innerHTML='<option value="">Selecione...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
   ms.value=cli;
   updateHistChassis();
-  setTimeout(()=>{document.getElementById('mh-ch').value=h.chassi;},50);
-  sv('mh-rev',h.rev);sv('mh-hor',h.hor);sv('mh-os',h.os);sv('mh-data',h.data);
+  setTimeout(()=>{ document.getElementById('mh-ch').value=h.chassi; },50);
+  sv('mh-rev',h.rev); sv('mh-hor',h.hor); sv('mh-os',h.os); sv('mh-data',h.data);
   document.getElementById('modal-hist').classList.add('open');
 }
-function delHist(i){if(confirm('Remover?')){db.hist.splice(i,1);rAll();saveLocal(true);}}
+function delHist(i){ if(confirm('Remover registro?')){ db.hist.splice(i,1); rAll(); autosave(); toast('Removido.'); } }
 
 function savePlano(){
-  const nome=gv('mp-nome'),mod=gv('mp-mod'),tipo=gv('mp-tipo'),revs=gv('mp-revs').split(',').map(r=>r.trim()).filter(Boolean);
-  if(!nome||!mod||!revs.length){alert('Preencha todos os campos.');return;}
-  const mao={},anal={};
-  revs.forEach(r=>{mao[r]=0;anal[r]=0;});
+  const nome=gv('mp-nome'), mod=gv('mp-mod'), tipo=gv('mp-tipo'), revs=gv('mp-revs').split(',').map(r=>r.trim()).filter(Boolean);
+  if(!nome||!mod||!revs.length){ alert('Preencha todos os campos.'); return; }
+  const mao={}, anal={};
+  revs.forEach(r=>{ mao[r]=0; anal[r]=0; });
   db.planos.push({id:uid(),nome,modelo:mod,tipo,revs,items:[],mao,anal,desl:350,chassis:[]});
-  closeM('plano');rAll();saveLocal(true);
+  closeM('plano'); rAll(); autosave(); toast('✅ Plano criado!');
 }
-function delPlano(i){if(confirm('Remover plano?')){db.planos.splice(i,1);rAll();saveLocal(true);}}
+function delPlano(i){ if(confirm('Remover plano?')){ db.planos.splice(i,1); rAll(); autosave(); toast('Removido.'); } }
 
-function saveFrota(){
-  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
-  if(!o.cliente||!o.chassi||!o.modelo){alert('Preencha cliente, chassi e modelo.');return;}
-  if(ei.frota>=0)db.frotas[ei.frota]=o;else db.frotas.push(o);
-  closeM('frota');rAll();saveLocal(true);
+// ── SEED DATA ──
+function seed(){
+  const f=(frota,cliente,chassi,modelo,tipo)=>({id:uid(),frota,cliente,chassi,modelo,tipo});
+  db.frotas=[
+    f('100','Santa Sofia','1BM5080ECS6203394','5080E','Trator'),f('101','Santa Sofia','1BM5080ELS6205299','5080E','Trator'),
+    f('102','Santa Sofia','1BM5080ELS6204878','5080E','Trator'),f('103','Santa Sofia','1BM5080ECS6203418','5080E','Trator'),
+    f('2003','Nardini','1NWC570HJTT260216','CH570','Colhedora'),f('2004','Nardini','1NWC570HCTT260217','CH570','Colhedora'),
+    f('2005','Nardini','1NWC570HVTT260218','CH570','Colhedora'),f('2006','Nardini','1NWC570HATT260219','CH570','Colhedora'),
+    f('2007','Nardini','1NWC570HLTT260223','CH570','Colhedora'),f('2008','Nardini','1NWC570HHTT260224','CH570','Colhedora'),
+    f('2009','Nardini','1NWC570HLTT260237','CH570','Colhedora'),f('2010','Nardini','1NWC570HETT260239','CH570','Colhedora'),
+    f('704151','Colombo','1NWC570HCST260113','CH570','Colhedora'),f('704152','Colombo','1NWC570HPST260115','CH570','Colhedora'),
+    f('704153','Colombo','1NWC570HKST260116','CH570','Colhedora'),f('704154','Colombo','1NWC570HJST260103','CH570','Colhedora'),
+    f('704155','Colombo','1NWC570HKST260102','CH570','Colhedora'),f('704156','Colombo','1NWC570HHST260111','CH570','Colhedora'),
+    f('704157','Colombo','1NWC570HJST260117','CH570','Colhedora'),f('704165','Colombo','1NWC570HKTT260196','CH570','Colhedora'),
+    f('704166','Colombo','1NWC570HPTT260195','CH570','Colhedora'),f('704167','Colombo','1NWC570HHTT260207','CH570','Colhedora'),
+    f('704168','Colombo','1NWC570HJTT260202','CH570','Colhedora'),f('704169','Colombo','1NWC570HATT260205','CH570','Colhedora'),
+    f('704170','Colombo','1NWC570HTTT260292','CH570','Colhedora'),
+    f('','Santa Isabel','1PY3036ELSH017739','3036EN','Trator'),f('','Santa Isabel','1PY3036ECSH017784','3036EN','Trator'),
+    f('','Santa Isabel','1PY3036EASH017786','3036EN','Trator'),f('','Santa Isabel','1PY3036EESH017789','3036EN','Trator'),
+    f('','Santa Isabel','1PY3036ETSH017777','3036EN','Trator'),f('','Santa Isabel','1PY3036ECSH017793','3036EN','Trator'),
+    f('','Santa Isabel','1PY3036EHSH017791','3036EN','Trator'),f('','Santa Isabel','1NWC570HAST260008','CH570','Colhedora'),
+    f('','Santa Isabel','1NWC570HVST260007','CH570','Colhedora'),f('','Santa Isabel','1NWC950HETT260024','CH950','Colhedora'),
+    f('','Santa Isabel','1BM5090EVS6200848','5090E','Trator'),f('','Santa Isabel','1BM5090ECS6201318','5090E','Trator'),
+    f('','Santa Isabel','1BM5090ECS6201022','5090E','Trator'),f('','Santa Isabel','1BM5090ECS6201358','5090E','Trator'),
+    f('','Santa Isabel','1BM5090EAS6201337','5090E','Trator'),f('','Santa Isabel','1BM5090ECS6201330','5090E','Trator'),
+  ];
+  const pi=(item,cod,qtd,marks)=>({id:uid(),item,cod,qtd:String(qtd),marks});
+  const revsCH570N=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h','3250h','3500h'];
+  const nI=[pi('SUBSTITUIR FILTRO DE ÓLEO DE MOTOR','DZ118283',1,[2,4,6,8,10,12,14]),pi('TROCAR ÓLEO DE MOTOR','15W40',33.3,[2,4,6,8,10,12,14]),pi('SUBST. FILTRO COMBUSTÍVEL PRIMÁRIO','RE525523',1,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]),pi('SUBST. FILTRO SEPARADOR DE ÁGUA','AT365869',1,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]),pi('SUBST. FILTRO ÓLEO HIDRÁULICO','CB01505351',3,[6,12]),pi('TROCAR ÓLEO REDUÇÕES FINAIS','85W140',3,[0,1,2,3,4,5,6,7,8,9,11,12,13,14]),pi('TROCAR ÓLEO CX ACION. BOMBA','85W140',7.1,[0,4,8,12]),pi('TROCAR ÓLEO CX CORTADOR BASE','85W140',7,[0,4,8,10,12]),pi('TROCAR ÓLEO CX PICADOR','85W140',13,[0,4,8,10,12]),pi('TROCAR FILTROS RECIRCULAÇÃO AR CABINE','TA32591',1,[2,4,6,8,10,12,14]),pi('TROCAR FILTROS AR CONDICIONADO','L214634',1,[2,4,6,8,12,14]),pi('TROCAR FILTRO AR EXTERNO','HXE11090',1,[2,4,6,8,12,14]),pi('TROCAR FILTRO AR INTERNO','HXE11091',1,[6,12]),pi('TROCAR VÁLVULAS TERMOSTATO','DZ120918',2,[4,8,12]),pi('AJUSTE VÁLVULAS DO MOTOR','DZ128866',1,[2,4,6,8,10,12,14])];
+  const maoN={'100h':1408.4,'250h':1263.2,'500h':1553.6,'750h':1263.2,'1000h':1844,'1250h':1263.2,'1500h':1553.6,'1750h':1263.2,'2000h':2715.2,'2250h':1263.2,'2500h':1553.6,'2750h':1263.2,'3000h':2715.2,'3250h':1263.2,'3500h':1553.6};
+  const analN={'100h':2,'250h':2,'500h':2,'750h':2,'1000h':2,'1250h':2,'1500h':2,'1750h':2,'2000h':2,'2250h':2,'2500h':2,'2750h':2,'3000h':2,'3250h':2,'3500h':2};
+  const revsCH570C=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h'];
+  const cI=[pi('SUBSTITUIR FILTRO DE ÓLEO DE MOTOR','DZ118283',1,[2,4,6,8,10,12]),pi('TROCAR ÓLEO DE MOTOR','15W40',33.3,[2,4,6,8,10,12]),pi('SUBST. FILTRO COMBUSTÍVEL PRIMÁRIO','RE525523',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('SUBST. FILTRO SEPARADOR DE ÁGUA','AT365869',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('SUBST. FILTRO ÓLEO HIDRÁULICO','CB01505351',3,[6,12]),pi('TROCAR ÓLEO REDUÇÕES FINAIS','85W140',3,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('TROCAR ÓLEO CX ACION. BOMBA','85W140',7.1,[0,4,8,12]),pi('TROCAR ÓLEO CX CORTADOR BASE','85W140',7,[0,4,8,12]),pi('TROCAR ÓLEO CX PICADOR','85W140',13,[0,4,8,12]),pi('TROCAR FILTROS RECIRCULAÇÃO AR CABINE','TA32591',1,[2,4,6,8,10,12]),pi('TROCAR FILTROS AR CONDICIONADO','L214634',1,[2,4,6,8,10,12]),pi('TROCAR FILTRO AR EXTERNO','HXE11090',1,[2,4,6,8,10,12]),pi('TROCAR FILTRO AR INTERNO','HXE11091',1,[4,12]),pi('TROCAR VÁLVULAS TERMOSTATO','DZ120918',2,[12]),pi('AJUSTE VÁLVULAS DO MOTOR','DZ128866',1,[8]),pi('SUBST. ÓLEO SISTEMA HIDRÁULICO','—',350,[12]),pi('ANÁLISE PERFIL CARGA OPERAÇÃO','—',1,[1,5,7,9,11]),pi('TESTE COMPRESSÃO DO MOTOR','—',1,[1,5,7,9,11])];
+  const maoC={'100h':2630,'250h':2507,'500h':2507,'750h':2507,'1000h':3305,'1250h':2507,'1500h':2507,'1750h':2507,'2000h':4151,'2250h':2507,'2500h':2507,'2750h':2507,'3000h':4574};
+  const analC={'100h':9,'250h':4,'500h':4,'750h':4,'1000h':9,'1250h':4,'1500h':4,'1750h':4,'2000h':9,'2250h':4,'2500h':4,'2750h':4,'3000h':9};
+  const revsSF=['100h','500h','750h','1000h','1500h','1750h','2000h'];
+  const sfI=[pi('KIT ANÁLISE FLUIDO MOTOR','AFPM',1,[0,1,2,3,4,5,6]),pi('KIT ANÁLISE FLUIDO HIDRÁULICO','AFPM',1,[1,2,3,4,5,6]),pi('KIT ANÁLISE FLUIDO CUBO LD','AFPM',1,[2,3,4,6]),pi('KIT ANÁLISE FLUIDO CUBO LE','AFPM',1,[2,3,4,6]),pi('KIT ANÁLISE FLUIDO EIXO DIANT.','AFPM',1,[2,3,4,6]),pi('KIT ANÁLISE FLUIDO ARREFEC.','AFPM',1,[3,6]),pi('ÓLEO EIXO E CUBO','CQM20191',10,[0,2]),pi('ÓLEO MOTOR 11L PLUS 50II','CQM20203',11,[1,3,4,6]),pi('GRAXA POLYUREA SD','CQM20246',1,[0,1,2,3,4,5,6]),pi('JUNTA TAMPA DE VALVULA','DZ107458',1,[1,6]),pi('FILTRO LUBRIFICANTE ÓLEO MOTOR','DZ114256',1,[1,3,4,6]),pi('FILTRO DE COMBUSTIVEL','DZ114677',1,[1,2,3,4,5,6]),pi('FILTRO RECIRCULAÇÃO DE AR','RE195491',2,[2,4]),pi('FILTRO AR FRESCO','RE198488',2,[2,4]),pi('FILTRO HIDRAULICO','RE45864',1,[0,2,4]),pi('FILTRO SEPARADOR DE ÁGUA','SJ26261',1,[6]),pi('FILTRO TRANSMISSÃO','SJ28834',1,[0,2,4]),pi('FILTRO AR MOTOR SECUNDARIO','SU29301',1,[2,4]),pi('FILTRO AR MOTOR PRIMARIO','SU55720',1,[2,4]),pi('FILTRO LINHA COMBUSTIVEL','T257865',1,[1,2,3,4,5,6]),pi('ÓLEO TRANSMISSÃO 40L+EIXO','TY25274',3,[4])];
+  const maoSF={'100h':651,'500h':745.5,'750h':840,'1000h':745.5,'1500h':1123.5,'1750h':745.5,'2000h':840};
+  const analSF={'100h':1,'500h':2,'750h':5,'1000h':6,'1500h':5,'1750h':2,'2000h':6};
+  const revsSI=['100h','250h','500h','750h','1000h','1250h','1500h','1750h','2000h','2250h','2500h','2750h','3000h'];
+  const siI=[pi('SUBSTITUIR FILTRO ÓLEO MOTOR','M806419',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('TROCAR ÓLEO DE MOTOR','CQM20203',5,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('SUBST. FILTRO COMBUSTÍVEL PRIMÁRIO','MIU801267',1,[0,1,2,3,4,5,6,7,8,9,10,11,12]),pi('SUBST. FILTRO ÓLEO HIDRÁULICO','SJ28834',1,[0,2,4,5,7,9,10,12]),pi('TROCAR ÓLEO DIFERENCIAL DIANTEIRO','CQM20191',5,[0,2,4,6,8,10,12]),pi('TROCAR FILTRO AR EXTERNO','SJ16911',1,[2,4,8,12]),pi('TROCAR FILTRO AR INTERNO','SJ16914',1,[4,8,12]),pi('AJUSTE VÁLVULAS DO MOTOR','M811429',1,[4,8,12]),pi('SUBST. LÍQUIDO ARREFECIMENTO','CQM25552',7,[8]),pi('INSPEÇÃO/LIMPEZA INJETORES','—',1,[4,8,12])];
+  const maoSI={'100h':1160,'250h':1235,'500h':1460,'750h':1235,'1000h':3485,'1250h':1625,'1500h':1460,'1750h':1235,'2000h':3485,'2250h':1235,'2500h':1850,'2750h':1235,'3000h':3485};
+  const analSI={'100h':0,'250h':1,'500h':4,'750h':1,'1000h':5,'1250h':1,'1500h':4,'1750h':1,'2000h':5,'2250h':1,'2500h':4,'2750h':1,'3000h':5};
+  const nCh=db.frotas.filter(f=>f.cliente==='Nardini').map(f=>f.chassi);
+  const cCh=db.frotas.filter(f=>f.cliente==='Colombo').map(f=>f.chassi);
+  const sfCh=db.frotas.filter(f=>f.cliente==='Santa Sofia').map(f=>f.chassi);
+  const siCh=db.frotas.filter(f=>f.cliente==='Santa Isabel'&&f.modelo==='3036EN').map(f=>f.chassi);
+  db.planos=[
+    {id:uid(),nome:'CH570 — Nardini',modelo:'CH570',tipo:'Colhedora',revs:revsCH570N,items:nI,mao:maoN,anal:analN,desl:350,chassis:nCh},
+    {id:uid(),nome:'CH570 — Colombo',modelo:'CH570',tipo:'Colhedora',revs:revsCH570C,items:cI,mao:maoC,anal:analC,desl:350,chassis:cCh},
+    {id:uid(),nome:'5080E — Santa Sofia',modelo:'5080E',tipo:'Trator',revs:revsSF,items:sfI,mao:maoSF,anal:analSF,desl:350,chassis:sfCh},
+    {id:uid(),nome:'3036EN — Santa Isabel',modelo:'3036EN',tipo:'Trator',revs:revsSI,items:siI,mao:maoSI,anal:analSI,desl:350,chassis:siCh},
+  ];
 }
 
-// close on bg click
-document.querySelectorAll('.overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+// ── INIT ──
+document.querySelectorAll('.overlay').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
 
-// ══════════════════════════════════════════
-// FIREBASE — PERSISTÊNCIA
-// ══════════════════════════════════════════
-
-// Indicador visual de conexão/status
-function setFbStatus(state, msg){
-  const dot = document.getElementById('fb-dot');
-  const lbl = document.getElementById('fb-status');
-  const sidebar = document.getElementById('fb-sidebar-dot');
-  const colors = { ok:'var(--green)', loading:'var(--yellow)', error:'var(--red)' };
-  if(dot){ dot.style.background = colors[state]||'var(--muted2)'; }
-  if(lbl){ lbl.textContent = msg; lbl.style.color = colors[state]||'var(--muted)'; }
-  if(sidebar){ sidebar.style.background = colors[state]||'var(--muted2)'; }
+function showApp(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='flex';
+  rAll();
 }
 
-function setSaveStatus(msg, ok){
-  const el = document.getElementById('save-status');
-  if(el){ el.textContent = msg; el.style.color = ok ? 'var(--green)' : 'var(--red)'; }
-}
+function setLoadMsg(msg){ document.getElementById('loading-msg').textContent=msg; }
 
-// Salvar tudo no Firebase (chamado automaticamente após cada mudança)
-async function saveLocal(silent){
-  try{
-    setFbStatus('loading', 'Salvando...');
-    await Promise.all([
-      fbWrite(DOCS.frotas,  db.frotas),
-      fbWrite(DOCS.hist,    db.hist),
-      fbWrite(DOCS.planos,  db.planos),
-    ]);
-    const ts = new Date().toLocaleString('pt-BR');
-    setFbStatus('ok', `Sincronizado · ${ts}`);
-    setSaveStatus(`✅ Salvo no Firebase às ${ts}`, true);
-    if(!silent) showToast('☁️ Dados salvos no Firebase!');
-  }catch(e){
-    setFbStatus('error', 'Erro ao salvar: ' + e.message);
-    setSaveStatus('❌ Erro: ' + e.message, false);
-    showToast('❌ Falha ao salvar!');
+async function init(){
+  setLoadMsg('Aguardando Firebase...');
+  // Espera o módulo Firebase sinalizar que está pronto
+  await new Promise(resolve=>{
+    if(window._fbReady){ resolve(); return; }
+    document.addEventListener('fbReady', resolve, {once:true});
+    setTimeout(resolve, 8000); // timeout de segurança
+  });
+
+  if(!window._fbRead){
+    // Firebase não carregou — modo offline com seed
+    setLoadMsg('Firebase indisponível. Carregando dados locais...');
+    setFb('error','Offline');
+    seed(); showApp(); toast('⚠️ Firebase indisponível.');
+    return;
   }
-}
 
-// Alias para o botão "Salvar no Firebase" do modal
-async function fbSaveAll(){ await saveLocal(false); }
-
-// Carregar tudo do Firebase
-async function fbLoadAll(){
   try{
-    setFbStatus('loading', 'Carregando dados do Firebase...');
-    const [frotas, hist, planos] = await Promise.all([
-      fbRead(DOCS.frotas),
-      fbRead(DOCS.hist),
-      fbRead(DOCS.planos),
+    setLoadMsg('Carregando dados do Firebase...');
+    setFb('loading','Conectando...');
+    const [fr,hi,pl] = await Promise.all([
+      window._fbRead('frotas'),
+      window._fbRead('historico'),
+      window._fbRead('planos'),
     ]);
-    db.frotas = frotas;
-    db.hist   = hist;
-    db.planos = planos;
-    rAll();
-    const ts = new Date().toLocaleString('pt-BR');
-    setFbStatus('ok', `Carregado às ${ts}`);
-    setSaveStatus(`✅ Dados carregados do Firebase (${ts})`, true);
-    showToast('✅ Dados sincronizados do Firebase!');
-    return true;
-  }catch(e){
-    setFbStatus('error', 'Erro ao carregar: ' + e.message);
-    setSaveStatus('❌ ' + e.message, false);
-    return false;
-  }
-}
-
-// ── Export / Import ──
-function exportData(){
-  const data = { db, _version:'1.0', _exported: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = `tracbel_revisoes_${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(url);
-  showToast('⬇️ Backup exportado!');
-}
-
-function importData(input){
-  const file = input.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = async e => {
-    try{
-      const parsed = JSON.parse(e.target.result);
-      if(!parsed.db || !Array.isArray(parsed.db.frotas)){
-        document.getElementById('import-status').textContent = '❌ Arquivo inválido.';
-        return;
-      }
-      const msg = `Importar e enviar para o Firebase?
-
-• ${parsed.db.frotas.length} equipamentos
-• ${parsed.db.hist.length} históricos
-• ${parsed.db.planos.length} planos
-
-Isso substituirá os dados atuais.`;
-      if(!confirm(msg)) return;
-      db.frotas  = parsed.db.frotas  || [];
-      db.hist    = parsed.db.hist    || [];
-      db.planos  = parsed.db.planos  || [];
-      await saveLocal(true);
-      rAll();
-      const ts = parsed._exported ? new Date(parsed._exported).toLocaleString('pt-BR') : '—';
-      const el = document.getElementById('import-status');
-      if(el){ el.textContent = `✅ Importado e salvo no Firebase! (backup de ${ts})`; el.style.color='var(--green)'; }
-      showToast('✅ Importado com sucesso!');
-    }catch(err){
-      const el = document.getElementById('import-status');
-      if(el){ el.textContent = '❌ ' + err.message; el.style.color='var(--red)'; }
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
-
-// ── Toast ──
-function showToast(msg){
-  let t = document.getElementById('toast');
-  if(!t){
-    t = document.createElement('div');
-    t.id = 'toast';
-    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:opacity .3s;pointer-events:none';
-    document.body.appendChild(t);
-  }
-  t.textContent = msg; t.style.opacity = '1';
-  clearTimeout(t._to); t._to = setTimeout(()=>{ t.style.opacity='0'; }, 2500);
-}
-
-// ── openM override to refresh modal status ──
-const _origOpenM = openM;
-window.openM = function(t){
-  _origOpenM(t);
-};
-
-// ══════════════════════════════════════════
-// INIT — carrega do Firebase (ou seed no 1º acesso)
-// ══════════════════════════════════════════
-(async function init(){
-  setFbStatus('loading', 'Conectando ao Firebase...');
-  try{
-    const [frotas, hist, planos] = await Promise.all([
-      fbRead(DOCS.frotas),
-      fbRead(DOCS.hist),
-      fbRead(DOCS.planos),
-    ]);
-    const isEmpty = !frotas.length && !hist.length && !planos.length;
-    if(isEmpty){
-      // Primeiro acesso: carrega dados iniciais e salva no Firebase
-      setFbStatus('loading', 'Primeiro acesso — carregando dados iniciais...');
+    const empty = !fr.length && !hi.length && !pl.length;
+    if(empty){
+      setLoadMsg('Primeiro acesso — carregando dados iniciais...');
       seed();
-      await saveLocal(true);
-      showToast('🚀 Dados iniciais carregados no Firebase!');
+      await Promise.all([
+        window._fbWrite('frotas', db.frotas),
+        window._fbWrite('historico', db.hist),
+        window._fbWrite('planos', db.planos),
+      ]);
+      toast('🚀 Dados iniciais salvos no Firebase!');
     } else {
-      db.frotas  = frotas;
-      db.hist    = hist;
-      db.planos  = planos;
-      const ts = new Date().toLocaleString('pt-BR');
-      setFbStatus('ok', `Online · ${db.frotas.length} equip., ${db.hist.length} histórico · ${ts}`);
+      db.frotas=fr; db.hist=hi; db.planos=pl;
     }
-    rAll();
+    setFb('ok','Online · '+new Date().toLocaleString('pt-BR'));
+    showApp();
   }catch(e){
-    setFbStatus('error', 'Sem conexão — usando dados locais');
-    // fallback: seed para não ficar vazio
-    seed();
-    rAll();
-    showToast('⚠️ Firebase indisponível. Dados não salvos.');
+    setFb('error','Erro: '+e.message);
+    setLoadMsg('Erro Firebase: '+e.message+'. Usando seed...');
+    seed(); showApp();
+    toast('⚠️ Erro Firebase: '+e.message);
   }
-})();
+}
+
+init();
 </script>
 </body>
 </html>
