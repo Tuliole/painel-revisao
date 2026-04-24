@@ -1198,7 +1198,7 @@ function _renderEmailCpick(frotas,cli){
       const al=alerts.find(a=>a.frota.chassi===f.chassi);
       const badge=al?(al.status==='overdue'?'<span style="font-size:10px;color:var(--red);margin-left:4px">🔴</span>':'<span style="font-size:10px;color:var(--yellow);margin-left:4px">🟡 '+Math.round(al.delta)+'h</span>'):'';
       const hasPlan=!!getPlanoForChassi(f.chassi);
-      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${!hasPlan?' <span style=\\'color:var(--orange)\\'>sem plano</span>':''}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
+      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${!hasPlan?" <span style='color:var(--orange)'>sem plano</span>":''}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
     }).join('')}</div>
     <div class="cpick-foot"><span id="em-ch-count">Nenhum selecionado</span><button onclick="selectAllEmailChassis(true)">Todos</button></div>`;
 }
