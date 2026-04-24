@@ -619,27 +619,35 @@ tr:hover .acts{opacity:1}
   </div>
 </div>
 
-<!-- FIREBASE MODULE — resolve shared promise so init() never misses the signal -->
+<!-- FIREBASE — compat SDK (scripts normais, sem ES modules, funciona em qualquer host) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
-// Create the promise BEFORE the module loads, so the resolver is always ready
-window._fbPromise = new Promise(res => { window._fbResolve = res; });
-</script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-try {
-  const _app = initializeApp({apiKey:"AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",authDomain:"painel-revisao.firebaseapp.com",projectId:"painel-revisao",storageBucket:"painel-revisao.firebasestorage.app",messagingSenderId:"822130385965",appId:"1:822130385965:web:ef5b725647bedc3b3a84a4"});
-  const _fs = getFirestore(_app);
-  const COL = "dados";
-  window._fbRead  = async id => { const s=await getDoc(doc(_fs,COL,id)); return s.exists()?(s.data().lista||[]):[] };
-  window._fbWrite = async (id,lista) => { await setDoc(doc(_fs,COL,id),{lista,_ts:new Date().toISOString()}) };
-} catch(e) {
-  console.error('Firebase init error:', e);
-  window._fbRead = null;
-  window._fbWrite = null;
-}
-// Always resolve — whether success or failure
-window._fbResolve();
+(function(){
+  try{
+    const _app = firebase.initializeApp({
+      apiKey:"AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",
+      authDomain:"painel-revisao.firebaseapp.com",
+      projectId:"painel-revisao",
+      storageBucket:"painel-revisao.firebasestorage.app",
+      messagingSenderId:"822130385965",
+      appId:"1:822130385965:web:ef5b725647bedc3b3a84a4"
+    });
+    const _fs = firebase.firestore();
+    const COL = "dados";
+    window._fbRead  = async id => {
+      const snap = await _fs.collection(COL).doc(id).get();
+      return snap.exists ? (snap.data().lista || []) : [];
+    };
+    window._fbWrite = async (id, lista) => {
+      await _fs.collection(COL).doc(id).set({ lista, _ts: new Date().toISOString() });
+    };
+  }catch(e){
+    console.error('Firebase init error:', e);
+    window._fbRead  = null;
+    window._fbWrite = null;
+  }
+})();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
@@ -1643,20 +1651,14 @@ function showApp(){document.getElementById('loading').style.display='none';docum
 function setLoadMsg(m){document.getElementById('loading-msg').textContent=m;}
 
 async function init(){
-  setLoadMsg('Conectando ao Firebase...');
-
-  // Wait for firebase module with a hard timeout safety net
-  const timeout = new Promise(res => setTimeout(res, 12000));
-  await Promise.race([window._fbPromise, timeout]);
-
   if(!window._fbRead){
-    setFb('error','Firebase indisponível — carregando dados locais');
+    setLoadMsg('Firebase não disponível — modo offline');
+    setFb('error','Offline');
     seed();
     showApp();
-    toast('⚠️ Sem conexão com Firebase. Dados não serão salvos.');
+    toast('⚠️ Sem conexão com Firebase. Dados não serão salvos na nuvem.');
     return;
   }
-
   try{
     setLoadMsg('Carregando dados...');
     setFb('loading','Conectando...');
@@ -1677,20 +1679,20 @@ async function init(){
         window._fbWrite('horimetros', db.horimetros)
       ]);
       toast('🚀 Dados iniciais salvos no Firebase!');
-    } else {
+    }else{
       db.frotas = fr;
       db.hist = hi;
       db.planos = pl;
       db.horimetros = ho || [];
     }
-    setFb('ok', 'Online · ' + new Date().toLocaleString('pt-BR'));
+    setFb('ok','Online · '+new Date().toLocaleString('pt-BR'));
     showApp();
-  } catch(e) {
-    setFb('error', 'Erro: ' + e.message);
-    setLoadMsg('Erro ao carregar dados. Usando dados locais...');
-    seed();
+  }catch(e){
+    setFb('error','Erro: '+e.message);
+    setLoadMsg('Erro ao conectar: '+e.message);
+    // Still show app with whatever data we have
     showApp();
-    toast('⚠️ Erro Firebase: ' + e.message);
+    toast('⚠️ Erro Firebase: '+e.message);
   }
 }
 init();
