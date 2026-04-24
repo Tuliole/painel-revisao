@@ -619,17 +619,27 @@ tr:hover .acts{opacity:1}
   </div>
 </div>
 
-<!-- FIREBASE MODULE -->
+<!-- FIREBASE MODULE — resolve shared promise so init() never misses the signal -->
+<script>
+// Create the promise BEFORE the module loads, so the resolver is always ready
+window._fbPromise = new Promise(res => { window._fbResolve = res; });
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-const _app = initializeApp({apiKey:"AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",authDomain:"painel-revisao.firebaseapp.com",projectId:"painel-revisao",storageBucket:"painel-revisao.firebasestorage.app",messagingSenderId:"822130385965",appId:"1:822130385965:web:ef5b725647bedc3b3a84a4"});
-const _fs = getFirestore(_app);
-const COL = "dados";
-window._fbRead  = async id => { const s=await getDoc(doc(_fs,COL,id)); return s.exists()?(s.data().lista||[]):[] };
-window._fbWrite = async (id,lista) => { await setDoc(doc(_fs,COL,id),{lista,_ts:new Date().toISOString()}) };
-window._fbReady = true;
-document.dispatchEvent(new Event('fbReady'));
+try {
+  const _app = initializeApp({apiKey:"AIzaSyDGQecWho1S0a3i2KO0dRldZWe3rIvyWxY",authDomain:"painel-revisao.firebaseapp.com",projectId:"painel-revisao",storageBucket:"painel-revisao.firebasestorage.app",messagingSenderId:"822130385965",appId:"1:822130385965:web:ef5b725647bedc3b3a84a4"});
+  const _fs = getFirestore(_app);
+  const COL = "dados";
+  window._fbRead  = async id => { const s=await getDoc(doc(_fs,COL,id)); return s.exists()?(s.data().lista||[]):[] };
+  window._fbWrite = async (id,lista) => { await setDoc(doc(_fs,COL,id),{lista,_ts:new Date().toISOString()}) };
+} catch(e) {
+  console.error('Firebase init error:', e);
+  window._fbRead = null;
+  window._fbWrite = null;
+}
+// Always resolve — whether success or failure
+window._fbResolve();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
@@ -1633,17 +1643,55 @@ function showApp(){document.getElementById('loading').style.display='none';docum
 function setLoadMsg(m){document.getElementById('loading-msg').textContent=m;}
 
 async function init(){
-  setLoadMsg('Aguardando Firebase...');
-  await new Promise(res=>{if(window._fbReady){res();return;}document.addEventListener('fbReady',res,{once:true});setTimeout(res,8000);});
-  if(!window._fbRead){setFb('error','Offline');seed();showApp();toast('⚠️ Firebase indisponível.');return;}
+  setLoadMsg('Conectando ao Firebase...');
+
+  // Wait for firebase module with a hard timeout safety net
+  const timeout = new Promise(res => setTimeout(res, 12000));
+  await Promise.race([window._fbPromise, timeout]);
+
+  if(!window._fbRead){
+    setFb('error','Firebase indisponível — carregando dados locais');
+    seed();
+    showApp();
+    toast('⚠️ Sem conexão com Firebase. Dados não serão salvos.');
+    return;
+  }
+
   try{
-    setLoadMsg('Carregando dados...');setFb('loading','Conectando...');
-    const [fr,hi,pl,ho]=await Promise.all([window._fbRead('frotas'),window._fbRead('historico'),window._fbRead('planos'),window._fbRead('horimetros')]);
-    const empty=!fr.length&&!hi.length&&!pl.length;
-    if(empty){setLoadMsg('Primeiro acesso — carregando dados iniciais...');seed();await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);toast('🚀 Dados iniciais salvos!');}
-    else{db.frotas=fr;db.hist=hi;db.planos=pl;db.horimetros=ho||[];}
-    setFb('ok','Online · '+new Date().toLocaleString('pt-BR'));showApp();
-  }catch(e){setFb('error','Erro: '+e.message);seed();showApp();toast('⚠️ Erro Firebase: '+e.message);}
+    setLoadMsg('Carregando dados...');
+    setFb('loading','Conectando...');
+    const [fr,hi,pl,ho] = await Promise.all([
+      window._fbRead('frotas'),
+      window._fbRead('historico'),
+      window._fbRead('planos'),
+      window._fbRead('horimetros')
+    ]);
+    const empty = !fr.length && !hi.length && !pl.length;
+    if(empty){
+      setLoadMsg('Primeiro acesso — salvando dados iniciais...');
+      seed();
+      await Promise.all([
+        window._fbWrite('frotas', db.frotas),
+        window._fbWrite('historico', db.hist),
+        window._fbWrite('planos', db.planos),
+        window._fbWrite('horimetros', db.horimetros)
+      ]);
+      toast('🚀 Dados iniciais salvos no Firebase!');
+    } else {
+      db.frotas = fr;
+      db.hist = hi;
+      db.planos = pl;
+      db.horimetros = ho || [];
+    }
+    setFb('ok', 'Online · ' + new Date().toLocaleString('pt-BR'));
+    showApp();
+  } catch(e) {
+    setFb('error', 'Erro: ' + e.message);
+    setLoadMsg('Erro ao carregar dados. Usando dados locais...');
+    seed();
+    showApp();
+    toast('⚠️ Erro Firebase: ' + e.message);
+  }
 }
 init();
 </script>
