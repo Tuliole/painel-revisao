@@ -685,23 +685,24 @@ function setFb(state,msg){
   const st=document.getElementById('fb-status');if(st){st.textContent=msg;st.style.color=c;}
 }
 function setSaveStatus(msg,ok){const el=document.getElementById('save-status');if(el){el.textContent=msg;el.style.color=ok?'var(--green)':'var(--red)';}}
+function withTimeout(promise,ms,label='Operação'){return Promise.race([promise,new Promise((_,rej)=>setTimeout(()=>rej(new Error(`${label} demorou mais que ${Math.round(ms/1000)}s`)),ms))]);}
 
 // ── FIREBASE ──
 async function fbSaveAll(){
   try{setFb('loading','Salvando...');
-    await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);
+    await withTimeout(Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]),12000,'Salvar no Firebase');
     const ts=new Date().toLocaleString('pt-BR');setFb('ok',`Sincronizado · ${ts}`);setSaveStatus(`✅ Salvo às ${ts}`,true);toast('☁️ Salvo!');
   }catch(e){setFb('error','Erro: '+e.message);setSaveStatus('❌ '+e.message,false);toast('❌ Falha!');}
 }
 async function fbLoadAll(){
   try{setFb('loading','Carregando...');
-    const [f,h,p,ho]=await Promise.all([window._fbRead('frotas'),window._fbRead('historico'),window._fbRead('planos'),window._fbRead('horimetros')]);
+    const [f,h,p,ho]=await withTimeout(Promise.all([window._fbRead('frotas'),window._fbRead('historico'),window._fbRead('planos'),window._fbRead('horimetros')]),12000,'Carregar do Firebase');
     db.frotas=f;db.hist=h;db.planos=p;db.horimetros=ho||[];
     rAll();setFb('ok','Carregado');setSaveStatus('✅ Recarregado',true);toast('✅ Sincronizado!');return true;
   }catch(e){setFb('error','Erro: '+e.message);return false;}
 }
 async function autosave(){
-  try{await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);setFb('ok','Sincronizado · '+new Date().toLocaleString('pt-BR'));}
+  try{await withTimeout(Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]),12000,'Autosave no Firebase');setFb('ok','Sincronizado · '+new Date().toLocaleString('pt-BR'));}
   catch(e){setFb('error','Autosave: '+e.message);}
 }
 function exportData(){
@@ -1662,12 +1663,12 @@ async function init(){
   try{
     setLoadMsg('Carregando dados...');
     setFb('loading','Conectando...');
-    const [fr,hi,pl,ho] = await Promise.all([
+    const [fr,hi,pl,ho] = await withTimeout(Promise.all([
       window._fbRead('frotas'),
       window._fbRead('historico'),
       window._fbRead('planos'),
       window._fbRead('horimetros')
-    ]);
+    ]),12000,'Conexão inicial com Firebase');
     const empty = !fr.length && !hi.length && !pl.length;
     if(empty){
       setLoadMsg('Primeiro acesso — salvando dados iniciais...');
