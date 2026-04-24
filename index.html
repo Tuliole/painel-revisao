@@ -299,7 +299,9 @@ tr:hover .acts{opacity:1}
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <select class="fil" id="hist-fil-cli" onchange="rHist()"><option value="">Todos os clientes</option></select>
           <select class="fil" id="hist-fil-plano" onchange="rHist()"><option value="">Todos os planos</option></select>
-          <input type="text" class="fil" id="hist-search" placeholder="Buscar chassi..." oninput="rHist()" style="width:160px">
+          <input type="text" class="fil" id="hist-search" placeholder="Buscar chassi..." oninput="rHist()" style="width:140px">
+          <button class="btn btn-g btn-sm" onclick="openM('importHist')" title="Importar revisões via Excel">⬆️ Importar</button>
+          <button class="btn btn-g btn-sm" onclick="openM('exportHist')" title="Exportar revisões para Excel">⬇️ Exportar</button>
         </div>
       </div>
       <div id="hist-board"></div>
@@ -340,10 +342,13 @@ tr:hover .acts{opacity:1}
 
     <!-- FROTAS -->
     <div class="section" id="sec-frotas">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
         <div><div class="page-title">Base de Frotas</div><div class="page-sub" style="margin-bottom:0">Equipamentos cadastrados</div></div>
-        <div style="display:flex;gap:8px;align-items:center">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <select class="fil" id="fil-tipo-f" onchange="rFrotas()"><option value="">Todos os tipos</option><option>Trator</option><option>Colhedora</option><option>Pulverizador</option></select>
+          <button class="btn btn-g btn-sm" id="btn-sel-mode" onclick="toggleSelMode()">☑ Selecionar</button>
+          <button class="btn btn-d btn-sm" id="btn-del-sel" style="display:none" onclick="delSelected()">🗑 Excluir selecionados (<span id="sel-count">0</span>)</button>
+          <button class="btn btn-g btn-sm" id="btn-cancel-sel" style="display:none" onclick="cancelSelMode()">Cancelar</button>
           <button class="btn btn-p" onclick="openM('frota')">+ Adicionar</button>
         </div>
       </div>
@@ -555,6 +560,65 @@ tr:hover .acts{opacity:1}
   </div>
 </div>
 
+<!-- MODAL IMPORTAR HISTÓRICO -->
+<div class="overlay" id="modal-importHist">
+  <div class="modal" style="width:540px">
+    <div class="mhd"><h3>Importar Histórico de Revisões</h3><button class="mcl" onclick="closeM('importHist')">×</button></div>
+    <div class="mbody">
+      <div class="notice notice-info" style="margin-bottom:14px">
+        ℹ️ Formato esperado: colunas <strong>A=Chassi, B=Revisão, C=Data (DD/MM/AAAA), D=Número OS, E=Número Orçamento</strong>. Linha 1 = cabeçalho (ignorada).
+      </div>
+      <div class="field">
+        <label>Arquivo Excel (.xlsx)</label>
+        <label style="cursor:pointer">
+          <div class="btn btn-g" style="width:100%;justify-content:center">📂 Selecionar arquivo</div>
+          <input type="file" accept=".xlsx,.xls" id="ih-file" style="display:none" onchange="previewImportHist(this)">
+        </label>
+      </div>
+      <div id="ih-preview" style="font-size:12px;color:var(--muted);min-height:18px"></div>
+      <div id="ih-table-wrap" style="display:none;margin-top:10px">
+        <div class="tw" style="max-height:220px;overflow-y:auto">
+          <table><thead><tr><th>Chassi</th><th>Revisão</th><th>Data</th><th>OS</th><th>Orçamento</th><th>Status</th></tr></thead>
+          <tbody id="ih-preview-rows"></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="mftr">
+      <button class="btn btn-g" onclick="closeM('importHist')">Cancelar</button>
+      <button class="btn btn-p" id="ih-save-btn" style="display:none" onclick="saveImportHist()">Importar registros</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EXPORTAR HISTÓRICO -->
+<div class="overlay" id="modal-exportHist">
+  <div class="modal" style="width:500px">
+    <div class="mhd"><h3>Exportar Histórico de Revisões</h3><button class="mcl" onclick="closeM('exportHist')">×</button></div>
+    <div class="mbody">
+      <div class="field"><label>Selecione os chassis para exportar</label>
+        <div class="cpick">
+          <div class="cpick-search">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="eh-search" placeholder="Filtrar chassi ou frota..." oninput="filterExportHist(this.value)">
+          </div>
+          <div class="cpick-body" id="eh-list" style="max-height:260px"></div>
+          <div class="cpick-foot">
+            <span id="eh-count">Nenhum selecionado</span>
+            <div style="display:flex;gap:8px">
+              <button onclick="selectAllExportHist(true)">Todos</button>
+              <button onclick="selectAllExportHist(false)">Nenhum</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mftr">
+      <button class="btn btn-g" onclick="closeM('exportHist')">Cancelar</button>
+      <button class="btn btn-p" onclick="doExportHist()">⬇️ Exportar Excel</button>
+    </div>
+  </div>
+</div>
+
 <!-- FIREBASE MODULE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
@@ -578,6 +642,8 @@ let editorPlanIdx = -1;
 let editorData = null;
 let revModal = { chassi:'', rev:'', planoIdx:-1, histIdx:-1 };
 let importedPlanData = null; // for excel import preview
+let selMode = false; // frota selection mode
+let selIds = new Set(); // selected frota ids
 
 // ── UTILS ──
 const uid  = () => Date.now().toString(36)+Math.random().toString(36).slice(2);
@@ -921,11 +987,13 @@ function rFrotas(){
         <svg class="chev" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </div>
       <div class="cg-body"><div class="tw"><table>
-        <thead><tr><th>Frota</th><th>Chassi</th><th>Modelo</th><th>Tipo</th><th>Horímetro</th><th></th></tr></thead>
-        <tbody>${equips.map(f=>{const i=db.frotas.indexOf(f);const hor=getHor(f.chassi);return`<tr>
+        <thead><tr>${selMode?'<th style="width:32px"></th>':''}<th>Frota</th><th>Chassi</th><th>Modelo</th><th>Tipo</th><th>Horímetro</th><th></th></tr></thead>
+        <tbody>${equips.map(f=>{const i=db.frotas.indexOf(f);const hor=getHor(f.chassi);const isSel=selIds.has(f.id);return`<tr style="${isSel?'background:var(--green-g)':''}">
+          ${selMode?`<td><input type="checkbox" ${isSel?'checked':''} onclick="toggleSelFrota('${f.id}')" style="accent-color:var(--green);width:14px;height:14px;cursor:pointer"></td>`:''}
           <td><strong>${f.frota||'—'}</strong></td><td class="mono">${f.chassi}</td><td><strong>${f.modelo}</strong></td><td>${tbadge(f.tipo)}</td>
           <td>${hor!=null?`<strong>${hor.toLocaleString('pt-BR')} h</strong>`:`<span style="color:var(--muted2)">—</span>`}</td>
-          <td><div class="acts"><button class="btn btn-g btn-sm" onclick="editFrota(${i})">Editar</button><button class="btn btn-d btn-sm" onclick="delFrota(${i})">Remover</button></div></td>
+          <td><div class="acts">${selMode?`<button class="btn btn-g btn-sm" onclick="toggleSelFrota('${f.id}')">${isSel?'✓ Selecionado':'Selecionar'}</button>`:
+            `<button class="btn btn-g btn-sm" onclick="editFrota(${i})">Editar</button><button class="btn btn-d btn-sm" onclick="delFrota(${i})">Remover</button>`}</div></td>
         </tr>`}).join('')}</tbody>
       </table></div></div>
     </div>`).join('');
@@ -1198,7 +1266,7 @@ function _renderEmailCpick(frotas,cli){
       const al=alerts.find(a=>a.frota.chassi===f.chassi);
       const badge=al?(al.status==='overdue'?'<span style="font-size:10px;color:var(--red);margin-left:4px">🔴</span>':'<span style="font-size:10px;color:var(--yellow);margin-left:4px">🟡 '+Math.round(al.delta)+'h</span>'):'';
       const hasPlan=!!getPlanoForChassi(f.chassi);
-      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${!hasPlan?" <span style='color:var(--orange)'>sem plano</span>":''}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
+      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${!hasPlan?' <span style=\\'color:var(--orange)\\'>sem plano</span>':''}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
     }).join('')}</div>
     <div class="cpick-foot"><span id="em-ch-count">Nenhum selecionado</span><button onclick="selectAllEmailChassis(true)">Todos</button></div>`;
 }
@@ -1284,6 +1352,15 @@ function openM(t){
   if(t==='plano'){sv('mp-nome','');sv('mp-mod','');sv('mp-revs','');sv('mp-tipo','Colhedora');
     const mc=document.getElementById('mp-copiar');if(mc)mc.innerHTML='<option value="">— Não copiar —</option>'+db.planos.map((p,i)=>`<option value="${i}">${p.nome}</option>`).join('');}
   if(t==='importPlano'){sv('imp-nome','');sv('imp-mod','');sv('imp-tipo','Colhedora');const st=document.getElementById('imp-preview');if(st)st.textContent='';const btn=document.getElementById('imp-save-btn');if(btn)btn.style.display='none';_importPlanPreview=null;}
+  if(t==='importHist'){
+    _ihRows=[];
+    const st=document.getElementById('ih-preview');if(st){st.textContent='';st.style.color='var(--muted)';}
+    const btn=document.getElementById('ih-save-btn');if(btn)btn.style.display='none';
+    const wrap=document.getElementById('ih-table-wrap');if(wrap)wrap.style.display='none';
+    const tbody=document.getElementById('ih-preview-rows');if(tbody)tbody.innerHTML='';
+    const fi=document.getElementById('ih-file');if(fi)fi.value='';
+  }
+  if(t==='exportHist'){openExportHist();}
   const el=document.getElementById('modal-'+t);if(el)el.classList.add('open');
 }
 function closeM(t){const el=document.getElementById('modal-'+t);if(el)el.classList.remove('open');}
@@ -1318,7 +1395,162 @@ function editFrota(i){
   sv('mf-frota',f.frota);sv('mf-cli',f.cliente);sv('mf-ch',f.chassi);sv('mf-mod',f.modelo);sv('mf-tipo',f.tipo||'Trator');
   renderFrotaPlanoList(f.chassi);document.getElementById('modal-frota').classList.add('open');
 }
-function delFrota(i){if(confirm('Remover equipamento?')){db.frotas.splice(i,1);rAll();autosave();toast('Removido.');}}
+function delFrota(i){
+  if(confirm('Remover equipamento?')){
+    const chassi=db.frotas[i]?.chassi;
+    db.frotas.splice(i,1);
+    // Remove from all plano.chassis arrays
+    if(chassi)db.planos.forEach(p=>{const ci=p.chassis.indexOf(chassi);if(ci>=0)p.chassis.splice(ci,1);});
+    rAll();autosave();toast('Removido.');
+  }
+}
+
+// ── SELECTION MODE (frotas) ──
+function toggleSelMode(){
+  selMode=!selMode;selIds.clear();
+  document.getElementById('btn-sel-mode').textContent=selMode?'✕ Cancelar seleção':'☑ Selecionar';
+  document.getElementById('btn-del-sel').style.display=selMode?'':'none';
+  document.getElementById('btn-cancel-sel').style.display='none';
+  rFrotas();
+}
+function cancelSelMode(){selMode=false;selIds.clear();document.getElementById('btn-sel-mode').textContent='☑ Selecionar';document.getElementById('btn-del-sel').style.display='none';document.getElementById('btn-cancel-sel').style.display='none';rFrotas();}
+function toggleSelFrota(id){
+  if(selIds.has(id))selIds.delete(id);else selIds.add(id);
+  const n=selIds.size;
+  const cnt=document.getElementById('sel-count');if(cnt)cnt.textContent=n;
+  const delBtn=document.getElementById('btn-del-sel');if(delBtn)delBtn.style.display=n>0?'':'none';
+  rFrotas();
+}
+function delSelected(){
+  const n=selIds.size;if(!n){toast('Nenhum equipamento selecionado.');return;}
+  const list=db.frotas.filter(f=>selIds.has(f.id)).map(f=>`${f.frota?'Frota '+f.frota+' — ':''}${f.modelo} (${f.chassi})`);
+  if(!confirm(`Excluir ${n} equipamento${n!==1?'s':''}?
+
+${list.join('
+')}
+
+Esta ação não pode ser desfeita.`))return;
+  db.frotas=db.frotas.filter(f=>!selIds.has(f.id));
+  selMode=false;selIds.clear();
+  document.getElementById('btn-sel-mode').textContent='☑ Selecionar';
+  document.getElementById('btn-del-sel').style.display='none';
+  rAll();autosave();toast(`🗑 ${n} equipamento${n!==1?'s':''} removido${n!==1?'s':''}.`);
+}
+
+// ── IMPORT / EXPORT HISTÓRICO ──
+let _ihRows=[];
+
+function previewImportHist(input){
+  const file=input.files[0];if(!file)return;
+  const st=document.getElementById('ih-preview');const btn=document.getElementById('ih-save-btn');
+  const wrap=document.getElementById('ih-table-wrap');
+  _ihRows=[];btn.style.display='none';wrap.style.display='none';
+  st.textContent='Lendo...';st.style.color='var(--muted)';
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      let ok=0,skip=0;
+      const preview=[];
+      for(let i=1;i<rows.length;i++){
+        const row=rows[i];
+        const chassi=String(row[0]||'').trim();
+        const rev=String(row[1]||'').trim();
+        const dataRaw=String(row[2]||'').trim();
+        const os=String(row[3]||'').trim();
+        const orc=String(row[4]||'').trim();
+        if(!chassi||!rev){skip++;continue;}
+        // Normalize date: handle Excel serial, DD/MM/YYYY, ISO, etc.
+        let dataFmt=dataRaw;
+        if(typeof row[2]==='number'&&row[2]>1){
+          // Excel serial date
+          const d=new Date(Math.round((row[2]-25569)*86400000));
+          dataFmt=d.toISOString().slice(0,10);
+        }else if(/^\d{2}\/\d{2}\/\d{4}$/.test(dataRaw)){
+          const p=dataRaw.split('/');dataFmt=`${p[2]}-${p[1]}-${p[0]}`;
+        }else if(/^\d{4}-\d{2}-\d{2}/.test(dataRaw)){
+          dataFmt=dataRaw.slice(0,10);
+        }
+        const inDb=db.frotas.find(f=>f.chassi===chassi);
+        const exists=db.hist.find(h=>h.chassi===chassi&&h.rev===rev);
+        const status=!inDb?'⚠️ Chassi não encontrado':exists?'🔄 Atualizar':'✅ Novo';
+        if(inDb){_ihRows.push({chassi,rev,data:dataFmt,os,orc});ok++;}else skip++;
+        preview.push({chassi,rev,data:dataRaw||'—',os:os||'—',orc:orc||'—',status});
+      }
+      const tbody=document.getElementById('ih-preview-rows');
+      tbody.innerHTML=preview.map(p=>`<tr><td class="mono" style="font-size:11px">${p.chassi}</td><td><span class="badge bk">${p.rev}</span></td><td>${p.data}</td><td>${p.os}</td><td>${p.orc}</td><td style="font-size:11px">${p.status}</td></tr>`).join('');
+      wrap.style.display='';
+      st.textContent=`${ok} registros prontos para importar${skip?' | '+skip+' ignorados (chassi não cadastrado)':''}.`;
+      st.style.color=skip?'var(--yellow)':'var(--green)';
+      if(ok>0)btn.style.display='';
+    }catch(err){st.textContent='❌ '+err.message;st.style.color='var(--red)';}
+  };r.readAsArrayBuffer(file);input.value='';
+}
+
+function saveImportHist(){
+  let added=0,updated=0;
+  _ihRows.forEach(row=>{
+    const idx=db.hist.findIndex(h=>h.chassi===row.chassi&&h.rev===row.rev);
+    const entry={id:idx>=0?db.hist[idx].id:uid(),chassi:row.chassi,rev:row.rev,data:row.data,os:row.os,orc:row.orc,obs:''};
+    if(idx>=0){db.hist[idx]=entry;updated++;}else{db.hist.push(entry);added++;}
+  });
+  closeM('importHist');rAll();autosave();
+  toast(`✅ ${added} adicionados, ${updated} atualizados.`);_ihRows=[];
+}
+
+function openExportHist(){
+  const list=document.getElementById('eh-list');if(!list)return;
+  list.innerHTML=db.frotas.map(f=>{
+    const nhist=db.hist.filter(h=>h.chassi===f.chassi).length;
+    return`<div class="cpick-item" id="ehrow-${f.id}" onclick="toggleExportFrota('${f.id}')">
+      <input type="checkbox" id="ehch-${f.id}" onclick="event.stopPropagation();toggleExportFrota('${f.id}')">
+      <div class="pim"><div class="pic">${f.chassi}</div><div class="pis">${f.modelo} · ${f.cliente}${f.frota?' · Frota '+f.frota:''}</div></div>
+      <span class="pif">${nhist} rev.</span>
+    </div>`;
+  }).join('');
+  updateEhCount();
+}
+function toggleExportFrota(fid){
+  const cb=document.getElementById('ehch-'+fid);const row=document.getElementById('ehrow-'+fid);
+  if(cb){cb.checked=!cb.checked;row?.classList.toggle('sel',cb.checked);}
+  updateEhCount();
+}
+function selectAllExportHist(sel){
+  document.querySelectorAll('#eh-list .cpick-item').forEach(row=>{
+    const cb=row.querySelector('input');if(cb){cb.checked=sel;row.classList.toggle('sel',sel);}
+  });updateEhCount();
+}
+function filterExportHist(q){
+  document.querySelectorAll('#eh-list .cpick-item').forEach((row,idx)=>{
+    const f=db.frotas[idx];
+    row.style.display=(!q||!f||(f.chassi+f.modelo+f.cliente+(f.frota||'')).toLowerCase().includes(q.toLowerCase()))?'':'none';
+  });
+}
+function updateEhCount(){
+  const n=document.querySelectorAll('#eh-list input:checked').length;
+  const el=document.getElementById('eh-count');if(el)el.textContent=n?`${n} selecionado${n!==1?'s':''}`:'Nenhum selecionado';
+}
+function doExportHist(){
+  const selCh=db.frotas.filter(f=>document.getElementById('ehch-'+f.id)?.checked).map(f=>f.chassi);
+  if(!selCh.length){toast('Selecione ao menos um chassi.');return;}
+  const rows=[['Chassi','Revisão','Data','Número OS','Número Orçamento','Frota','Modelo','Cliente']];
+  selCh.forEach(ch=>{
+    const f=db.frotas.find(ff=>ff.chassi===ch);
+    db.hist.filter(h=>h.chassi===ch).forEach(h=>{
+      // Convert YYYY-MM-DD back to DD/MM/YYYY for readability
+      let dateFmt=h.data||'';
+      if(/^\d{4}-\d{2}-\d{2}$/.test(dateFmt)){const p=dateFmt.split('-');dateFmt=`${p[2]}/${p[1]}/${p[0]}`;}
+      rows.push([ch,h.rev,dateFmt,h.os||'',h.orc||'',f?.frota||'',f?.modelo||'',f?.cliente||'']);
+    });
+  });
+  if(rows.length<=1){toast('Nenhum registro de histórico para os chassis selecionados.');return;}
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Historico');
+  XLSX.writeFile(wb,`historico_revisoes_${new Date().toISOString().slice(0,10)}.xlsx`);
+  closeM('exportHist');toast(`⬇️ Exportado! ${rows.length-1} registros.`);
+}
 
 function savePlano(){
   const nome=gv('mp-nome'),mod=gv('mp-mod'),tipo=gv('mp-tipo'),revs=gv('mp-revs').split(',').map(r=>r.trim()).filter(Boolean);
