@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gestão de Revisões — Tracbel Agro</title>
+<title>Revisões — Tracbel Agro</title>
 <style>
 :root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2230;--bg4:#21262d;--green:#2ea043;--green-b:#238636;--green-d:#1a6330;--green-g:rgba(46,160,67,.15);--border:#30363d;--border2:#21262d;--text:#e6edf3;--muted:#7d8590;--muted2:#484f58;--blue:#58a6ff;--blue-g:rgba(88,166,255,.12);--yellow:#d29922;--yellow-g:rgba(210,153,34,.15);--orange:#e3681a;--orange-g:rgba(227,104,26,.15);--red:#f85149;--red-g:rgba(248,81,73,.12);--r:8px;--rs:5px}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,13 +36,14 @@ nav{padding:10px 8px;flex:1;overflow-y:auto}
 .section{display:none}.section.active{display:block}
 .page-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.4px}
 .page-sub{font-size:13px;color:var(--muted);margin-top:3px;margin-bottom:18px}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
-.stat.ac{border-left:2px solid var(--green)}
-.stat.aw{border-left:2px solid var(--orange)}
-.stat.ar{border-left:2px solid var(--red)}
+/* STATS */
+.stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;flex:1;min-width:140px}
+.stat.ac{border-left:3px solid var(--green)}
+.stat.aw{border-left:3px solid var(--orange)}
+.stat.ar{border-left:3px solid var(--red)}
 .stat .lbl{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.stat .val{font-size:24px;font-weight:700;color:var(--text);line-height:1}
+.stat .val{font-size:28px;font-weight:700;color:var(--text);line-height:1}
 .stat .s{font-size:11px;color:var(--muted2);margin-top:4px}
 /* CLIENT GROUPS */
 .cg{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
@@ -94,7 +95,7 @@ tr:hover .acts{opacity:1}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .overlay.open{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);width:520px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.5)}
-.modal.wide{width:96vw;max-width:1300px;height:90vh;display:flex;flex-direction:column;overflow:hidden}
+.modal.wide{width:96vw;max-width:1400px;height:92vh;display:flex;flex-direction:column;overflow:hidden}
 .modal.wide .mbody{flex:1;overflow:hidden;padding:0;display:flex;flex-direction:column;min-height:0}
 .mhd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3);flex-shrink:0}
 .mhd h3{font-size:14px;font-weight:600;color:var(--text)}
@@ -109,22 +110,24 @@ tr:hover .acts{opacity:1}
 .field select option{background:var(--bg3)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .hint{font-size:11px;color:var(--muted2);margin-top:4px}
-/* PLAN EDITOR */
-.plan-editor{overflow-x:auto;flex:1;min-height:0}
-.plan-table{border-collapse:collapse;font-size:12px;min-width:100%}
-.plan-table thead th{position:sticky;top:0;z-index:2}
-.plan-table th{background:var(--bg4);border:1px solid var(--border);padding:6px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:center}
-.plan-table th.ic{text-align:left;min-width:190px;max-width:190px}
-.plan-table th.cc{min-width:80px;max-width:80px}
-.plan-table th.qc{min-width:48px;max-width:48px}
+/* PLAN EDITOR — fixed layout */
+.plan-editor{overflow:auto;flex:1;min-height:0;position:relative}
+.plan-table{border-collapse:collapse;font-size:12px}
+.plan-table thead th{position:sticky;top:0;z-index:3;background:var(--bg4)}
+.plan-table th.ic-sticky{position:sticky;left:0;z-index:4;background:var(--bg4)}
+.plan-table td.ic-sticky{position:sticky;left:0;z-index:1;background:var(--bg3)}
+.plan-table th{border:1px solid var(--border);padding:6px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:center}
+.plan-table th.ic{text-align:left;min-width:200px}
+.plan-table th.cc{min-width:90px}
+.plan-table th.qc{min-width:48px}
 .plan-table td{border:1px solid var(--border2);padding:5px 6px;vertical-align:middle}
-.plan-table td.ic{background:var(--bg3);min-width:190px;max-width:190px}
-.plan-table td.cc{background:var(--bg3);text-align:center;min-width:80px;max-width:80px}
-.plan-table td.qc{background:var(--bg3);text-align:center;min-width:48px;max-width:48px}
-.plan-table td.rc{text-align:center;cursor:pointer;background:var(--bg4);transition:background .1s;min-width:50px}
+.plan-table td.ic{background:var(--bg3);min-width:200px;max-width:240px}
+.plan-table td.cc{background:var(--bg3);text-align:center;min-width:90px}
+.plan-table td.qc{background:var(--bg3);text-align:center;min-width:48px}
+.plan-table td.rc{text-align:center;cursor:pointer;background:var(--bg4);transition:background .1s;min-width:52px}
 .plan-table td.rc:hover{background:rgba(46,160,67,.25)}
 .plan-table td.rc.marked{background:var(--green-g)}
-.plan-table .xm{color:var(--green);font-weight:700;font-size:13px;pointer-events:none}
+.plan-table .xm{color:var(--green);font-weight:700;font-size:14px;pointer-events:none}
 .plan-table input[type=text]{background:transparent;border:none;color:var(--text);font-size:12px;width:100%;outline:none;padding:0;font-family:inherit}
 .plan-table input[type=text]:focus{background:rgba(255,255,255,.05);padding:1px 4px;border-radius:3px}
 /* CHASSIS PICKER */
@@ -143,7 +146,7 @@ tr:hover .acts{opacity:1}
 .cpick-item .pif{background:var(--bg4);border:1px solid var(--border);border-radius:4px;font-size:10px;padding:1px 6px;color:var(--muted);flex-shrink:0}
 .cpick-foot{font-size:11px;color:var(--muted);padding:6px 12px;border-top:1px solid var(--border);background:var(--bg4);display:flex;align-items:center;justify-content:space-between}
 .cpick-foot button{font-size:11px;color:var(--green);background:none;border:none;cursor:pointer;padding:0}
-/* PLAN LIST */
+/* PLAN CARDS */
 .plan-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px}
 .plan-card-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .plan-card-hd .left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -170,73 +173,82 @@ tr:hover .acts{opacity:1}
 #loading .spin{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loading p{font-size:13px;color:var(--muted)}
-
-/* ── HISTORICO BOARD ── */
-.hist-board{display:flex;flex-direction:column;gap:0}
-.hist-equip-row{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
-.hist-equip-hd{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
-.hist-equip-info{display:flex;flex-direction:column;gap:2px}
-.hist-equip-info .equip-line1{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
-.hist-equip-info .equip-line2{font-size:11px;color:var(--muted);font-family:'Courier New',monospace}
-.hist-hor-badge{display:flex;align-items:center;gap:6px;font-size:12px}
-.hist-hor-val{font-weight:700;font-size:14px}
-.hist-hor-val.ok{color:var(--green)}
-.hist-hor-val.warn{color:var(--orange)}
-.hist-hor-val.danger{color:var(--red)}
-.hist-hor-val.none{color:var(--muted2)}
-
-/* Revision pills strip */
-.rev-strip{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;align-items:flex-start}
-.rev-pill{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:58px}
-.rev-pill-btn{padding:5px 8px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg4);font-size:11px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;white-space:nowrap;text-align:center;width:100%}
+/* HISTORICO BOARD */
+.hist-equip-row{background:var(--bg2);border:1px solid var(--border2);overflow:hidden}
+.hist-equip-row:first-child{border-top:1px solid var(--border)}
+.hist-equip-hd{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--bg3)}
+.equip-line1{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600}
+.equip-line2{font-size:11px;color:var(--muted);font-family:'Courier New',monospace}
+.hor-val.ok{color:var(--green)}
+.hor-val.warn{color:var(--orange)}
+.hor-val.danger{color:var(--red)}
+.hor-val.none{color:var(--muted2)}
+.rev-strip{display:flex;flex-wrap:wrap;gap:5px;padding:8px 12px}
+.rev-pill{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}
+.rev-pill-btn{padding:4px 7px;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg4);font-size:11px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;white-space:nowrap;text-align:center;width:100%}
 .rev-pill-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-g)}
 .rev-pill-btn.done{background:var(--green-g);border-color:rgba(46,160,67,.4);color:var(--green)}
 .rev-pill-btn.next{background:var(--blue-g);border-color:rgba(88,166,255,.4);color:var(--blue);font-weight:700}
 .rev-pill-btn.soon{background:var(--yellow-g);border-color:rgba(210,153,34,.4);color:var(--yellow);font-weight:700}
 .rev-pill-btn.overdue{background:var(--red-g);border-color:rgba(248,81,73,.4);color:var(--red);font-weight:700;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
-.rev-pill-check{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:3px}
-.rev-pill-check.ck{color:var(--green)}
-
-/* Alert strip */
-.alert-strip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.alert-card{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r);border:1px solid;font-size:12px;flex:1;min-width:220px;max-width:360px}
-.alert-card.danger{background:var(--red-g);border-color:rgba(248,81,73,.35);color:var(--red)}
-.alert-card.warn{background:var(--yellow-g);border-color:rgba(210,153,34,.35);color:var(--yellow)}
-.alert-card .ac-icon{font-size:18px;flex-shrink:0}
-.alert-card .ac-body .ac-title{font-weight:700;margin-bottom:2px}
-.alert-card .ac-body .ac-sub{opacity:.8;font-size:11px}
+.rev-pill-sub{font-size:10px;color:var(--muted);text-align:center}
+.rev-pill-sub.ck{color:var(--green)}
+.rev-pill-sub.rd{color:var(--red)}
+.rev-pill-sub.yw{color:var(--yellow)}
+/* ALERTAS — CARD GRID (visual compact) */
+.alert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:20px}
+.alert-chip{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color .15s}
+.alert-chip:hover{border-color:var(--muted2)}
+.alert-chip.over{border-left:3px solid var(--red)}
+.alert-chip.soon{border-left:3px solid var(--yellow)}
+.alert-chip .ac-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.alert-chip .ac-rev{font-size:12px;font-weight:700}
+.alert-chip .ac-rev.over{color:var(--red)}
+.alert-chip .ac-rev.soon{color:var(--yellow)}
+.alert-chip .ac-info{font-size:11px;color:var(--muted);margin-top:2px}
+.alert-chip .ac-hor{font-size:11px;color:var(--muted2)}
+/* TABS */
+.tab-bar{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.tab-btn{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-pane{display:none}.tab-pane.active{display:block}
 </style>
 </head>
 <body>
-
 <div id="loading"><div class="spin"></div><p id="loading-msg">Conectando ao Firebase...</p></div>
-
 <div class="layout" id="app" style="display:none">
+
+<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">
     <div class="logo-ey"><span class="ldot"></span>John Deere</div>
-    <div class="logo-nm">Gestão de Revisões</div>
+    <div class="logo-nm">Controle de Revisões</div>
     <div class="logo-sb">Tracbel Agro · Catanduva</div>
   </div>
   <nav>
-    <div class="nav-sec">Cadastros</div>
-    <div class="nav-item active" id="nav-frotas" onclick="go('frotas')">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-      Base de Frotas <span class="nc" id="nc-frotas">0</span>
+    <div class="nav-sec">Controle</div>
+    <div class="nav-item active" id="nav-alertas" onclick="go('alertas')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      Alertas <span class="nc" id="nc-alertas" style="background:var(--red-g);color:var(--red);border-color:rgba(248,81,73,.3)">0</span>
     </div>
     <div class="nav-item" id="nav-historico" onclick="go('historico')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       Histórico <span class="nc" id="nc-hist">0</span>
     </div>
-    <div class="nav-item" id="nav-alertas" onclick="go('alertas')">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-      Alertas <span class="nc" id="nc-alertas" style="background:var(--red-g);color:var(--red);border-color:rgba(248,81,73,.3)">0</span>
+    <div class="nav-item" id="nav-horimetro" onclick="go('horimetro')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      Horímetros
     </div>
-    <div class="nav-sec">Técnico</div>
+    <div class="nav-sec">Cadastros</div>
+    <div class="nav-item" id="nav-frotas" onclick="go('frotas')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+      Base de Frotas <span class="nc" id="nc-frotas">0</span>
+    </div>
     <div class="nav-item" id="nav-plano" onclick="go('plano')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7"/></svg>
-      Planos de Manutenção <span class="nc" id="nc-plano">0</span>
+      Planos <span class="nc" id="nc-plano">0</span>
     </div>
     <div class="nav-sec">Operação</div>
     <div class="nav-item" id="nav-email" onclick="go('email')">
@@ -244,13 +256,9 @@ tr:hover .acts{opacity:1}
       Gerar Orçamento
     </div>
     <div class="nav-sec">Sistema</div>
-    <div class="nav-item" id="nav-horimetro" onclick="go('horimetro')">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-      Horímetros (OC)
-    </div>
     <div class="nav-item" onclick="go('dados')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-      Firebase / Backup
+      Backup / Firebase
     </div>
   </nav>
   <div class="sfoot">
@@ -258,13 +266,13 @@ tr:hover .acts{opacity:1}
       <span id="fb-dot" style="width:7px;height:7px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .4s"></span>
       <span id="fb-lbl" style="font-size:10px;color:var(--muted2)">Firebase</span>
     </div>
-    <span style="font-size:10px;color:var(--muted2)">v4.0 · Tracbel Agro</span>
+    <span style="font-size:10px;color:var(--muted2)">v5.0 · Tracbel Agro</span>
   </div>
 </div>
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-title" id="tt">Base de Frotas</div>
+    <div class="topbar-title" id="tt">Alertas</div>
     <div class="swrap">
       <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" id="gsearch" placeholder="Buscar..." oninput="srch(this.value)">
@@ -272,23 +280,22 @@ tr:hover .acts{opacity:1}
   </div>
   <div class="content">
 
-    <!-- FROTAS -->
-    <div class="section active" id="sec-frotas">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
-        <div><div class="page-title">Base de Frotas</div><div class="page-sub" style="margin-bottom:0">Equipamentos organizados por cliente</div></div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select class="fil" id="fil-tipo-f" onchange="rFrotas()"><option value="">Todos os tipos</option><option>Trator</option><option>Colhedora</option><option>Pulverizador</option></select>
-          <button class="btn btn-p" onclick="openM('frota')">+ Adicionar</button>
-        </div>
+    <!-- ALERTAS -->
+    <div class="section active" id="sec-alertas">
+      <div class="page-title" style="margin-bottom:4px">Alertas de Revisão</div>
+      <div class="page-sub">Monitoramento de revisões por horímetro</div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchAlertTab('resumo',this)">Resumo</button>
+        <button class="tab-btn" onclick="switchAlertTab('todos',this)">Todos os alertas</button>
       </div>
-      <div class="stats-row" id="stats-frotas"></div>
-      <div id="frotas-groups"></div>
+      <div id="alertas-resumo" class="tab-pane active"></div>
+      <div id="alertas-todos" class="tab-pane"></div>
     </div>
 
     <!-- HISTORICO -->
     <div class="section" id="sec-historico">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-        <div><div class="page-title">Histórico de Revisões</div><div class="page-sub" style="margin-bottom:0">Clique em uma revisão para registrar data, OS e orçamento</div></div>
+        <div><div class="page-title">Histórico de Revisões</div><div class="page-sub" style="margin-bottom:0">Clique em uma revisão para registrar</div></div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <select class="fil" id="hist-fil-cli" onchange="rHist()"><option value="">Todos os clientes</option></select>
           <select class="fil" id="hist-fil-plano" onchange="rHist()"><option value="">Todos os planos</option></select>
@@ -298,18 +305,60 @@ tr:hover .acts{opacity:1}
       <div id="hist-board"></div>
     </div>
 
-    <!-- ALERTAS -->
-    <div class="section" id="sec-alertas">
-      <div class="page-title" style="margin-bottom:4px">Alertas de Revisão</div>
-      <div class="page-sub">Equipamentos com revisão vencida ou próxima do vencimento</div>
-      <div id="alertas-content"></div>
+    <!-- HORIMETROS -->
+    <div class="section" id="sec-horimetro">
+      <div class="page-title" style="margin-bottom:4px">Horímetros — Operation Center</div>
+      <div class="page-sub">Importe a planilha do OC ou insira manualmente</div>
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:20px;align-items:start">
+        <div>
+          <div class="panel" style="margin-bottom:14px">
+            <div class="phd"><h2>Importar planilha (.xlsx)</h2></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+              <p style="font-size:12px;color:var(--muted2)">Colunas: <strong style="color:var(--text)">A (Frota)</strong>, <strong style="color:var(--text)">D (Chassi — principal)</strong>, <strong style="color:var(--text)">H (Data)</strong>, <strong style="color:var(--text)">I (Horímetro)</strong></p>
+              <label style="cursor:pointer"><div class="btn btn-p" style="justify-content:center;width:100%">📂 Selecionar .xlsx</div><input type="file" accept=".xlsx,.xls" id="oc-file" style="display:none" onchange="importOC(this)"></label>
+              <div id="oc-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="phd"><h2>Inserir manualmente</h2></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+              <div class="field" style="margin:0"><label>Chassi</label><select id="manual-chassi"><option value="">Selecione...</option></select></div>
+              <div class="field" style="margin:0"><label>Horímetro (h)</label><input type="number" id="manual-hor" placeholder="Ex: 1250" min="0"></div>
+              <button class="btn btn-p" style="justify-content:center" onclick="saveManualHor()">Salvar</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="phd"><h2>Status dos horímetros</h2><span id="oc-last-update" style="font-size:11px;color:var(--muted)"></span></div>
+          <div class="tw"><table>
+            <thead><tr><th>Frota</th><th>Chassi</th><th>Modelo</th><th>Horímetro</th><th>Próx. Revisão</th><th>Previsão</th><th>Data OC</th><th></th></tr></thead>
+            <tbody id="hor-table"></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FROTAS -->
+    <div class="section" id="sec-frotas">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+        <div><div class="page-title">Base de Frotas</div><div class="page-sub" style="margin-bottom:0">Equipamentos cadastrados</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select class="fil" id="fil-tipo-f" onchange="rFrotas()"><option value="">Todos os tipos</option><option>Trator</option><option>Colhedora</option><option>Pulverizador</option></select>
+          <button class="btn btn-p" onclick="openM('frota')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="stats-row" id="stats-frotas"></div>
+      <div id="frotas-groups"></div>
     </div>
 
     <!-- PLANOS -->
     <div class="section" id="sec-plano">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
-        <div><div class="page-title">Planos de Manutenção</div><div class="page-sub" style="margin-bottom:0">Planos padrão e personalizados por cliente</div></div>
-        <button class="btn btn-p" onclick="openM('plano')">+ Novo plano</button>
+        <div><div class="page-title">Planos de Manutenção</div><div class="page-sub" style="margin-bottom:0">Intervalos de revisão por modelo</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-g" onclick="openM('importPlano')">⬆️ Importar Excel</button>
+          <button class="btn btn-p" onclick="openM('plano')">+ Novo plano</button>
+        </div>
       </div>
       <div id="plano-list"></div>
     </div>
@@ -317,27 +366,39 @@ tr:hover .acts{opacity:1}
     <!-- EMAIL -->
     <div class="section" id="sec-email">
       <div class="page-title" style="margin-bottom:4px">Gerar Orçamento</div>
-      <div class="page-sub">Selecione os equipamentos e a revisão para gerar o email de orçamento</div>
+      <div class="page-sub">Gere o email de solicitação de orçamento</div>
       <div class="email-builder">
         <div>
-          <!-- Alertas rápidos -->
           <div class="eform">
-            <h3>1. Selecionar equipamentos</h3>
+            <h3>1. Equipamentos</h3>
             <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-              <button class="btn btn-sm" style="background:var(--red-g);color:var(--red);border-color:rgba(248,81,73,.3)" onclick="emailLoadAlerts('overdue')">🔴 Carregar vencidas</button>
-              <button class="btn btn-sm" style="background:var(--yellow-g);color:var(--yellow);border-color:rgba(210,153,34,.3)" onclick="emailLoadAlerts('soon')">🟡 Carregar próximas</button>
+              <button class="btn btn-sm" style="background:var(--red-g);color:var(--red);border-color:rgba(248,81,73,.3)" onclick="emailLoadAlerts('overdue')">🔴 Vencidas</button>
+              <button class="btn btn-sm" style="background:var(--yellow-g);color:var(--yellow);border-color:rgba(210,153,34,.3)" onclick="emailLoadAlerts('soon')">🟡 Próximas</button>
               <button class="btn btn-sm btn-g" onclick="emailClearAll()">✕ Limpar</button>
             </div>
             <div class="field"><label>Cliente</label><select id="em-cli" onchange="updateEmailChassis()"><option value="">Selecione...</option></select></div>
-            <div class="field"><label>Chassis — selecione um ou mais</label>
-              <div class="cpick" id="em-cpick"><div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div></div>
+            <div class="field"><label>Chassis</label>
+              <div class="cpick" id="em-cpick"><div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente</div></div></div>
             </div>
           </div>
           <div class="eform">
             <h3>2. Revisão</h3>
-            <div class="field"><label>Revisão (horímetro)</label><select id="em-rev" onchange="buildEmail()"><option value="">Selecione...</option></select></div>
-            <div class="field"><label>Observações (opcional)</label><textarea id="em-obs" rows="2" placeholder="Ex: Máquina com defeito no..." oninput="buildEmail()" style="resize:vertical"></textarea></div>
+            <div class="field"><label>Horímetro da revisão</label><select id="em-rev" onchange="buildEmail()"><option value="">Selecione...</option></select></div>
+            <div class="field"><label>Observações</label><textarea id="em-obs" rows="2" placeholder="Opcional..." oninput="buildEmail()" style="resize:vertical"></textarea></div>
             <button class="btn btn-p" style="width:100%;justify-content:center" onclick="buildEmail()">⚡ Gerar email</button>
+          </div>
+          <div class="eform">
+            <h3>⚙️ Configurações do email</h3>
+            <div class="field"><label>Saudação</label><input id="cfg-saudacao" value="Boa tarde!" oninput="buildEmail()"></div>
+            <div class="field"><label>Deslocamento fixo (R$)</label><input type="number" id="cfg-desl" value="350" min="0" oninput="buildEmail()"></div>
+            <div class="field"><label>Mensagem de rodapé</label><input id="cfg-rodape" value="Utilizar apenas itens previstos para a revisão conforme plano técnico." oninput="buildEmail()"></div>
+            <div class="field"><label>Ordem das seções</label>
+              <select id="cfg-ordem" onchange="buildEmail()" style="font-size:12px">
+                <option value="cabecalho,chassis,mo,itens">Cabeçalho → Chassis → M.O. → Itens</option>
+                <option value="cabecalho,mo,chassis,itens">Cabeçalho → M.O. → Chassis → Itens</option>
+                <option value="cabecalho,chassis,itens,mo">Cabeçalho → Chassis → Itens → M.O.</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="eprev">
@@ -347,79 +408,37 @@ tr:hover .acts{opacity:1}
       </div>
     </div>
 
-    <!-- HORIMETROS -->
-    <div class="section" id="sec-horimetro">
-      <div class="page-title" style="margin-bottom:4px">Horímetros — Operation Center</div>
-      <div class="page-sub">Importe a planilha do John Deere OC para atualizar os horímetros de todos os equipamentos</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
-        <div>
-          <div class="panel" style="margin-bottom:16px">
-            <div class="phd"><h2>Importar planilha (.xlsx)</h2></div>
-            <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-              <p style="font-size:12px;color:var(--muted2)">Colunas utilizadas: <strong style="color:var(--text)">A (Frota)</strong>, <strong style="color:var(--text)">D (Chassi)</strong>, <strong style="color:var(--text)">H (Data)</strong>, <strong style="color:var(--text)">I (Horímetro)</strong></p>
-              <label style="cursor:pointer">
-                <div class="btn btn-p" style="justify-content:center;width:100%">📂 Selecionar arquivo .xlsx</div>
-                <input type="file" accept=".xlsx,.xls" id="oc-file" style="display:none" onchange="importOC(this)">
-              </label>
-              <div id="oc-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="phd"><h2>Inserir horímetro manual</h2><span style="font-size:11px;color:var(--muted)">Quando um chassi não consta no arquivo</span></div>
-            <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
-              <div class="field" style="margin:0"><label>Chassi</label><select id="manual-chassi"><option value="">Selecione...</option></select></div>
-              <div class="field" style="margin:0"><label>Horímetro atual (h)</label><input type="number" id="manual-hor" placeholder="Ex: 1250" min="0"></div>
-              <button class="btn btn-p" style="justify-content:center" onclick="saveManualHor()">Salvar horímetro</button>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="panel">
-            <div class="phd"><h2>Status dos horímetros</h2><span id="oc-last-update" style="font-size:11px;color:var(--muted)"></span></div>
-            <div class="tw"><table>
-              <thead><tr><th>Frota</th><th>Chassi</th><th>Modelo</th><th>Horímetro</th><th>Data OC</th><th></th></tr></thead>
-              <tbody id="hor-table"></tbody>
-            </table></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- DADOS -->
     <div class="section" id="sec-dados">
       <div class="page-title" style="margin-bottom:4px">Firebase / Backup</div>
       <div class="page-sub">Sincronização e cópias de segurança</div>
-      <div style="max-width:500px">
-        <div class="panel" style="margin-bottom:16px">
+      <div style="max-width:480px">
+        <div class="panel" style="margin-bottom:14px">
           <div class="phd"><h2>Status</h2></div>
           <div style="padding:16px;display:flex;align-items:center;gap:12px">
             <span id="fb-dot2" style="width:10px;height:10px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .4s"></span>
             <span id="fb-status" style="font-size:13px;color:var(--muted)">Verificando...</span>
           </div>
         </div>
-        <div class="panel" style="margin-bottom:16px">
-          <div class="phd"><h2>Sincronização manual</h2></div>
+        <div class="panel" style="margin-bottom:14px">
+          <div class="phd"><h2>Sincronização</h2></div>
           <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
-            <button class="btn btn-p" style="justify-content:center" onclick="fbSaveAll()">☁️ Salvar tudo no Firebase</button>
+            <button class="btn btn-p" style="justify-content:center" onclick="fbSaveAll()">☁️ Salvar no Firebase</button>
             <button class="btn btn-g" style="justify-content:center" onclick="fbLoadAll()">🔄 Recarregar do Firebase</button>
             <div id="save-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
           </div>
         </div>
-        <div class="panel" style="margin-bottom:16px">
+        <div class="panel" style="margin-bottom:14px">
           <div class="phd"><h2>Backup local</h2></div>
           <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
-            <p style="font-size:12px;color:var(--muted2)">Baixa um .json com todos os dados como cópia extra.</p>
-            <button class="btn btn-b" style="justify-content:center" onclick="exportData()">⬇️ Baixar backup .json</button>
+            <button class="btn btn-b" style="justify-content:center" onclick="exportData()">⬇️ Baixar .json</button>
           </div>
         </div>
         <div class="panel">
-          <div class="phd"><h2>Restaurar de backup</h2></div>
+          <div class="phd"><h2>Restaurar backup</h2></div>
           <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
-            <p style="font-size:12px;color:var(--muted2)">Importa um .json e envia para o Firebase. <strong style="color:var(--yellow)">Substitui dados atuais.</strong></p>
-            <label style="cursor:pointer">
-              <div class="btn btn-g" style="justify-content:center;width:100%">⬆️ Selecionar arquivo .json</div>
-              <input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(this)">
-            </label>
+            <p style="font-size:12px;color:var(--muted2);margin-bottom:4px"><strong style="color:var(--yellow)">Atenção:</strong> substitui dados atuais.</p>
+            <label style="cursor:pointer"><div class="btn btn-g" style="justify-content:center;width:100%">⬆️ Selecionar .json</div><input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(this)"></label>
             <div id="import-status" style="font-size:12px;color:var(--muted);min-height:18px"></div>
           </div>
         </div>
@@ -442,21 +461,20 @@ tr:hover .acts{opacity:1}
       <div class="field"><label>Cliente / Fazenda</label><input id="mf-cli" placeholder="Ex: Colombo"></div>
       <div class="field"><label>Chassi</label><input id="mf-ch" placeholder="Ex: 1NWC570HCST260113"></div>
       <div class="field"><label>Modelo</label><input id="mf-mod" placeholder="Ex: CH570"></div>
-    </div>
-    <div class="field"><label>Planos de manutenção</label>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Selecione os planos que este equipamento segue:</div>
-      <div id="mf-planos-list" style="display:flex;flex-direction:column;gap:4px;max-height:150px;overflow-y:auto;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:8px"></div>
+      <div class="field"><label>Planos de manutenção</label>
+        <div id="mf-planos-list" style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:8px"></div>
+      </div>
     </div>
     <div class="mftr"><button class="btn btn-g" onclick="closeM('frota')">Cancelar</button><button class="btn btn-p" onclick="saveFrota()">Salvar</button></div>
   </div>
 </div>
 
-<!-- MODAL REGISTRAR REVISÃO (abre ao clicar em pill) -->
+<!-- MODAL REGISTRAR REVISÃO -->
 <div class="overlay" id="modal-rev">
   <div class="modal" style="width:460px">
     <div class="mhd"><h3 id="rev-modal-title">Registrar Revisão</h3><button class="mcl" onclick="closeM('rev')">×</button></div>
     <div class="mbody">
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--muted)">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;margin-bottom:14px;font-size:12px">
         <div id="rev-modal-info" style="color:var(--text)"></div>
       </div>
       <div class="frow">
@@ -466,7 +484,7 @@ tr:hover .acts{opacity:1}
       <div class="field"><label>Número do Orçamento</label><input type="text" id="rev-orc" placeholder="Ex: ORC-2025-0042"></div>
       <div class="field"><label>Observações</label><textarea id="rev-obs" rows="2" placeholder="Opcional..." style="resize:vertical"></textarea></div>
       <div id="rev-existing" style="display:none;margin-top:8px">
-        <div class="notice notice-warn">⚠️ Já existe um registro para esta revisão. Salvar irá substituí-lo.</div>
+        <div class="notice notice-warn">⚠️ Já existe registro. Salvar irá substituí-lo.</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--border);background:var(--bg3)">
@@ -481,18 +499,41 @@ tr:hover .acts{opacity:1}
 
 <!-- MODAL NOVO PLANO -->
 <div class="overlay" id="modal-plano">
-  <div class="modal">
+  <div class="modal" style="width:560px">
     <div class="mhd"><h3>Novo Plano de Manutenção</h3><button class="mcl" onclick="closeM('plano')">×</button></div>
     <div class="mbody">
       <div class="frow">
-        <div class="field"><label>Nome do plano</label><input id="mp-nome" placeholder="Ex: CH570 Padrão Colombo"></div>
+        <div class="field"><label>Nome do plano</label><input id="mp-nome" placeholder="Ex: CH570 Colombo"></div>
         <div class="field"><label>Modelo base</label><input id="mp-mod" placeholder="Ex: CH570"></div>
       </div>
       <div class="field"><label>Tipo</label><select id="mp-tipo"><option>Colhedora</option><option>Trator</option><option>Pulverizador</option></select></div>
-      <div class="field"><label>Horímetros (separados por vírgula)</label><input id="mp-revs" placeholder="Ex: 100h, 250h, 500h, 1000h"><div class="hint">Serão as colunas. Adicione itens depois no editor.</div></div>
-      <div class="notice notice-info">ℹ️ Após criar, clique em "Editar plano" para adicionar itens e atribuir chassis.</div>
+      <div class="field"><label>Horímetros (separados por vírgula)</label><input id="mp-revs" placeholder="Ex: 100h, 250h, 500h, 1000h"><div class="hint">Colunas do plano.</div></div>
+      <div class="field"><label>Copiar itens de outro plano (opcional)</label>
+        <select id="mp-copiar"><option value="">— Não copiar —</option></select>
+        <div class="hint">Os itens do plano selecionado serão copiados como ponto de partida.</div>
+      </div>
     </div>
     <div class="mftr"><button class="btn btn-g" onclick="closeM('plano')">Cancelar</button><button class="btn btn-p" onclick="savePlano()">Criar plano</button></div>
+  </div>
+</div>
+
+<!-- MODAL IMPORTAR PLANO EXCEL -->
+<div class="overlay" id="modal-importPlano">
+  <div class="modal" style="width:520px">
+    <div class="mhd"><h3>Importar Plano via Excel</h3><button class="mcl" onclick="closeM('importPlano')">×</button></div>
+    <div class="mbody">
+      <div class="notice notice-info">ℹ️ Formato esperado: Linha 1 = cabeçalho (Item | Código | Qtd | 100h | 250h | ...). Colunas A=Item, B=Código, C=Qtd, D em diante = horímetros. Marque X na célula para indicar que o item é feito naquela revisão.</div>
+      <div class="frow">
+        <div class="field"><label>Nome do plano</label><input id="imp-nome" placeholder="Ex: CH570 Nardini"></div>
+        <div class="field"><label>Modelo</label><input id="imp-mod" placeholder="Ex: CH570"></div>
+      </div>
+      <div class="field"><label>Tipo</label><select id="imp-tipo"><option>Colhedora</option><option>Trator</option><option>Pulverizador</option></select></div>
+      <div class="field"><label>Arquivo Excel</label>
+        <label style="cursor:pointer"><div class="btn btn-g" style="width:100%;justify-content:center">📂 Selecionar .xlsx</div><input type="file" accept=".xlsx,.xls" id="imp-file" style="display:none" onchange="previewImportPlano(this)"></label>
+      </div>
+      <div id="imp-preview" style="font-size:12px;color:var(--muted);margin-top:8px"></div>
+    </div>
+    <div class="mftr"><button class="btn btn-g" onclick="closeM('importPlano')">Cancelar</button><button class="btn btn-p" id="imp-save-btn" style="display:none" onclick="saveImportPlano()">Criar plano</button></div>
   </div>
 </div>
 
@@ -503,12 +544,12 @@ tr:hover .acts{opacity:1}
       <h3 id="editor-title">Editar Plano</h3>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn btn-p btn-sm" onclick="addItemRow()">+ Linha</button>
+        <button class="btn btn-g btn-sm" onclick="exportPlanExcel()">⬇️ Exportar Excel</button>
         <button class="mcl" onclick="closeM('editor')">×</button>
       </div>
     </div>
     <div class="mbody">
       <div class="plan-editor" id="plan-editor-wrap"></div>
-
     </div>
     <div class="mftr"><button class="btn btn-g" onclick="closeM('editor')">Cancelar</button><button class="btn btn-p" onclick="savePlanEditor()">Salvar plano</button></div>
   </div>
@@ -526,11 +567,7 @@ window._fbWrite = async (id,lista) => { await setDoc(doc(_fs,COL,id),{lista,_ts:
 window._fbReady = true;
 document.dispatchEvent(new Event('fbReady'));
 </script>
-
-<!-- XLSX READER (SheetJS) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-<!-- APP -->
 <script>
 'use strict';
 // ── STATE ──
@@ -539,89 +576,99 @@ let ei = { frota:-1 };
 let sq = '';
 let editorPlanIdx = -1;
 let editorData = null;
-// Rev modal state
 let revModal = { chassi:'', rev:'', planoIdx:-1, histIdx:-1 };
+let importedPlanData = null; // for excel import preview
 
 // ── UTILS ──
 const uid  = () => Date.now().toString(36)+Math.random().toString(36).slice(2);
 const brl  = v => parseFloat(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const gv   = id => document.getElementById(id).value.trim();
-const sv   = (id,v) => { document.getElementById(id).value=v||''; };
+const gv   = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
+const sv   = (id,v) => { const el=document.getElementById(id); if(el) el.value=v||''; };
 const gMod  = ch => (db.frotas.find(f=>f.chassi===ch)||{modelo:'—'}).modelo;
 const gCli  = ch => (db.frotas.find(f=>f.chassi===ch)||{cliente:'—'}).cliente;
 const gFrot = ch => (db.frotas.find(f=>f.chassi===ch)||{frota:''}).frota;
 const tbadge = t => { const m={Trator:'bg',Colhedora:'bb',Pulverizador:'by'}; return `<span class="badge ${m[t]||'bk'}">${t||'Outro'}</span>`; };
-const empRow = (cols,ico,txt) => `<tr><td colspan="${cols}"><div class="emp"><div class="ico">${ico}</div><p>${txt}</p></div></td></tr>`;
-const parseFrota = s => String(s||'').replace('.','');
 
 function toast(msg,dur=2600){
   let t=document.getElementById('_toast');
   if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:none';document.body.appendChild(t);}
   t.textContent=msg;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';},dur);
 }
-
 function setFb(state,msg){
-  const cols={ok:'var(--green)',loading:'var(--yellow)',error:'var(--red)'};
-  const c=cols[state]||'var(--muted2)';
+  const cols={ok:'var(--green)',loading:'var(--yellow)',error:'var(--red)'};const c=cols[state]||'var(--muted2)';
   ['fb-dot','fb-dot2'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.background=c;});
   const lbl=document.getElementById('fb-lbl');if(lbl)lbl.textContent='Firebase '+(state==='ok'?'✓':state==='loading'?'…':'✗');
   const st=document.getElementById('fb-status');if(st){st.textContent=msg;st.style.color=c;}
 }
 function setSaveStatus(msg,ok){const el=document.getElementById('save-status');if(el){el.textContent=msg;el.style.color=ok?'var(--green)':'var(--red)';}}
 
-// ── FIREBASE OPS ──
+// ── FIREBASE ──
 async function fbSaveAll(){
-  try{
-    setFb('loading','Salvando...');
-    await Promise.all([
-      window._fbWrite('frotas',db.frotas),
-      window._fbWrite('historico',db.hist),
-      window._fbWrite('planos',db.planos),
-      window._fbWrite('horimetros',db.horimetros),
-    ]);
-    const ts=new Date().toLocaleString('pt-BR');
-    setFb('ok',`Sincronizado · ${ts}`);setSaveStatus(`✅ Salvo às ${ts}`,true);toast('☁️ Salvo no Firebase!');
+  try{setFb('loading','Salvando...');
+    await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);
+    const ts=new Date().toLocaleString('pt-BR');setFb('ok',`Sincronizado · ${ts}`);setSaveStatus(`✅ Salvo às ${ts}`,true);toast('☁️ Salvo!');
   }catch(e){setFb('error','Erro: '+e.message);setSaveStatus('❌ '+e.message,false);toast('❌ Falha!');}
 }
 async function fbLoadAll(){
-  try{
-    setFb('loading','Carregando...');
+  try{setFb('loading','Carregando...');
     const [f,h,p,ho]=await Promise.all([window._fbRead('frotas'),window._fbRead('historico'),window._fbRead('planos'),window._fbRead('horimetros')]);
     db.frotas=f;db.hist=h;db.planos=p;db.horimetros=ho||[];
-    rAll();setFb('ok','Carregado · '+new Date().toLocaleString('pt-BR'));setSaveStatus('✅ Recarregado',true);toast('✅ Sincronizado!');return true;
+    rAll();setFb('ok','Carregado');setSaveStatus('✅ Recarregado',true);toast('✅ Sincronizado!');return true;
   }catch(e){setFb('error','Erro: '+e.message);return false;}
 }
 async function autosave(){
-  try{
-    await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);
-    setFb('ok','Sincronizado · '+new Date().toLocaleString('pt-BR'));
-  }catch(e){setFb('error','Autosave: '+e.message);}
+  try{await Promise.all([window._fbWrite('frotas',db.frotas),window._fbWrite('historico',db.hist),window._fbWrite('planos',db.planos),window._fbWrite('horimetros',db.horimetros)]);setFb('ok','Sincronizado · '+new Date().toLocaleString('pt-BR'));}
+  catch(e){setFb('error','Autosave: '+e.message);}
 }
-
 function exportData(){
   const blob=new Blob([JSON.stringify({db,_v:'2.0',_ts:new Date().toISOString()},null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`tracbel_${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);toast('⬇️ Backup exportado!');
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`tracbel_${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);toast('⬇️ Exportado!');
 }
 function importData(input){
   const file=input.files[0];if(!file)return;
   const r=new FileReader();
   r.onload=async e=>{
-    try{
-      const p=JSON.parse(e.target.result);
+    try{const p=JSON.parse(e.target.result);
       if(!p.db||!Array.isArray(p.db.frotas)){document.getElementById('import-status').textContent='❌ Arquivo inválido.';return;}
-      if(!confirm(`Importar?\n• ${p.db.frotas.length} equip.\n• ${p.db.hist.length} históricos\n• ${p.db.planos.length} planos\n\nSubstitui dados atuais.`))return;
+      if(!confirm(`Importar?\n• ${p.db.frotas.length} equip.\n• ${p.db.hist.length} históricos\n• ${p.db.planos.length} planos\nSubstitui dados atuais.`))return;
       db.frotas=p.db.frotas||[];db.hist=p.db.hist||[];db.planos=p.db.planos||[];db.horimetros=p.db.horimetros||[];
       await autosave();rAll();
-      const el=document.getElementById('import-status');if(el){el.textContent='✅ Importado!';el.style.color='var(--green)';}toast('✅ Importado!');
-    }catch(err){const el=document.getElementById('import-status');if(el){el.textContent='❌ '+err.message;el.style.color='var(--red)';}}
+      const el=document.getElementById('import-status');if(el){el.textContent='✅ Importado!';el.style.color='var(--green)';}toast('✅ Importado!');}
+    catch(err){const el=document.getElementById('import-status');if(el){el.textContent='❌ '+err.message;el.style.color='var(--red)';}}
   };r.readAsText(file);input.value='';
 }
 
 // ── HORÍMETROS ──
 function getHor(chassi){ const h=db.horimetros.find(h=>h.chassi===chassi); return h?h.hor:null; }
+function getHorTs(chassi){ const h=db.horimetros.find(h=>h.chassi===chassi); return h?h._ts||h.data:null; }
 function getHorDate(chassi){ const h=db.horimetros.find(h=>h.chassi===chassi); return h?h.data:null; }
 
-// Import OC xlsx
+// Estimate next revision date based on usage rate
+function estimateNextRevDate(chassi){
+  const hor=getHor(chassi);const tsRaw=getHorTs(chassi);
+  if(hor==null||!tsRaw)return null;
+  // Find next undone revision
+  const planos=db.planos.filter(p=>p.chassis.includes(chassi));
+  let nextRevH=null;
+  for(const p of planos){
+    for(const r of p.revs){
+      const rh=parseInt(r);if(isNaN(rh))continue;
+      const done=db.hist.find(h=>h.chassi===chassi&&h.rev===r);
+      if(!done&&rh>hor){nextRevH=nextRevH?Math.min(nextRevH,rh):rh;break;}
+    }
+  }
+  if(nextRevH==null)return null;
+  const hDiff=nextRevH-hor;if(hDiff<=0)return null;
+  // Parse ts to date object
+  let tsDate;
+  try{tsDate=new Date(tsRaw);}catch(e){return null;}
+  if(isNaN(tsDate.getTime()))return null;
+  // Assume ~10h/day of operation — gives a rough estimate
+  const daysAhead=Math.round(hDiff/10);
+  const estDate=new Date(tsDate.getTime()+daysAhead*86400000);
+  return{date:estDate,hDiff,daysAhead,nextRevH};
+}
+
 function importOC(input){
   const file=input.files[0];if(!file)return;
   const st=document.getElementById('oc-status');
@@ -632,39 +679,33 @@ function importOC(input){
       const wb=XLSX.read(e.target.result,{type:'array'});
       const ws=wb.Sheets[wb.SheetNames[0]];
       const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
-      // skip header row (row 0)
-      let updated=0,notFound=[];
+      let updated=0,skipped=0;
       const ts=new Date().toISOString();
+      const ocChassis=new Set();
       for(let i=1;i<rows.length;i++){
         const row=rows[i];
-        const frotaRaw=String(row[0]||'').trim();  // col A (garantia)
-        const chassiRaw=String(row[3]||'').trim(); // col D (principal)
-        const dateRaw=String(row[7]||'').trim();   // col H
-        const horRaw=parseFloat(row[8]);            // col I
+        const frotaRaw=String(row[0]||'').trim();
+        const chassiRaw=String(row[3]||'').trim(); // col D — primary
+        const dateRaw=String(row[7]||'').trim();
+        const horRaw=parseFloat(row[8]);
         if(!chassiRaw||isNaN(horRaw))continue;
-        // Primary match: chassi exact. Fallback: frota normalizada
+        ocChassis.add(chassiRaw);
         const inDb=db.frotas.find(f=>f.chassi===chassiRaw);
-        if(inDb){
-          const idx=db.horimetros.findIndex(h=>h.chassi===chassiRaw);
-          const entry={chassi:chassiRaw,hor:horRaw,data:dateRaw||ts,frota:frotaRaw,_ts:ts};
-          if(idx>=0)db.horimetros[idx]=entry;else db.horimetros.push(entry);
-          updated++;
-        }else{
-          notFound.push(`${frotaRaw?'Frota '+frotaRaw+' / ':''}${chassiRaw}`);
-        }
+        if(!inDb){skipped++;continue;} // silently ignore unknown chassis
+        const idx=db.horimetros.findIndex(h=>h.chassi===chassiRaw);
+        const entry={chassi:chassiRaw,hor:horRaw,data:dateRaw||ts,frota:frotaRaw,_ts:ts};
+        if(idx>=0)db.horimetros[idx]=entry;else db.horimetros.push(entry);
+        updated++;
       }
-      // Detect chassis in db that were NOT in the OC file
-      const ocChassis=new Set(rows.slice(1).map(r=>String(r[3]||'').trim()).filter(Boolean));
       const missingFromOC=db.frotas.filter(f=>!ocChassis.has(f.chassi));
       autosave();rAll();
       let msg=`✅ ${updated} horímetros atualizados.`;
-      if(notFound.length)msg+=` | ⚠️ ${notFound.length} do arquivo não encontrados no painel.`;
-      if(missingFromOC.length)msg+=` | 🔴 ${missingFromOC.length} chassis do painel SEM dados no arquivo: ${missingFromOC.map(f=>(f.frota?'Frota '+f.frota+' ':'')+f.chassi).join(', ')}.`;
-      st.textContent=msg;st.style.color=(notFound.length||missingFromOC.length)?'var(--yellow)':'var(--green)';
-      document.getElementById('oc-last-update').textContent=`Último import: ${new Date().toLocaleString('pt-BR')}`;
-      if(missingFromOC.length){toast(`🔴 Sem horímetro: ${missingFromOC.map(f=>f.frota||f.chassi.slice(-8)).join(', ')}`,6000);}
-      else if(notFound.length){const detail=notFound.slice(0,5).join(', ')+(notFound.length>5?`... +${notFound.length-5} mais`:'');toast(`⚠️ Não encontrados no painel: ${detail}`,5000);}
-      else{toast(`✅ ${updated} horímetros atualizados!`);}
+      if(skipped)msg+=` (${skipped} linhas do arquivo ignoradas — chassis não cadastrados)`;
+      if(missingFromOC.length)msg+=` | ⚠️ ${missingFromOC.length} chassis do painel não estavam no arquivo: ${missingFromOC.map(f=>(f.frota?'Frota '+f.frota+' ':'')+f.chassi.slice(-8)).join(', ')}`;
+      st.textContent=msg;st.style.color=missingFromOC.length?'var(--yellow)':'var(--green)';
+      document.getElementById('oc-last-update').textContent=`Import: ${new Date().toLocaleString('pt-BR')}`;
+      if(missingFromOC.length)toast(`⚠️ Sem dados no arquivo: ${missingFromOC.map(f=>f.frota||f.chassi.slice(-6)).join(', ')}`,5000);
+      else toast(`✅ ${updated} horímetros atualizados!`);
     }catch(err){st.textContent='❌ Erro: '+err.message;st.style.color='var(--red)';}
   };
   reader.readAsArrayBuffer(file);input.value='';
@@ -682,51 +723,51 @@ function saveManualHor(){
 
 function rHorTable(){
   const tb=document.getElementById('hor-table');if(!tb)return;
-  // populate manual chassi select
   const sel=document.getElementById('manual-chassi');
-  if(sel){
-    const cv=sel.value;
-    sel.innerHTML='<option value="">Selecione...</option>'+db.frotas.map(f=>`<option value="${f.chassi}">${f.chassi} — ${f.modelo} (${f.cliente})</option>`).join('');
-    sel.value=cv;
-  }
-  if(!db.frotas.length){tb.innerHTML=empRow(6,'📊','Nenhum equipamento cadastrado.');return;}
+  if(sel){const cv=sel.value;sel.innerHTML='<option value="">Selecione...</option>'+db.frotas.map(f=>`<option value="${f.chassi}">${f.chassi} — ${f.modelo} (${f.cliente})</option>`).join('');sel.value=cv;}
+  if(!db.frotas.length){tb.innerHTML=`<tr><td colspan="8"><div class="emp"><div class="ico">📊</div><p>Nenhum equipamento.</p></div></td></tr>`;return;}
   tb.innerHTML=db.frotas.map(f=>{
     const h=db.horimetros.find(hh=>hh.chassi===f.chassi);
     const hor=h?h.hor:null;
     const horCell=hor!=null?`<strong>${hor.toLocaleString('pt-BR')} h</strong>`:`<span style="color:var(--red);font-weight:600">— Sem dados</span>`;
+    // Next revision
+    const plano=getPlanoForChassi(f.chassi);
+    let nextRev='—';
+    if(plano&&hor!=null){
+      for(const r of plano.revs){
+        const rh=parseInt(r);if(isNaN(rh))continue;
+        const done=db.hist.find(hh=>hh.chassi===f.chassi&&hh.rev===r);
+        if(!done&&rh>hor){nextRev=`${r} (falta ${(rh-hor).toFixed(0)}h)`;break;}
+        if(!done&&rh<=hor){nextRev=`<span style="color:var(--red)">${r} VENCIDA</span>`;break;}
+      }
+    }
+    // Estimate date
+    const est=estimateNextRevDate(f.chassi);
+    const estCell=est?`~${est.date.toLocaleDateString('pt-BR')} (${est.daysAhead}d)`:`<span style="color:var(--muted2)">—</span>`;
     return`<tr>
-      <td>${f.frota||'—'}</td>
-      <td class="mono">${f.chassi}</td>
-      <td>${f.modelo}</td>
-      <td>${horCell}</td>
+      <td>${f.frota||'—'}</td><td class="mono">${f.chassi}</td><td>${f.modelo}</td>
+      <td>${horCell}</td><td style="font-size:12px">${nextRev}</td>
+      <td style="font-size:11px;color:var(--muted)">${estCell}</td>
       <td style="font-size:11px;color:var(--muted)">${h?h.data||'—':'—'}</td>
       <td><div class="acts"><button class="btn btn-g btn-sm" onclick="editManualHor('${f.chassi}',${hor||0})">Editar</button></div></td>
     </tr>`;
   }).join('');
-  // Show missing
   const missing=db.frotas.filter(f=>!db.horimetros.find(h=>h.chassi===f.chassi));
   const st=document.getElementById('oc-status');
-  if(missing.length&&!st.textContent){st.textContent=`⚠️ ${missing.length} chassis sem horímetro: ${missing.map(f=>f.frota||f.chassi).join(', ')}`;st.style.color='var(--yellow)';}
+  if(missing.length&&!st.textContent){st.textContent=`⚠️ ${missing.length} chassis sem horímetro: ${missing.map(f=>f.frota||f.chassi.slice(-8)).join(', ')}`;st.style.color='var(--yellow)';}
 }
 
-function editManualHor(chassi,hor){
-  go('horimetro');
-  setTimeout(()=>{sv('manual-chassi',chassi);document.getElementById('manual-hor').value=hor||'';},100);
-}
+function editManualHor(chassi,hor){go('horimetro');setTimeout(()=>{sv('manual-chassi',chassi);document.getElementById('manual-hor').value=hor||'';},100);}
 
-// ── ALERTA LOGIC ──
-// Returns {status:'ok'|'soon'|'overdue'|'next'|'done'|'pending', horasAte} for a rev given current hor
+// ── ALERT LOGIC ──
 function revStatus(revStr,chassi){
-  const hor=getHor(chassi);
-  const revH=parseInt(revStr); // "500h" -> 500
+  const hor=getHor(chassi);const revH=parseInt(revStr);
   if(isNaN(revH))return{status:'done'};
-  // Check if done
   const done=db.hist.find(h=>h.chassi===chassi&&h.rev===revStr);
   if(done)return{status:'done',data:done.data,os:done.os,orc:done.orc};
-  // Not done
   if(hor==null)return{status:'pending'};
-  const delta=revH-hor; // positive = ahead, negative = passed
-  if(delta<0)return{status:'overdue',delta:Math.abs(delta)}; // already passed
+  const delta=revH-hor;
+  if(delta<0)return{status:'overdue',delta:Math.abs(delta)};
   if(delta<=100)return{status:'soon',delta};
   return{status:'next',delta};
 }
@@ -738,57 +779,104 @@ function computeAlerts(){
     if(!planos.length)return;
     const hor=getHor(f.chassi);
     planos.forEach(p=>{
+      // Find ALL overdue revisions (not just latest)
       p.revs.forEach(r=>{
         const rs=revStatus(r,f.chassi);
-        if(rs.status==='overdue'||rs.status==='soon'){
-          alerts.push({frota:f,rev:r,status:rs.status,delta:rs.delta,plano:p.nome,hor});
+        if(rs.status==='overdue'){
+          alerts.push({frota:f,rev:r,status:'overdue',delta:rs.delta,plano:p.nome,hor});
         }
       });
+      // Find ONLY the single closest upcoming revision within 100h
+      const upcoming=p.revs
+        .map(r=>({r,rs:revStatus(r,f.chassi)}))
+        .filter(({rs})=>rs.status==='soon')
+        .sort((a,b)=>a.rs.delta-b.rs.delta);
+      if(upcoming.length){
+        const{r,rs}=upcoming[0];
+        alerts.push({frota:f,rev:r,status:'soon',delta:rs.delta,plano:p.nome,hor});
+      }
     });
   });
   return alerts;
 }
 
+let _alertTab='resumo';
+function switchAlertTab(tab,btn){
+  _alertTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('alertas-resumo').classList.toggle('active',tab==='resumo');
+  document.getElementById('alertas-todos').classList.toggle('active',tab==='todos');
+}
+
 function rAlertas(){
-  const wrap=document.getElementById('alertas-content');if(!wrap)return;
   const alerts=computeAlerts();
-  const nc=document.getElementById('nc-alertas');if(nc)nc.textContent=alerts.length;
-  if(!alerts.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">✅</div><p>Nenhum alerta. Todas as revisões estão em dia.</p></div></div>`;return;}
-  const overdue=alerts.filter(a=>a.status==='overdue');
-  const soon=alerts.filter(a=>a.status==='soon');
+  const nc=document.getElementById('nc-alertas');if(nc)nc.textContent=alerts.length||'';
+  const overdue=alerts.filter(a=>a.status==='overdue').sort((a,b)=>b.delta-a.delta);
+  const soon=alerts.filter(a=>a.status==='soon').sort((a,b)=>a.delta-b.delta);
+
+  // ── RESUMO TAB ──
+  const resumoWrap=document.getElementById('alertas-resumo');
+  if(!resumoWrap)return;
   const statsHtml=`<div class="stats-row">
-    <div class="stat ar"><div class="lbl">Vencidas</div><div class="val" style="color:var(--red)">${overdue.length}</div><div class="s">revisões ultrapassadas</div></div>
+    <div class="stat ar"><div class="lbl">Vencidas</div><div class="val" style="color:var(--red)">${overdue.length}</div><div class="s">revisões atrasadas</div></div>
     <div class="stat aw"><div class="lbl">Próximas</div><div class="val" style="color:var(--orange)">${soon.length}</div><div class="s">dentro de 100h</div></div>
-    <div class="stat ac"><div class="lbl">Total alertas</div><div class="val">${alerts.length}</div><div class="s">equipamentos afetados</div></div>
-    <div class="stat"><div class="lbl">Com horímetro</div><div class="val">${db.frotas.filter(f=>getHor(f.chassi)!=null).length}</div><div class="s">de ${db.frotas.length} equip.</div></div>
+    <div class="stat"><div class="lbl">Total alertas</div><div class="val">${alerts.length}</div><div class="s">equipamentos afetados</div></div>
   </div>`;
-  const alertRow=(a,cls,icon,msg)=>`<tr>
-    <td>${icon} <span class="badge ${cls}">${a.status==='overdue'?'VENCIDA':'PRÓXIMA'}</span></td>
-    <td>${a.frota.frota||'—'}</td>
-    <td class="mono" style="font-size:11px">${a.frota.chassi}</td>
-    <td>${a.frota.modelo} · <span style="color:var(--muted)">${a.frota.cliente}</span></td>
-    <td><span class="badge bk">${a.rev}</span></td>
-    <td>${a.hor!=null?a.hor.toLocaleString('pt-BR')+' h':'—'}</td>
-    <td style="font-size:12px;${a.status==='overdue'?'color:var(--red)':'color:var(--yellow)'}">${msg}</td>
-    <td style="font-size:11px;color:var(--muted)">${a.plano}</td>
-  </tr>`;
+
+  const overCard=a=>`<div class="alert-chip over" onclick="go('historico')" title="Clique para ir ao histórico">
+    <div class="ac-top">
+      <span class="ac-rev over">${a.rev}</span>
+      <span style="font-size:10px;color:var(--red)">há ${a.delta.toFixed(0)}h</span>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--text)">${a.frota.frota?'Frota '+a.frota.frota+' · ':''}${a.frota.modelo}</div>
+    <div class="ac-info">${a.frota.cliente}</div>
+    <div class="ac-hor">${a.hor!=null?a.hor.toLocaleString('pt-BR')+' h atual':'sem horímetro'}</div>
+  </div>`;
+
+  const soonCard=a=>`<div class="alert-chip soon" onclick="go('historico')" title="Clique para ir ao histórico">
+    <div class="ac-top">
+      <span class="ac-rev soon">${a.rev}</span>
+      <span style="font-size:10px;color:var(--yellow)">falta ${a.delta.toFixed(0)}h</span>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--text)">${a.frota.frota?'Frota '+a.frota.frota+' · ':''}${a.frota.modelo}</div>
+    <div class="ac-info">${a.frota.cliente}</div>
+    <div class="ac-hor">${a.hor!=null?a.hor.toLocaleString('pt-BR')+' h atual':'sem horímetro'}</div>
+  </div>`;
+
+  if(!alerts.length){
+    resumoWrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">✅</div><p>Todas as revisões estão em dia.</p></div></div>`;
+  }else{
+    resumoWrap.innerHTML=statsHtml
+      +(overdue.length?`<div style="margin-bottom:8px;font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px">🔴 Vencidas (${overdue.length})</div><div class="alert-grid">${overdue.map(overCard).join('')}</div>`:'')
+      +(soon.length?`<div style="margin-bottom:8px;margin-top:${overdue.length?'16':'0'}px;font-size:12px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.5px">🟡 Próximas do Vencimento (${soon.length})</div><div class="alert-grid">${soon.map(soonCard).join('')}</div>`:'');
+  }
+
+  // ── TODOS TAB ──
+  const todosWrap=document.getElementById('alertas-todos');
+  if(!todosWrap)return;
+  if(!alerts.length){todosWrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">✅</div><p>Nenhum alerta.</p></div></div>`;return;}
   const thead='<thead><tr><th>Status</th><th>Frota</th><th>Chassi</th><th>Equipamento</th><th>Revisão</th><th>Hor. Atual</th><th>Situação</th><th>Plano</th></tr></thead>';
-  // All sorted: overdue first (most overdue), then soon (closest to expiry)
-  const allSorted=[...overdue.sort((a,b)=>b.delta-a.delta),...soon.sort((a,b)=>a.delta-b.delta)];
-  const allRows=allSorted.map(a=>alertRow(a,a.status==='overdue'?'br':'by',a.status==='overdue'?'🔴':'🟡',a.status==='overdue'?`Vencida há ${a.delta.toFixed(0)}h`:`Vence em ${a.delta.toFixed(0)}h`)).join('');
-  // Overdue panel
-  const overdueRows=overdue.sort((a,b)=>b.delta-a.delta).map(a=>alertRow(a,'br','🔴',`Vencida há ${a.delta.toFixed(0)}h`)).join('');
-  // Soon panel: sorted closest first
-  const soonRows=soon.sort((a,b)=>a.delta-b.delta).map(a=>alertRow(a,'by','🟡',`Vence em ${a.delta.toFixed(0)}h`)).join('');
-  wrap.innerHTML=statsHtml
-    +(overdue.length?`<div class="panel" style="margin-bottom:16px;border-color:rgba(248,81,73,.3)"><div class="phd" style="background:var(--red-g)"><h2 style="color:var(--red)">🔴 Revisões Vencidas (${overdue.length})</h2></div><div class="tw"><table>${thead}<tbody>${overdueRows}</tbody></table></div></div>`:'')
-    +(soon.length?`<div class="panel" style="margin-bottom:16px;border-color:rgba(210,153,34,.3)"><div class="phd" style="background:var(--yellow-g)"><h2 style="color:var(--yellow)">🟡 Próximas do Vencimento (${soon.length}) — mais próximas primeiro</h2></div><div class="tw"><table>${thead}<tbody>${soonRows}</tbody></table></div></div>`:'')
-    +`<div class="panel"><div class="phd"><h2>Todos os alertas</h2></div><div class="tw"><table>${thead}<tbody>${allRows}</tbody></table></div></div>`;
+  const allSorted=[...overdue,...soon];
+  const allRows=allSorted.map(a=>{
+    const cls=a.status==='overdue'?'br':'by';
+    const msg=a.status==='overdue'?`Vencida há ${a.delta.toFixed(0)}h`:`Vence em ${a.delta.toFixed(0)}h`;
+    return`<tr>
+      <td><span class="badge ${cls}">${a.status==='overdue'?'🔴 VENCIDA':'🟡 PRÓXIMA'}</span></td>
+      <td>${a.frota.frota||'—'}</td><td class="mono" style="font-size:11px">${a.frota.chassi}</td>
+      <td>${a.frota.modelo} · <span style="color:var(--muted)">${a.frota.cliente}</span></td>
+      <td><span class="badge bk">${a.rev}</span></td>
+      <td>${a.hor!=null?a.hor.toLocaleString('pt-BR')+' h':'—'}</td>
+      <td style="font-size:12px;${a.status==='overdue'?'color:var(--red)':'color:var(--yellow)'}">${msg}</td>
+      <td style="font-size:11px;color:var(--muted)">${a.plano}</td>
+    </tr>`;
+  }).join('');
+  todosWrap.innerHTML=`<div class="panel"><div class="phd"><h2>Todos os alertas (${alerts.length})</h2></div><div class="tw"><table>${thead}<tbody>${allRows}</tbody></table></div></div>`;
 }
 
 // ── NAV ──
-const TITLES={frotas:'Base de Frotas',historico:'Histórico de Revisões',alertas:'Alertas de Revisão',plano:'Planos de Manutenção',email:'Gerar Orçamento',horimetro:'Horímetros — OC',dados:'Firebase / Backup'};
-const NAV_IDS=['frotas','historico','alertas','plano','email','horimetro'];
+const TITLES={alertas:'Alertas',historico:'Histórico de Revisões',horimetro:'Horímetros',frotas:'Base de Frotas',plano:'Planos de Manutenção',email:'Gerar Orçamento',dados:'Firebase / Backup'};
+const NAV_IDS=['alertas','historico','horimetro','frotas','plano','email'];
 function go(s){
   document.querySelectorAll('.section').forEach(e=>e.classList.remove('active'));
   document.getElementById('sec-'+s).classList.add('active');
@@ -803,9 +891,9 @@ function rAll(){rFrotas();rHist();rAlertas();rPlanos();rHorTable();upCounts();up
 function upCounts(){
   document.getElementById('nc-frotas').textContent=db.frotas.length;
   document.getElementById('nc-hist').textContent=db.hist.length;
-  const alerts=computeAlerts();
-  const nc=document.getElementById('nc-alertas');if(nc)nc.textContent=alerts.length;
   document.getElementById('nc-plano').textContent=db.planos.length;
+  const al=computeAlerts();const nc=document.getElementById('nc-alertas');
+  if(nc){nc.textContent=al.length||'';nc.style.display=al.length?'':'none';}
 }
 function upFils(){
   const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
@@ -819,12 +907,10 @@ function rFrotas(){
   const ft=document.getElementById('fil-tipo-f').value;
   let list=db.frotas.filter(f=>{if(ft&&f.tipo!==ft)return false;if(sq&&!(f.cliente+f.chassi+f.modelo+f.frota).toLowerCase().includes(sq))return false;return true;});
   const clis=[...new Set(db.frotas.map(f=>f.cliente))];
-  const mods=[...new Set(db.frotas.map(f=>f.modelo))];
+  // Simplified stats: only total equip + total clients
   document.getElementById('stats-frotas').innerHTML=`
-    <div class="stat ac"><div class="lbl">Equipamentos</div><div class="val">${db.frotas.length}</div><div class="s">total</div></div>
-    <div class="stat"><div class="lbl">Clientes</div><div class="val">${clis.length}</div><div class="s">${clis.join(' · ')}</div></div>
-    <div class="stat"><div class="lbl">Modelos</div><div class="val">${mods.length}</div><div class="s">tipos distintos</div></div>
-    <div class="stat"><div class="lbl">Colhedoras</div><div class="val">${db.frotas.filter(f=>f.tipo==='Colhedora').length}</div><div class="s">${db.frotas.filter(f=>f.tipo==='Trator').length} tratores</div></div>`;
+    <div class="stat ac"><div class="lbl">Total de equipamentos</div><div class="val">${db.frotas.length}</div><div class="s">na base cadastral</div></div>
+    <div class="stat"><div class="lbl">Total de clientes</div><div class="val">${clis.length}</div><div class="s">fazendas ativas</div></div>`;
   const byClient={};list.forEach(f=>{(byClient[f.cliente]=byClient[f.cliente]||[]).push(f);});
   const wrap=document.getElementById('frotas-groups');
   if(!list.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">🚜</div><p>Nenhum equipamento.</p></div></div>`;return;}
@@ -840,30 +926,25 @@ function rFrotas(){
           <td><strong>${f.frota||'—'}</strong></td><td class="mono">${f.chassi}</td><td><strong>${f.modelo}</strong></td><td>${tbadge(f.tipo)}</td>
           <td>${hor!=null?`<strong>${hor.toLocaleString('pt-BR')} h</strong>`:`<span style="color:var(--muted2)">—</span>`}</td>
           <td><div class="acts"><button class="btn btn-g btn-sm" onclick="editFrota(${i})">Editar</button><button class="btn btn-d btn-sm" onclick="delFrota(${i})">Remover</button></div></td>
-        </tr>`; }).join('')}</tbody>
+        </tr>`}).join('')}</tbody>
       </table></div></div>
     </div>`).join('');
 }
 
-// ── HISTORICO (novo board) ──
+// ── HISTORICO ──
 function rHist(){
   const fc=document.getElementById('hist-fil-cli').value;
   const fp=document.getElementById('hist-fil-plano').value;
   const hs=(document.getElementById('hist-search')||{}).value?.toLowerCase()||'';
   const wrap=document.getElementById('hist-board');if(!wrap)return;
-
-  // Group frotas by client
   let frotas=db.frotas.filter(f=>{
     if(fc&&f.cliente!==fc)return false;
     if(hs&&!(f.chassi+f.frota+f.modelo).toLowerCase().includes(hs))return false;
     if(sq&&!(f.chassi+f.cliente+f.modelo+f.frota).toLowerCase().includes(sq))return false;
     return true;
   });
-
   if(!frotas.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📋</div><p>Nenhum equipamento encontrado.</p></div></div>`;return;}
-
   const byClient={};frotas.forEach(f=>{(byClient[f.cliente]=byClient[f.cliente]||[]).push(f);});
-
   wrap.innerHTML=Object.entries(byClient).map(([cli,equips])=>`
     <div class="cg">
       <div class="cg-hd" onclick="this.parentElement.classList.toggle('collapsed')">
@@ -876,41 +957,27 @@ function rHist(){
 
 function equipHistCard(f,filterPlano){
   const hor=getHor(f.chassi);
-  const horDate=getHorDate(f.chassi);
-  // Find plans for this equip
   let planos=db.planos.filter(p=>p.chassis.includes(f.chassi));
   if(filterPlano!==''&&filterPlano!=null){const pi=parseInt(filterPlano);if(!isNaN(pi)&&db.planos[pi])planos=planos.filter(p=>p===db.planos[pi]);}
-
   let horClass='none',horLabel='Sem horímetro';
   if(hor!=null){
-    // Determine if any revision is overdue/soon
     let worst='ok';
     planos.forEach(p=>{p.revs.forEach(r=>{const rs=revStatus(r,f.chassi);if(rs.status==='overdue')worst='danger';else if(rs.status==='soon'&&worst!=='danger')worst='warn';});});
-    horClass=worst;
-    horLabel=hor.toLocaleString('pt-BR')+' h';
+    horClass=worst;horLabel=hor.toLocaleString('pt-BR')+' h';
   }
-
-  const strips=planos.length?planos.map(p=>planRevStrip(f.chassi,p)).join(''):`<div style="padding:10px 14px;font-size:12px;color:var(--muted2)">Nenhum plano atribuído a este equipamento.</div>`;
-
-  const horDateStr=horDate?`<span style="font-size:10px;color:var(--muted2);margin-left:4px">${horDate.slice?horDate.slice(0,16):horDate}</span>`:'';
-
-  return`<div class="hist-equip-row" style="margin:0;border-radius:0;border-left:none;border-right:none;border-top:none;border-bottom:1px solid var(--border2)">
+  const strips=planos.length?planos.map(p=>planRevStrip(f.chassi,p)).join(''):`<div style="padding:8px 14px;font-size:12px;color:var(--muted2)">Nenhum plano atribuído.</div>`;
+  return`<div class="hist-equip-row">
     <div class="hist-equip-hd">
-      <div class="hist-equip-info">
+      <div>
         <div class="equip-line1">
           ${f.frota?`<span class="badge bk">Frota ${f.frota}</span>`:''}
-          <span>${f.modelo}</span>
-          ${tbadge(f.tipo)}
-          ${f.cliente?`<span style="font-size:11px;color:var(--muted)">${f.cliente}</span>`:''}
+          <span>${f.modelo}</span>${tbadge(f.tipo)}
+          <span style="font-size:11px;color:var(--muted)">${f.cliente}</span>
         </div>
         <div class="equip-line2">${f.chassi}</div>
       </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
-        <div class="hist-hor-badge">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--muted)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span class="hist-hor-val ${horClass}">${horLabel}</span>
-          ${horDateStr}
-        </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+        <span class="hor-val ${horClass}" style="font-size:14px;font-weight:700">${horLabel}</span>
         <button class="btn btn-g btn-sm" onclick="go('horimetro')" style="font-size:10px">Atualizar</button>
       </div>
     </div>
@@ -921,18 +988,18 @@ function equipHistCard(f,filterPlano){
 function planRevStrip(chassi,plano){
   const pills=plano.revs.map(r=>{
     const rs=revStatus(r,chassi);
-    let cls='',check='',label='';
+    let cls='',sub='',subCls='';
     switch(rs.status){
-      case'done':cls='done';check=`<div class="rev-pill-check ck">✓ ${rs.data?new Date(rs.data+'T12:00:00').toLocaleDateString('pt-BR'):'feito'}</div>`;break;
-      case'overdue':cls='overdue';check=`<div class="rev-pill-check" style="color:var(--red)">vencida</div>`;break;
-      case'soon':cls='soon';check=`<div class="rev-pill-check" style="color:var(--yellow)">~${rs.delta?Math.round(rs.delta)+'h':''}</div>`;break;
-      case'next':cls='next';check=`<div class="rev-pill-check"></div>`;break;
-      default:cls='';check=`<div class="rev-pill-check"></div>`;
+      case'done':cls='done';sub=rs.data?new Date(rs.data+'T12:00:00').toLocaleDateString('pt-BR'):'✓';subCls='ck';break;
+      case'overdue':cls='overdue';sub='VENCIDA';subCls='rd';break;
+      case'soon':cls='soon';sub=`~${rs.delta?Math.round(rs.delta)+'h':''}`;subCls='yw';break;
+      case'next':cls='next';sub='';break;
+      default:cls='';sub='';
     }
     const pi=db.planos.indexOf(plano);
     return`<div class="rev-pill">
-      <button class="rev-pill-btn ${cls}" onclick="openRevModal('${chassi}','${r}',${pi})" title="${r} — clique para registrar">${r}</button>
-      ${check}
+      <button class="rev-pill-btn ${cls}" onclick="openRevModal('${chassi}','${r}',${pi})">${r}</button>
+      <div class="rev-pill-sub ${subCls}">${sub}</div>
     </div>`;
   }).join('');
   return`<div style="padding:6px 10px 4px;border-top:1px solid var(--border2)">
@@ -947,23 +1014,17 @@ function openRevModal(chassi,rev,planoIdx){
   const f=db.frotas.find(f=>f.chassi===chassi);
   const plano=db.planos[planoIdx];
   document.getElementById('rev-modal-title').textContent=`Revisão ${rev}`;
-  document.getElementById('rev-modal-info').innerHTML=`
-    <strong>${f?f.modelo:'?'}</strong> &nbsp;·&nbsp; Chassi <span style="font-family:monospace">${chassi}</span>${f?.frota?` &nbsp;·&nbsp; Frota ${f.frota}`:''}<br>
-    <span style="font-size:11px;color:var(--muted)">Plano: ${plano?plano.nome:'—'}</span>`;
-  // Check existing
+  document.getElementById('rev-modal-info').innerHTML=`<strong>${f?f.modelo:'?'}</strong> · Chassi <span style="font-family:monospace">${chassi}</span>${f?.frota?' · Frota '+f.frota:''}<br><span style="font-size:11px;color:var(--muted)">Plano: ${plano?plano.nome:'—'}</span>`;
   const existing=db.hist.find(h=>h.chassi===chassi&&h.rev===rev);
   revModal.histIdx=existing?db.hist.indexOf(existing):-1;
   if(existing){
     document.getElementById('rev-existing').style.display='block';
     document.getElementById('rev-del-btn').style.display='block';
-    sv('rev-data',existing.data||'');sv('rev-os',existing.os||'');
-    document.getElementById('rev-orc').value=existing.orc||'';
-    sv('rev-obs',existing.obs||'');
+    sv('rev-data',existing.data||'');sv('rev-os',existing.os||'');sv('rev-orc',existing.orc||'');sv('rev-obs',existing.obs||'');
   }else{
     document.getElementById('rev-existing').style.display='none';
     document.getElementById('rev-del-btn').style.display='none';
-    sv('rev-data','');sv('rev-os','');
-    document.getElementById('rev-orc').value='';sv('rev-obs','');
+    sv('rev-data','');sv('rev-os','');sv('rev-orc','');sv('rev-obs','');
   }
   document.getElementById('modal-rev').classList.add('open');
 }
@@ -977,8 +1038,7 @@ function saveRevModal(){
 }
 
 function deleteRevModal(){
-  if(!confirm('Remover este registro de revisão?'))return;
-  // Re-find by chassi+rev to be safe (index may have shifted)
+  if(!confirm('Remover este registro?'))return;
   const idx=db.hist.findIndex(h=>h.chassi===revModal.chassi&&h.rev===revModal.rev);
   if(idx>=0)db.hist.splice(idx,1);
   closeM('rev');rAll();autosave();toast('Removido.');
@@ -986,25 +1046,34 @@ function deleteRevModal(){
 
 // ── PLANOS ──
 function rPlanos(){
-  const wrap=document.getElementById('plano-list');
+  const wrap=document.getElementById('plano-list');if(!wrap)return;
   if(!db.planos.length){wrap.innerHTML=`<div class="panel"><div class="emp"><div class="ico">📊</div><p>Nenhum plano cadastrado.</p></div></div>`;return;}
   wrap.innerHTML=db.planos.map((p,i)=>`
     <div class="plan-card">
       <div class="plan-card-hd">
-        <div class="left"><h3>${p.nome}</h3>${tbadge(p.tipo)}<span class="badge bk">${p.modelo}</span><span class="badge bk">${p.revs.length} intervalos</span><span class="badge bk">${p.items.length} itens</span></div>
-        <div style="display:flex;gap:6px"><button class="btn btn-b btn-sm" onclick="openEditor(${i})">✏️ Editar plano</button><button class="btn btn-d btn-sm" onclick="delPlano(${i})">Remover</button></div>
-      </div>
-      <div style="padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border)">
-        <span style="font-size:11px;color:var(--muted);align-self:center">Chassis:</span>
-        ${p.chassis.length?p.chassis.map(ch=>`<span class="tag">${ch}</span>`).join(''):`<span style="font-size:12px;color:var(--muted2)">Nenhum atribuído</span>`}
+        <div class="left"><h3>${p.nome}</h3>${tbadge(p.tipo)}<span class="badge bk">${p.modelo}</span><span class="badge bk">${p.revs.length} rev.</span><span class="badge bk">${(p.items||[]).length} itens</span></div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-g btn-sm" onclick="duplicatePlano(${i})">📋 Duplicar</button>
+          <button class="btn btn-b btn-sm" onclick="openEditor(${i})">✏️ Editar</button>
+          <button class="btn btn-d btn-sm" onclick="delPlano(${i})">Remover</button>
+        </div>
       </div>
       <div style="padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
         <span style="font-size:11px;color:var(--muted)">M.O.:</span>
-        ${p.revs.slice(0,5).map(r=>`<span class="tag">${r}: ${brl(p.mao[r]||0)}</span>`).join('')}
-        ${p.revs.length>5?`<span style="font-size:11px;color:var(--muted2)">+${p.revs.length-5} mais</span>`:''}
+        ${p.revs.slice(0,6).map(r=>`<span class="tag">${r}: ${brl(p.mao?.[r]||0)}</span>`).join('')}
+        ${p.revs.length>6?`<span style="font-size:11px;color:var(--muted2)">+${p.revs.length-6} mais</span>`:''}
       </div>
     </div>`).join('');
 }
+
+function duplicatePlano(i){
+  const orig=db.planos[i];
+  const copy=JSON.parse(JSON.stringify(orig));
+  copy.id=uid();copy.nome=orig.nome+' (cópia)';copy.chassis=[];
+  db.planos.push(copy);rAll();autosave();toast('📋 Plano duplicado!');
+}
+
+function getPlanoForChassi(chassi){ return db.planos.find(p=>p.chassis.includes(chassi))||null; }
 
 // ── PLAN EDITOR ──
 function openEditor(i){
@@ -1013,41 +1082,93 @@ function openEditor(i){
   renderEditor();
   document.getElementById('modal-editor').classList.add('open');
 }
-function renderEditorChassis(filter){
-  const cl=document.getElementById('editor-chassis-list');
-  const filtered=db.frotas.filter(f=>!filter||(f.chassi+f.cliente+f.modelo).toLowerCase().includes(filter.toLowerCase()));
-  cl.innerHTML=filtered.map(f=>{const sel=editorData.chassis.includes(f.chassi);return`<div class="cpick-item${sel?' sel':''}" onclick="toggleEditorChassi('${f.chassi}','${f.id}')"><input type="checkbox" id="ech-${f.id}" ${sel?'checked':''} onclick="event.stopPropagation();toggleEditorChassi('${f.chassi}','${f.id}')"><div class="pim"><div class="pic">${f.chassi}</div><div class="pis">${f.modelo} · ${f.cliente}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;}).join('');
-  upEditorChCount();
-}
-function toggleEditorChassi(chassi,fid){
-  const idx=editorData.chassis.indexOf(chassi);if(idx>=0)editorData.chassis.splice(idx,1);else editorData.chassis.push(chassi);
-  const cb=document.getElementById('ech-'+fid);const row=cb?.closest('.cpick-item');
-  if(cb)cb.checked=editorData.chassis.includes(chassi);if(row)row.classList.toggle('sel',editorData.chassis.includes(chassi));upEditorChCount();
-}
-function filterEditorChassis(v){renderEditorChassis(v);}
-function toggleAllEditorChassis(sel){editorData.chassis=sel?db.frotas.map(f=>f.chassi):[];renderEditorChassis(document.getElementById('editor-ch-search').value);}
-function upEditorChCount(){const n=editorData.chassis.length;document.getElementById('editor-ch-count').textContent=`${n} selecionado${n!==1?'s':''}`;document.getElementById('editor-ch-label').textContent=n?`${n} chassi`:' Nenhum selecionado';}
 function renderEditor(){
   const p=editorData;
-  const rh=p.revs.map((r,ri)=>`<th style="min-width:50px"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px">${r}<input type="number" value="${p.mao[r]||''}" style="width:56px;font-size:9px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px;color:var(--muted);text-align:center;margin-top:2px" placeholder="M.O." onchange="editorMao(${ri},this.value)"></div></th>`).join('');
-  const rows=p.items.map((item,ii)=>`<tr><td class="ic"><input type="text" value="${item.item.replace(/"/g,'&quot;')}" onchange="editorItem(${ii},'item',this.value)" title="${item.item}"></td><td class="cc"><input type="text" value="${item.cod}" onchange="editorItem(${ii},'cod',this.value)"></td><td class="qc"><input type="text" value="${item.qtd}" onchange="editorItem(${ii},'qtd',this.value)"></td>${p.revs.map((r,ri)=>`<td class="rc${item.marks.includes(ri)?' marked':''}" onclick="toggleMark(${ii},${ri})" title="${r}">${item.marks.includes(ri)?'<span class="xm">X</span>':''}</td>`).join('')}<td style="background:var(--bg3)"><button class="btn btn-d btn-sm" onclick="removeItemRow(${ii})">✕</button></td></tr>`).join('');
-  document.getElementById('plan-editor-wrap').innerHTML=`<table class="plan-table"><thead><tr><th class="ic">Item</th><th class="cc">Código</th><th class="qc">Qtd</th>${rh}<th style="width:40px"></th></tr></thead><tbody>${rows}</tbody></table>`;
+  const rh=p.revs.map((r,ri)=>`<th style="min-width:56px;text-align:center"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px">${r}<input type="number" value="${(p.mao&&p.mao[r])||''}" style="width:52px;font-size:9px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px;color:var(--muted);text-align:center;margin-top:2px" placeholder="M.O." onchange="editorMao(${ri},this.value)"></div></th>`).join('');
+  const rows=(p.items||[]).map((item,ii)=>`<tr>
+    <td class="ic ic-sticky"><input type="text" value="${item.item.replace(/"/g,'&quot;')}" onchange="editorItem(${ii},'item',this.value)" title="${item.item}" style="min-width:180px"></td>
+    <td class="cc"><input type="text" value="${item.cod}" onchange="editorItem(${ii},'cod',this.value)"></td>
+    <td class="qc"><input type="text" value="${item.qtd}" onchange="editorItem(${ii},'qtd',this.value)"></td>
+    ${p.revs.map((r,ri)=>`<td class="rc${item.marks.includes(ri)?' marked':''}" onclick="toggleMark(${ii},${ri})">${item.marks.includes(ri)?'<span class="xm">X</span>':''}</td>`).join('')}
+    <td style="background:var(--bg3);white-space:nowrap;position:sticky;right:0"><button class="btn btn-d btn-sm" onclick="removeItemRow(${ii})">✕</button></td>
+  </tr>`).join('');
+  document.getElementById('plan-editor-wrap').innerHTML=`<table class="plan-table" style="table-layout:auto">
+    <thead><tr>
+      <th class="ic ic-sticky" style="position:sticky;left:0;z-index:5">Item</th>
+      <th class="cc">Código</th><th class="qc">Qtd</th>${rh}
+      <th style="width:40px;position:sticky;right:0;background:var(--bg4)"></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 function toggleMark(ii,ri){
   const item=editorData.items[ii];const idx=item.marks.indexOf(ri);if(idx>=0)item.marks.splice(idx,1);else item.marks.push(ri);
-  const rows=document.getElementById('plan-editor-wrap').querySelectorAll('tbody tr');const cells=rows[ii]?.querySelectorAll('td.rc');
+  const tbl=document.getElementById('plan-editor-wrap');const rows=tbl.querySelectorAll('tbody tr');const cells=rows[ii]?.querySelectorAll('td.rc');
   if(cells&&cells[ri]){const m=item.marks.includes(ri);cells[ri].classList.toggle('marked',m);cells[ri].innerHTML=m?'<span class="xm">X</span>':'';}
 }
 function editorItem(ii,f,v){editorData.items[ii][f]=v;}
-function editorMao(ri,v){editorData.mao[editorData.revs[ri]]=parseFloat(v)||0;}
-function addItemRow(){editorData.items.push({id:uid(),item:'Novo item',cod:'',qtd:'1',marks:[]});renderEditor();}
+function editorMao(ri,v){if(!editorData.mao)editorData.mao={};editorData.mao[editorData.revs[ri]]=parseFloat(v)||0;}
+function addItemRow(){if(!editorData.items)editorData.items=[];editorData.items.push({id:uid(),item:'Novo item',cod:'',qtd:'1',marks:[]});renderEditor();}
 function removeItemRow(ii){editorData.items.splice(ii,1);renderEditor();}
 function savePlanEditor(){db.planos[editorPlanIdx]=editorData;closeM('editor');rAll();autosave();toast('✅ Plano salvo!');}
 
+// Export plan to Excel
+function exportPlanExcel(){
+  if(!editorData)return;
+  const p=editorData;
+  const header=['Item','Código','Qtd',...p.revs];
+  const rows=(p.items||[]).map(item=>{
+    const row=[item.item,item.cod,item.qtd];
+    p.revs.forEach((_,ri)=>row.push(item.marks.includes(ri)?'X':''));
+    return row;
+  });
+  const ws=XLSX.utils.aoa_to_sheet([header,...rows]);
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Plano');
+  XLSX.writeFile(wb,`plano_${p.nome.replace(/[^a-z0-9]/gi,'_')}.xlsx`);
+  toast('⬇️ Excel exportado!');
+}
+
+// Import plan from Excel
+let _importPlanPreview=null;
+function previewImportPlano(input){
+  const file=input.files[0];if(!file)return;
+  const st=document.getElementById('imp-preview');const btn=document.getElementById('imp-save-btn');
+  _importPlanPreview=null;btn.style.display='none';
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      if(!rows.length){st.textContent='❌ Arquivo vazio.';return;}
+      const header=rows[0].map(c=>String(c).trim());
+      const revCols=header.slice(3).filter(Boolean); // cols D onward = rev headers
+      const items=[];
+      for(let i=1;i<rows.length;i++){
+        const row=rows[i];
+        const itemName=String(row[0]||'').trim();if(!itemName)continue;
+        const cod=String(row[1]||'').trim();const qtd=String(row[2]||'1').trim();
+        const marks=revCols.map((_,ri)=>String(row[3+ri]||'').trim().toUpperCase()==='X'?ri:-1).filter(x=>x>=0);
+        items.push({id:uid(),item:itemName,cod,qtd,marks});
+      }
+      _importPlanPreview={revs:revCols.map(r=>r.trim()),items};
+      st.textContent=`✅ ${items.length} itens encontrados. Revisões: ${revCols.join(', ')}`;
+      st.style.color='var(--green)';btn.style.display='block';
+    }catch(err){st.textContent='❌ Erro: '+err.message;st.style.color='var(--red)';}
+  };r.readAsArrayBuffer(file);
+}
+function saveImportPlano(){
+  if(!_importPlanPreview){alert('Nenhum arquivo carregado.');return;}
+  const nome=gv('imp-nome');const mod=gv('imp-mod');const tipo=gv('imp-tipo');
+  if(!nome||!mod){alert('Preencha nome e modelo.');return;}
+  const mao={},anal={};
+  _importPlanPreview.revs.forEach(r=>{mao[r]=0;anal[r]=0;});
+  const plano={id:uid(),nome,modelo:mod,tipo,revs:_importPlanPreview.revs,items:_importPlanPreview.items,mao,anal,desl:350,chassis:[]};
+  db.planos.push(plano);closeM('importPlano');rAll();autosave();
+  toast('✅ Plano importado com '+plano.items.length+' itens!');_importPlanPreview=null;
+}
+
 // ── EMAIL ──
-// Get the plano for a chassi (first matching plano that contains this chassi)
-function getPlanoForChassi(chassi){ return db.planos.find(p=>p.chassis.includes(chassi))||null; }
-// Get all revs available across planos for selected chassis
 function getRevsForChassis(chassiList){
   const revSet=new Set();
   chassiList.forEach(ch=>{const p=getPlanoForChassi(ch);if(p)p.revs.forEach(r=>revSet.add(r));});
@@ -1056,36 +1177,35 @@ function getRevsForChassis(chassiList){
 
 function initEmail(){
   const clis=[...new Set(db.frotas.map(f=>f.cliente))].sort();
-  document.getElementById('em-cli').innerHTML='<option value="">Selecione...</option>'+clis.map(cl=>`<option value="${cl}">${cl}</option>`).join('');
+  document.getElementById('em-cli').innerHTML='<option value="">Selecione...</option>'+clis.map(c=>`<option value="${c}">${c}</option>`).join('');
   document.getElementById('em-rev').innerHTML='<option value="">Selecione...</option>';
-  document.getElementById('em-cpick').innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>';
-  document.getElementById('em-output').textContent='Preencha os campos ao lado para gerar o email.';
+  document.getElementById('em-cpick').innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente</div></div>';
+  document.getElementById('em-output').textContent='Preencha os campos ao lado.';
 }
 
 function updateEmailChassis(){
   const cli=document.getElementById('em-cli').value;const picker=document.getElementById('em-cpick');
-  if(!cli){picker.innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente acima</div></div>';return;}
+  if(!cli){picker.innerHTML='<div class="cpick-body" style="min-height:50px"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Selecione um cliente</div></div>';return;}
   const frotas=db.frotas.filter(f=>f.cliente===cli);
   if(!frotas.length){picker.innerHTML='<div class="cpick-body"><div style="padding:14px;text-align:center;color:var(--muted);font-size:12px">Nenhum equipamento</div></div>';return;}
   _renderEmailCpick(frotas,cli);
 }
 
 function _renderEmailCpick(frotas,cli){
-  const alerts=computeAlerts();
-  const picker=document.getElementById('em-cpick');
+  const alerts=computeAlerts();const picker=document.getElementById('em-cpick');
   picker.innerHTML=`<div class="cpick-search"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Filtrar chassis..." oninput="filterEmailChassis(this.value,'${cli||''}')"></div>
     <div class="cpick-body" id="em-cpick-body">${frotas.map(f=>{
       const al=alerts.find(a=>a.frota.chassi===f.chassi);
-      const badge=al?(al.status==='overdue'?'<span style="font-size:10px;color:var(--red);margin-left:4px">🔴 VENCIDA</span>':'<span style="font-size:10px;color:var(--yellow);margin-left:4px">🟡 '+Math.round(al.delta)+'h</span>'):'';
+      const badge=al?(al.status==='overdue'?'<span style="font-size:10px;color:var(--red);margin-left:4px">🔴</span>':'<span style="font-size:10px;color:var(--yellow);margin-left:4px">🟡 '+Math.round(al.delta)+'h</span>'):'';
       const hasPlan=!!getPlanoForChassi(f.chassi);
-      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${hasPlan?'':' <span style=\'color:var(--orange)\'>sem plano</span>'}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
+      return`<div class="cpick-item" id="emrow-${f.id}" onclick="toggleEmailChassi('${f.id}')"><input type="checkbox" id="emch-${f.id}" onclick="event.stopPropagation();toggleEmailChassi('${f.id}')"><div class="pim"><div class="pic">${f.chassi}${badge}</div><div class="pis">${f.modelo}${!hasPlan?' <span style=\\'color:var(--orange)\\'>sem plano</span>':''}</div></div>${f.frota?`<span class="pif">Frota ${f.frota}</span>`:''}</div>`;
     }).join('')}</div>
-    <div class="cpick-foot"><span id="em-ch-count">Nenhum selecionado</span><button onclick="selectAllEmailChassis(true)">Selecionar todos</button></div>`;
+    <div class="cpick-foot"><span id="em-ch-count">Nenhum selecionado</span><button onclick="selectAllEmailChassis(true)">Todos</button></div>`;
 }
 
 function toggleEmailChassi(fid){
   const cb=document.getElementById('emch-'+fid);const row=document.getElementById('emrow-'+fid);
-  if(cb){cb.checked=!cb.checked;row.classList.toggle('sel',cb.checked);}
+  if(cb){cb.checked=!cb.checked;row?.classList.toggle('sel',cb.checked);}
   _updateEmailCount();_updateEmailRevSelect();buildEmail();
 }
 function selectAllEmailChassis(sel){
@@ -1105,70 +1225,55 @@ function _updateEmailRevSelect(){
   const selCh=db.frotas.filter(f=>document.getElementById('emch-'+f.id)?.checked);
   const revs=getRevsForChassis(selCh.map(f=>f.chassi));
   const rs=document.getElementById('em-rev');const cv=rs.value;
-  rs.innerHTML='<option value="">Selecione a revisão...</option>'+revs.map(r=>`<option value="${r}">${r}</option>`).join('');
-  if(revs.includes(cv))rs.value=cv;
-  buildEmail();
+  rs.innerHTML='<option value="">Selecione...</option>'+revs.map(r=>`<option value="${r}">${r}</option>`).join('');
+  if(revs.includes(cv))rs.value=cv;buildEmail();
 }
-
-// Load alert chassis into email
 function emailLoadAlerts(type){
   const alerts=computeAlerts().filter(a=>a.status===type);
-  if(!alerts.length){toast(`Nenhum equipamento ${type==='overdue'?'vencido':'próximo do vencimento'}.`);return;}
-  // Group by client; show first client in selector, load all its chassis
+  if(!alerts.length){toast(`Nenhum equipamento ${type==='overdue'?'vencido':'próximo'}.`);return;}
   const clientCounts={};alerts.forEach(a=>{clientCounts[a.frota.cliente]=(clientCounts[a.frota.cliente]||0)+1;});
   const topCli=Object.entries(clientCounts).sort((a,b)=>b[1]-a[1])[0][0];
-  document.getElementById('em-cli').value=topCli;
-  updateEmailChassis();
-  // Auto-check matching chassis
+  document.getElementById('em-cli').value=topCli;updateEmailChassis();
   setTimeout(()=>{
-    alerts.filter(a=>a.frota.cliente===topCli).forEach(a=>{
-      const frotaObj=db.frotas.find(f=>f.chassi===a.frota.chassi);
-      if(frotaObj){const cb=document.getElementById('emch-'+frotaObj.id);const row=document.getElementById('emrow-'+frotaObj.id);if(cb){cb.checked=true;if(row)row.classList.add('sel');}}
-    });
-    _updateEmailCount();_updateEmailRevSelect();
-    toast(`${alerts.length} equipamento${alerts.length!==1?'s':''} ${type==='overdue'?'vencidos':'próximos'} carregados.`);
+    alerts.filter(a=>a.frota.cliente===topCli).forEach(a=>{const fo=db.frotas.find(f=>f.chassi===a.frota.chassi);if(fo){const cb=document.getElementById('emch-'+fo.id);const row=document.getElementById('emrow-'+fo.id);if(cb){cb.checked=true;if(row)row.classList.add('sel');}}});
+    _updateEmailCount();_updateEmailRevSelect();toast(`${alerts.length} equipamento${alerts.length!==1?'s':''} carregados.`);
   },80);
 }
 function emailClearAll(){
   document.querySelectorAll('#em-cpick-body input[type=checkbox]').forEach(cb=>{cb.checked=false;cb.closest('.cpick-item')?.classList.remove('sel');});
-  _updateEmailCount();document.getElementById('em-rev').innerHTML='<option value="">Selecione a revisão...</option>';
+  _updateEmailCount();document.getElementById('em-rev').innerHTML='<option value="">Selecione...</option>';
   document.getElementById('em-output').textContent='Selecione os equipamentos e a revisão.';
 }
 
 function buildEmail(){
   const cli=document.getElementById('em-cli').value;
   const rev=document.getElementById('em-rev').value;
-  const obs=document.getElementById('em-obs').value.trim();
-  const out=document.getElementById('em-output');
+  const obs=gv('em-obs');const out=document.getElementById('em-output');
   const selCh=db.frotas.filter(f=>document.getElementById('emch-'+f.id)?.checked);
   if(!rev||!selCh.length){out.textContent='Selecione ao menos um chassi e a revisão.';return;}
   const fmt=v=>parseFloat(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2});
-  // Group by plano for correct items/mao
-  const byPlano=new Map();
-  selCh.forEach(f=>{
-    const p=getPlanoForChassi(f.chassi);
-    const key=p?p.id:'_sem_plano';
-    if(!byPlano.has(key))byPlano.set(key,{plano:p,chassis:[]});
-    byPlano.get(key).chassis.push(f);
-  });
-  let L=[];
-  L.push('Boa tarde!');L.push('');L.push(`Favor montar orçamento de revisão ${rev}.`);L.push('');
+  const saudacao=gv('cfg-saudacao')||'Boa tarde!';
+  const deslCfg=parseFloat(document.getElementById('cfg-desl')?.value||350);
+  const rodape=gv('cfg-rodape')||'Utilizar apenas itens previstos para a revisão conforme plano técnico.';
+  const ordem=(document.getElementById('cfg-ordem')?.value||'cabecalho,chassis,mo,itens').split(',');
   const cliLabel=cli||[...new Set(selCh.map(f=>f.cliente))].join(', ');
-  L.push(cliLabel);L.push('');L.push('FROTA    MODELO    CHASSI');L.push('-'.repeat(50));
-  selCh.forEach(f=>L.push(`${(f.frota||'—').padEnd(8)} ${f.modelo.padEnd(9)} ${f.chassi}`));
-  L.push('');
-  // Use first plano that has this rev for M.O. and items
-  const refPlano=[...byPlano.values()].find(g=>g.plano&&g.plano.revs.includes(rev))?.plano||null;
-  if(refPlano){
-    const ri=refPlano.revs.indexOf(rev);
-    const maoVal=refPlano.mao[rev]||0;const analVal=refPlano.anal?.[rev]||0;const desl=refPlano.desl||350;
-    if(analVal>0)L.push(`${analVal} análise${analVal>1?'s':''} de fluído`);
-    L.push(`M.O. ${fmt(maoVal)} + ${fmt(desl)} desloc.`);L.push('');L.push('─'.repeat(40));L.push('Itens da revisão:');L.push('');
-    const activeItems=refPlano.items.filter(it=>it.marks.includes(ri));
-    if(activeItems.length){L.push(`${'ITEM'.padEnd(46)} ${'CÓDIGO'.padEnd(13)} QTD`);L.push('-'.repeat(68));activeItems.forEach(it=>{const nm=it.item.length>44?it.item.slice(0,43)+'…':it.item;L.push(`${nm.padEnd(46)} ${(it.cod||'—').padEnd(13)} ${it.qtd}`);});}
-    else L.push('(Nenhum item com X para esta revisão)');
-  }else{L.push('(Plano não encontrado para a revisão selecionada)');}
-  if(obs){L.push('');L.push('─'.repeat(40));L.push('Observações:');L.push(obs);}
+  const refPlano=getPlanoForChassi(selCh[0].chassi);
+  const ri=refPlano?refPlano.revs.indexOf(rev):-1;
+  const maoVal=refPlano&&ri>=0?(refPlano.mao?.[rev]||0):0;
+  const analVal=refPlano&&ri>=0?(refPlano.anal?.[rev]||0):0;
+  const activeItems=refPlano&&ri>=0?(refPlano.items||[]).filter(it=>it.marks.includes(ri)):[];
+  const sections={
+    cabecalho:[saudacao,'',`Favor montar orçamento de revisão ${rev}.`,''],
+    chassis:[cliLabel,'','FROTA    MODELO    CHASSI','-'.repeat(50),...selCh.map(f=>`${(f.frota||'—').padEnd(8)} ${f.modelo.padEnd(9)} ${f.chassi}`),''],
+    mo:[...(analVal>0?[`${analVal} análise${analVal>1?'s':''} de fluído`]:[]),`M.O. ${fmt(maoVal)} + ${fmt(deslCfg)} desloc.`,''],
+    itens:['─'.repeat(40),'Itens da revisão:','',
+      ...(activeItems.length
+        ?[`${'ITEM'.padEnd(46)} ${'CÓDIGO'.padEnd(13)} QTD`,'-'.repeat(68),...activeItems.map(it=>`${(it.item.length>44?it.item.slice(0,43)+'…':it.item).padEnd(46)} ${(it.cod||'—').padEnd(13)} ${it.qtd}`)]
+        :['(Nenhum item previsto para esta revisão)']),
+      ...(obs?['','─'.repeat(40),'Observações:',obs]:[]),
+      '',rodape]
+  };
+  const L=ordem.flatMap(k=>sections[k]||[]);
   out.textContent=L.join('\n');
 }
 function copyEmail(){const txt=document.getElementById('em-output').textContent;navigator.clipboard.writeText(txt).then(()=>{const b=document.querySelector('.cpybtn');if(b){b.textContent='✅ Copiado!';setTimeout(()=>b.textContent='📋 Copiar',1800);}});}
@@ -1176,37 +1281,14 @@ function copyEmail(){const txt=document.getElementById('em-output').textContent;
 // ── MODALS ──
 function openM(t){
   if(t==='frota'){ei.frota=-1;document.getElementById('mf-t').textContent='Adicionar Equipamento';['mf-frota','mf-cli','mf-ch','mf-mod'].forEach(id=>sv(id,''));sv('mf-tipo','Trator');renderFrotaPlanoList(null);}
-  if(t==='plano'){sv('mp-nome','');sv('mp-mod','');sv('mp-revs','');sv('mp-tipo','Colhedora');}
+  if(t==='plano'){sv('mp-nome','');sv('mp-mod','');sv('mp-revs','');sv('mp-tipo','Colhedora');
+    const mc=document.getElementById('mp-copiar');if(mc)mc.innerHTML='<option value="">— Não copiar —</option>'+db.planos.map((p,i)=>`<option value="${i}">${p.nome}</option>`).join('');}
+  if(t==='importPlano'){sv('imp-nome','');sv('imp-mod','');sv('imp-tipo','Colhedora');const st=document.getElementById('imp-preview');if(st)st.textContent='';const btn=document.getElementById('imp-save-btn');if(btn)btn.style.display='none';_importPlanPreview=null;}
   const el=document.getElementById('modal-'+t);if(el)el.classList.add('open');
 }
 function closeM(t){const el=document.getElementById('modal-'+t);if(el)el.classList.remove('open');}
 
-// ── CRUD ──
-function saveFrota(){
-  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
-  if(!o.cliente||!o.chassi||!o.modelo){alert('Preencha cliente, chassi e modelo.');return;}
-  // If editing, old chassi may differ — remove old chassi from all planos first
-  if(ei.frota>=0){
-    const oldChassi=db.frotas[ei.frota].chassi;
-    if(oldChassi!==o.chassi){db.planos.forEach(p=>{const i=p.chassis.indexOf(oldChassi);if(i>=0)p.chassis.splice(i,1);});}
-    db.frotas[ei.frota]=o;
-  }else{db.frotas.push(o);}
-  // Update plano.chassis from checkboxes
-  db.planos.forEach((p,pi)=>{
-    const cb=document.getElementById('fp-'+pi);
-    if(!cb)return;
-    const idx=p.chassis.indexOf(o.chassi);
-    if(cb.checked&&idx<0)p.chassis.push(o.chassi);
-    else if(!cb.checked&&idx>=0)p.chassis.splice(idx,1);
-  });
-  closeM('frota');rAll();autosave();toast('✅ Equipamento salvo!');
-}
-function editFrota(i){
-  ei.frota=i;const f=db.frotas[i];document.getElementById('mf-t').textContent='Editar Equipamento';
-  sv('mf-frota',f.frota);sv('mf-cli',f.cliente);sv('mf-ch',f.chassi);sv('mf-mod',f.modelo);sv('mf-tipo',f.tipo||'Trator');
-  renderFrotaPlanoList(f.chassi);
-  document.getElementById('modal-frota').classList.add('open');
-}
+// ── FROTA PLANO LIST ──
 function renderFrotaPlanoList(chassi){
   const wrap=document.getElementById('mf-planos-list');if(!wrap)return;
   if(!db.planos.length){wrap.innerHTML='<span style="font-size:12px;color:var(--muted2)">Nenhum plano cadastrado ainda.</span>';return;}
@@ -1214,19 +1296,46 @@ function renderFrotaPlanoList(chassi){
     const checked=chassi?p.chassis.includes(chassi):false;
     return`<label style="display:flex;align-items:center;gap:8px;padding:5px 8px;cursor:pointer;border-radius:var(--rs);transition:background .1s" onmouseover="this.style.background='var(--bg4)'" onmouseout="this.style.background=''">
       <input type="checkbox" id="fp-${pi}" ${checked?'checked':''} style="accent-color:var(--green);width:14px;height:14px">
-      <div>
-        <div style="font-size:13px;color:var(--text)">${p.nome}</div>
-        <div style="font-size:11px;color:var(--muted)">${p.modelo} · ${p.revs.length} revisões</div>
-      </div>
+      <div><div style="font-size:13px;color:var(--text)">${p.nome}</div><div style="font-size:11px;color:var(--muted)">${p.modelo} · ${p.revs.length} revisões</div></div>
     </label>`;
   }).join('');
 }
+
+// ── CRUD ──
+function saveFrota(){
+  const o={id:ei.frota>=0?db.frotas[ei.frota].id:uid(),frota:gv('mf-frota'),cliente:gv('mf-cli'),chassi:gv('mf-ch'),modelo:gv('mf-mod'),tipo:gv('mf-tipo')};
+  if(!o.cliente||!o.chassi||!o.modelo){alert('Preencha cliente, chassi e modelo.');return;}
+  if(ei.frota>=0){
+    const oldChassi=db.frotas[ei.frota].chassi;
+    if(oldChassi!==o.chassi){db.planos.forEach(p=>{const i=p.chassis.indexOf(oldChassi);if(i>=0)p.chassis.splice(i,1);});}
+    db.frotas[ei.frota]=o;
+  }else{db.frotas.push(o);}
+  db.planos.forEach((p,pi)=>{const cb=document.getElementById('fp-'+pi);if(!cb)return;const idx=p.chassis.indexOf(o.chassi);if(cb.checked&&idx<0)p.chassis.push(o.chassi);else if(!cb.checked&&idx>=0)p.chassis.splice(idx,1);});
+  closeM('frota');rAll();autosave();toast('✅ Equipamento salvo!');
+}
+function editFrota(i){
+  ei.frota=i;const f=db.frotas[i];document.getElementById('mf-t').textContent='Editar Equipamento';
+  sv('mf-frota',f.frota);sv('mf-cli',f.cliente);sv('mf-ch',f.chassi);sv('mf-mod',f.modelo);sv('mf-tipo',f.tipo||'Trator');
+  renderFrotaPlanoList(f.chassi);document.getElementById('modal-frota').classList.add('open');
+}
 function delFrota(i){if(confirm('Remover equipamento?')){db.frotas.splice(i,1);rAll();autosave();toast('Removido.');}}
+
 function savePlano(){
   const nome=gv('mp-nome'),mod=gv('mp-mod'),tipo=gv('mp-tipo'),revs=gv('mp-revs').split(',').map(r=>r.trim()).filter(Boolean);
   if(!nome||!mod||!revs.length){alert('Preencha todos os campos.');return;}
   const mao={},anal={};revs.forEach(r=>{mao[r]=0;anal[r]=0;});
-  db.planos.push({id:uid(),nome,modelo:mod,tipo,revs,items:[],mao,anal,desl:350,chassis:[]});
+  let items=[];
+  const copyIdx=parseInt(document.getElementById('mp-copiar')?.value);
+  if(!isNaN(copyIdx)&&db.planos[copyIdx]){
+    items=JSON.parse(JSON.stringify(db.planos[copyIdx].items||[])).map(item=>{
+      // Remap marks to new revs indices (by rev name matching)
+      const origRevs=db.planos[copyIdx].revs;
+      const newMarks=[];
+      item.marks.forEach(mi=>{const rName=origRevs[mi];const ni=revs.indexOf(rName);if(ni>=0)newMarks.push(ni);});
+      return{...item,id:uid(),marks:newMarks};
+    });
+  }
+  db.planos.push({id:uid(),nome,modelo:mod,tipo,revs,items,mao,anal,desl:350,chassis:[]});
   closeM('plano');rAll();autosave();toast('✅ Plano criado!');
 }
 function delPlano(i){if(confirm('Remover plano?')){db.planos.splice(i,1);rAll();autosave();toast('Removido.');}}
